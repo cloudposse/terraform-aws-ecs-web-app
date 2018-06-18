@@ -63,6 +63,7 @@ module "ecs_alb_service_task" {
 }
 
 module "ecs_codepipeline" {
+  count              = "${var.codepipeline_enabled == "true" ? 1 : 0}"
   source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.1.0"
   name               = "${var.name}"
   namespace          = "${var.namespace}"
