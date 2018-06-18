@@ -1,0 +1,74 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-ecs-web-app
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-ecs-web-app
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-aws-ecs-web-app.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-ecs-web-app"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-web-app/releases"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "Packages"
+    description: "Cloud Posse installer and distribution of native apps"
+    url: "https://github.com/cloudposse/packages"
+  - name: "Dev Harness"
+    description: "Cloud Posse Local Development Harness"
+    url: "https://github.com/cloudposse/dev"
+
+# Short description of this project
+description: |-
+  A Terraform module which implements a web app on ECS and supporting AWS resources.
+# How to use this project
+usage: |-
+  Usage example goes here.
+# Example usage
+examples: |-
+  Here are some real world examples:
+# How to get started quickly
+quickstart: |-
+  Here's how to get started...
+
+# Other files to include in this README from the project folder
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Erik Osterman"
+    homepage: "https://github.com/osterman"
+    avatar: "http://s.gravatar.com/avatar/88c480d4f73b813904e00a5695a454cb?s=144"
+    github: "osterman"
+  - name: "Igor Rodionov"
+    homepage: "https://github.com/goruha"
+    avatar: "http://s.gravatar.com/avatar/bc70834d32ed4517568a1feb0b9be7e2?s=144"
+    github: "goruha"
+  - name: "Andriy Knysh"
+    homepage: "https://github.com/aknysh"
+    avatar: "https://avatars0.githubusercontent.com/u/7356997?v=4&u=ed9ce1c9151d552d985bdf5546772e14ef7ab617&s=144"
+    github: "aknysh"
+  - name: "Sarkis Varozian"
+    homepage: "https://github.com/sarkis"
+    avatar: "https://avatars3.githubusercontent.com/u/42673?s=144&v=4"
+    github: "sarkis"
