@@ -47,7 +47,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.1.0"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=use-alb-modules"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
