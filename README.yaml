@@ -29,22 +29,34 @@ badges:
     url: "https://slack.cloudposse.com"
 
 related:
-  - name: "Packages"
-    description: "Cloud Posse installer and distribution of native apps"
-    url: "https://github.com/cloudposse/packages"
-  - name: "Dev Harness"
-    description: "Cloud Posse Local Development Harness"
-    url: "https://github.com/cloudposse/dev"
+  - name: "terraform-aws-ecs-alb-service-task"
+    description: "A Terraform module which implements an ECS service which exposes a web service via ALB."
+    url: "https://github.com/cloudposse/terraform-aws-ecs-alb-service-task"
+  - name: "terraform-aws-ecs-codepipeline"
+    description: "Terraform Module for CI/CD with AWS Code Pipeline and Code Build for ECS"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-codepipeline"
+  - name: "terraform-aws-ecs-container-definition"
+    description: "A Terraform module to generate well-formed JSON documents that are passed to the aws_ecs_task_definition Terraform resource"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-container-definition"
+  - name: "terraform-aws-alb"
+    description: "Terraform module to provision a standard ALB for HTTP/HTTP traffic"
+    url: "https://github.com/cloudposse/terraform-aws-alb"
+  - name: "terraform-aws-alb-ingress"
+    description: "Terraform module to provision an HTTP style ingress rule based on hostname and path for an ALB"
+    url: "https://github.com/cloudposse/terraform-aws-alb-ingress"
 
 # Short description of this project
 description: |-
   A Terraform module which implements a web app on ECS and supporting AWS resources.
+
 # How to use this project
 usage: |-
   Usage example goes here.
+
 # Example usage
 examples: |-
-  Here are some real world examples:
+  Here are some real world examples...
+
 # How to get started quickly
 quickstart: |-
   Here's how to get started...

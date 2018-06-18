@@ -27,16 +27,17 @@ module "alb_ingress" {
   vpc_id              = "${var.vpc_id}"
   listener_arns       = ["${var.listener_arns}"]
   listener_arns_count = "${var.listener_arns_count}"
-  health_check_path   = "/"
-  paths               = ["/*"]
+  health_check_path   = "${var.alb_ingress_healthcheck_path}"
+  paths               = ["${var.alb_ingress_paths}"]
+  hosts               = ["${var.alb_ingress_hosts}"]
 }
 
 module "container_definition" {
   source           = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.1.3"
   container_name   = "${module.default_label.id}"
-  container_image  = "nginx:latest"
-  container_memory = 128
-  container_port   = 80
+  container_image  = "${var.container_image}"
+  container_memory = "${var.container_memory}"
+  container_port   = "${var.container_port}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
@@ -55,7 +56,7 @@ module "ecs_alb_service_task" {
   container_name            = "${module.default_label.id}"
   ecr_repository_name       = "${module.ecr.repository_name}"
   ecs_cluster_arn           = "${var.ecs_cluster_arn}"
-  launch_type               = "FARGATE"
+  launch_type               = "${var.launch_type}"
   vpc_id                    = "${var.vpc_id}"
   security_group_ids        = ["${var.ecs_security_group_ids}"]
   private_subnet_ids        = ["${var.ecs_private_subnet_ids}"]
