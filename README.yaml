@@ -29,21 +29,33 @@ badges:
     url: "https://slack.cloudposse.com"
 
 related:
-  - name: "terraform-aws-ecs-alb-service-task"
-    description: "A Terraform module which implements an ECS service which exposes a web service via ALB."
-    url: "https://github.com/cloudposse/terraform-aws-ecs-alb-service-task"
-  - name: "terraform-aws-ecs-codepipeline"
-    description: "Terraform Module for CI/CD with AWS Code Pipeline and Code Build for ECS"
-    url: "https://github.com/cloudposse/terraform-aws-ecs-codepipeline"
-  - name: "terraform-aws-ecs-container-definition"
-    description: "A Terraform module to generate well-formed JSON documents that are passed to the aws_ecs_task_definition Terraform resource"
-    url: "https://github.com/cloudposse/terraform-aws-ecs-container-definition"
   - name: "terraform-aws-alb"
     description: "Terraform module to provision a standard ALB for HTTP/HTTP traffic"
     url: "https://github.com/cloudposse/terraform-aws-alb"
   - name: "terraform-aws-alb-ingress"
     description: "Terraform module to provision an HTTP style ingress rule based on hostname and path for an ALB"
     url: "https://github.com/cloudposse/terraform-aws-alb-ingress"
+  - name: "terraform-aws-codebuild"
+    description: "Terraform Module to easily leverage AWS CodeBuild for Continuous Integration"
+    url: "https://github.com/cloudposse/terraform-aws-codebuild"
+  - name: "terraform-aws-ecr"
+    description: "Terraform Module to manage Docker Container Registries on AWS ECR"
+    url: "https://github.com/cloudposse/terraform-aws-ecr"
+  - name: "terraform-aws-ecs-alb-service-task"
+    description: "Terraform module which implements an ECS service which exposes a web service via ALB."
+    url: "https://github.com/cloudposse/terraform-aws-ecs-alb-service-task"
+  - name: "terraform-aws-ecs-codepipeline"
+    description: "Terraform Module for CI/CD with AWS Code Pipeline and Code Build for ECS"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-codepipeline"
+  - name: "terraform-aws-ecs-container-definition"
+    description: "Terraform module to generate well-formed JSON documents that are passed to the aws_ecs_task_definition Terraform resource"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-container-definition"
+  - name: "terraform-aws-lb-s3-bucket"
+    description: "Terraform module to provision an S3 bucket with built in IAM policy to allow AWS Load Balancers to ship access logs."
+    url: "https://github.com/cloudposse/terraform-aws-lb-s3-bucket"
+
+
+
 
 # Short description of this project
 description: |-
@@ -51,11 +63,29 @@ description: |-
 
 # How to use this project
 usage: |-
-  Usage example goes here.
+  ```
+  module "default-backend-web-app" {
+    source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=tags/0.1.0"
+    name                         = "appname"
+    namespace                    = "eg"
+    stage                        = "testing"
+    vpc_id                       = "${module.vpc.vpc_id}"
+    listener_arns                = "${module.alb.listener_arns}"
+    listener_arns_count          = "1"
+    aws_logs_region              = "us-west-2"
+    ecs_cluster_arn              = "${aws_ecs_cluster.default.arn}"
+    ecs_cluster_name             = "${aws_ecs_cluster.default.name}"
+    ecs_security_group_ids       = ["${module.vpc.vpc_default_security_group_id}"]
+    ecs_private_subnet_ids       = ["${module.subnets.private_subnet_ids}"]
+    alb_ingress_healthcheck_path = "/healthz"
+    alb_ingress_paths            = ["/*"]
+    codepipeline_enabled         = "false"
+  }
+  ```
 
 # Example usage
 examples: |-
-  Here are some real world examples...
+  Example goes here...
 
 # How to get started quickly
 quickstart: |-

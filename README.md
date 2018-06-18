@@ -20,7 +20,25 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 ## Usage
 
-Usage example goes here.
+```
+module "default-backend-web-app" {
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=tags/0.1.0"
+  name                         = "appname"
+  namespace                    = "eg"
+  stage                        = "testing"
+  vpc_id                       = "${module.vpc.vpc_id}"
+  listener_arns                = "${module.alb.listener_arns}"
+  listener_arns_count          = "1"
+  aws_logs_region              = "us-west-2"
+  ecs_cluster_arn              = "${aws_ecs_cluster.default.arn}"
+  ecs_cluster_name             = "${aws_ecs_cluster.default.name}"
+  ecs_security_group_ids       = ["${module.vpc.vpc_default_security_group_id}"]
+  ecs_private_subnet_ids       = ["${module.subnets.private_subnet_ids}"]
+  alb_ingress_healthcheck_path = "/healthz"
+  alb_ingress_paths            = ["/*"]
+  codepipeline_enabled         = "false"
+}
+```
 
 ## Quick Start
 
@@ -29,7 +47,7 @@ Here's how to get started...
 
 ## Examples
 
-Here are some real world examples...
+Example goes here...
 
 
 
@@ -84,11 +102,14 @@ Available targets:
 
 Check out these related projects.
 
-- [terraform-aws-ecs-alb-service-task](https://github.com/cloudposse/terraform-aws-ecs-alb-service-task) - A Terraform module which implements an ECS service which exposes a web service via ALB.
-- [terraform-aws-ecs-codepipeline](https://github.com/cloudposse/terraform-aws-ecs-codepipeline) - Terraform Module for CI/CD with AWS Code Pipeline and Code Build for ECS
-- [terraform-aws-ecs-container-definition](https://github.com/cloudposse/terraform-aws-ecs-container-definition) - A Terraform module to generate well-formed JSON documents that are passed to the aws_ecs_task_definition Terraform resource
 - [terraform-aws-alb](https://github.com/cloudposse/terraform-aws-alb) - Terraform module to provision a standard ALB for HTTP/HTTP traffic
 - [terraform-aws-alb-ingress](https://github.com/cloudposse/terraform-aws-alb-ingress) - Terraform module to provision an HTTP style ingress rule based on hostname and path for an ALB
+- [terraform-aws-codebuild](https://github.com/cloudposse/terraform-aws-codebuild) - Terraform Module to easily leverage AWS CodeBuild for Continuous Integration
+- [terraform-aws-ecr](https://github.com/cloudposse/terraform-aws-ecr) - Terraform Module to manage Docker Container Registries on AWS ECR
+- [terraform-aws-ecs-alb-service-task](https://github.com/cloudposse/terraform-aws-ecs-alb-service-task) - Terraform module which implements an ECS service which exposes a web service via ALB.
+- [terraform-aws-ecs-codepipeline](https://github.com/cloudposse/terraform-aws-ecs-codepipeline) - Terraform Module for CI/CD with AWS Code Pipeline and Code Build for ECS
+- [terraform-aws-ecs-container-definition](https://github.com/cloudposse/terraform-aws-ecs-container-definition) - Terraform module to generate well-formed JSON documents that are passed to the aws_ecs_task_definition Terraform resource
+- [terraform-aws-lb-s3-bucket](https://github.com/cloudposse/terraform-aws-lb-s3-bucket) - Terraform module to provision an S3 bucket with built in IAM policy to allow AWS Load Balancers to ship access logs.
 
 
 ## Help
