@@ -47,7 +47,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=use-alb-modules"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.2.0"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
@@ -64,7 +64,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled            = "${var.codepipeline_enabled}"
-  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=add-enabled-flag"
+  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.1.1"
   name               = "${var.name}"
   namespace          = "${var.namespace}"
   stage              = "${var.stage}"
