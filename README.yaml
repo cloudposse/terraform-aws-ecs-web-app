@@ -84,12 +84,12 @@ usage: |-
   ```
 
 # Example usage
-examples: |-
-  Example goes here...
+#examples: |-
+#  Example goes here...
 
 # How to get started quickly
-quickstart: |-
-  Here's how to get started...
+#quickstart: |-
+#  Here's how to get started...
 
 # Other files to include in this README from the project folder
 include:

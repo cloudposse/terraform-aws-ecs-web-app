@@ -40,14 +40,8 @@ module "default-backend-web-app" {
 }
 ```
 
-## Quick Start
-
-Here's how to get started...
 
 
-## Examples
-
-Example goes here...
 
 
 

@@ -62,10 +62,11 @@ variable "host_port" {
 }
 
 variable "launch_type" {
-  type = "string"
+  type        = "string"
   description = "The ECS launch type (valid options: FARGATE or EC2)"
-  default = "FARGATE"
+  default     = "FARGATE"
 }
+
 variable "protocol" {
   type        = "string"
   description = "The protocol used for the port mapping. Options: tcp or udp."
@@ -79,9 +80,9 @@ variable "healthcheck" {
 }
 
 variable "alb_ingress_healthcheck_path" {
-  type = "string"
+  type        = "string"
   description = "The path of the healthcheck which the ALB checks."
-  default = "/"
+  default     = "/"
 }
 
 variable "alb_ingress_paths" {
