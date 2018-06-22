@@ -84,8 +84,8 @@ usage: |-
   ```
 
 # Example usage
-#examples: |-
-#  Example goes here...
+examples: |-
+  A full example demonstrated [here](example).
 
 # How to get started quickly
 #quickstart: |-
