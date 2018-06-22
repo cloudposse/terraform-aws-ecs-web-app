@@ -43,10 +43,6 @@ module "default-backend-web-app" {
 
 
 
-## Examples
-
-A full example demonstrated [here](example).
-
 
 
 ## Makefile Targets
