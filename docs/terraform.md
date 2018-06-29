@@ -3,9 +3,12 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| alb_arn_suffix | ARN suffix of the ALB used for CloudWatch Dimensions. | string | `` | no |
+| alb_ingress_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics. | string | `false` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks. | string | `/` | no |
 | alb_ingress_hosts | Hosts to match in Hosts header, at least one of hosts or paths must be set | list | `<list>` | no |
 | alb_ingress_paths | Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set | list | `<list>` | no |
+| alb_name | Name of the ALB used for CloudWatch Dimensions. | string | `` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
@@ -14,6 +17,7 @@
 | container_memory | The amount of RAM to allow container to use in MB. | string | `128` | no |
 | container_port | The port number on the container bound to assigned host_port. | string | `80` | no |
 | delimiter | The delimiter to be used in labels. | string | `-` | no |
+| ecs_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics. | string | `false` | no |
 | ecs_cluster_arn | The ECS Cluster ARN where ECS Service will be provisioned. | string | - | yes |
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
@@ -29,6 +33,7 @@
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
+| sns_topic_name | SNS topic name to send CloudWatch Alarm notifications. | string | `` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Map of key-value pairs to use for tags. | map | `<map>` | no |
 | vpc_id | The VPC ID where resources are created. | string | - | yes |

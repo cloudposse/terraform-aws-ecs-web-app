@@ -19,7 +19,7 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.2.1"
+  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.2.2"
   name                = "${var.name}"
   namespace           = "${var.namespace}"
   stage               = "${var.stage}"
@@ -75,4 +75,30 @@ module "ecs_codepipeline" {
   service_name       = "${module.ecs_alb_service_task.service_name}"
   ecs_cluster_name   = "${var.ecs_cluster_name}"
   privileged_mode    = "true"
+}
+
+module "ecs_alarms" {
+  enabled          = "${var.ecs_alarms_enabled}"
+  source           = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.2.0"
+  create_sns_topic = "false"
+  sns_topic_name   = "${var.sns_topic_name}"
+  name             = "${var.name}"
+  namespace        = "${var.namespace}"
+  stage            = "${var.stage}"
+  cluster_name     = "${var.ecs_cluster_name}"
+  service_name     = "${module.ecs_alb_service_task.service_name}"
+}
+
+module "alb_ingress_alarms" {
+  enabled                 = "${var.alb_ingress_alarms_enabled}"
+  source                  = "git::https://github.com/cloudposse/terraform-aws-alb-targetgroup-cloudwatch-sns-alarms.git?ref=tags/0.1.0"
+  name                    = "${var.name}"
+  namespace               = "${var.namespace}"
+  stage                   = "${var.stage}"
+  create_sns_topic        = "false"
+  sns_topic_name          = "${var.sns_topic_name}"
+  alb_name                = "${var.alb_name}"
+  alb_arn_suffix          = "${var.alb_arn_suffix}"
+  target_group_name       = "${module.alb_ingress.target_group_name}"
+  target_group_arn_suffix = "${module.alb_ingress.target_group_arn_suffix}"
 }

@@ -31,6 +31,18 @@ variable "tags" {
   default     = {}
 }
 
+variable "alb_name" {
+  type        = "string"
+  description = "Name of the ALB used for CloudWatch Dimensions."
+  default     = ""
+}
+
+variable "alb_arn_suffix" {
+  type        = "string"
+  description = "ARN suffix of the ALB used for CloudWatch Dimensions."
+  default     = ""
+}
+
 variable "codepipeline_enabled" {
   type        = "string"
   description = "A boolean to enable/disable AWS Codepipeline and ECR"
@@ -79,6 +91,18 @@ variable "healthcheck" {
   default     = {}
 }
 
+variable "sns_topic_name" {
+  type        = "string"
+  description = "SNS topic name to send CloudWatch Alarm notifications."
+  default     = ""
+}
+
+variable "alb_ingress_alarms_enabled" {
+  type        = "string"
+  description = "A boolean to enable/disable CloudWatch Alarms for ALB Target metrics."
+  default     = "false"
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = "string"
   description = "The path of the healthcheck which the ALB checks."
@@ -115,6 +139,12 @@ variable "listener_arns_count" {
 variable "aws_logs_region" {
   type        = "string"
   description = "The region for the AWS Cloudwatch Logs group."
+}
+
+variable "ecs_alarms_enabled" {
+  type        = "string"
+  description = "A boolean to enable/disable CloudWatch Alarms for ECS Service metrics."
+  default     = "false"
 }
 
 variable "ecs_cluster_arn" {
