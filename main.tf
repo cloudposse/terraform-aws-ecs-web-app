@@ -19,7 +19,7 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.2.1"
+  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.2.2"
   name                = "${var.name}"
   namespace           = "${var.namespace}"
   stage               = "${var.stage}"
@@ -64,7 +64,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled            = "${var.codepipeline_enabled}"
-  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.1.1"
+  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.1.2"
   name               = "${var.name}"
   namespace          = "${var.namespace}"
   stage              = "${var.stage}"
