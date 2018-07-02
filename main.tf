@@ -93,8 +93,8 @@ module "ecs_alarms" {
   evaluation_periods           = "${var.ecs_alarms_evaluation_periods}"
 }
 
-module "alb_ingress_alarms" {
-  enabled                        = "${var.alb_ingress_alarms_enabled}"
+module "alb_alarms" {
+  enabled                        = "${var.alb_alarms_enabled}"
   source                         = "git::https://github.com/cloudposse/terraform-aws-alb-targetgroup-cloudwatch-sns-alarms.git?ref=tags/0.1.0"
   name                           = "${var.name}"
   namespace                      = "${var.namespace}"
