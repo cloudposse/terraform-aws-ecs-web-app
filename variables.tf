@@ -110,21 +110,21 @@ variable "alb_alarms_5xx_threshold" {
 }
 
 variable "alb_alarms_response_time_threshold" {
-  type = "string"
+  type        = "string"
   description = "The maximum ALB Target Group response time."
-  default = "0.5"
+  default     = "0.5"
 }
 
 variable "alb_alarms_period" {
-  type = "string"
+  type        = "string"
   description = "The period (in seconds) to analyze for ALB CloudWatch Alarms."
-  default = "300"
+  default     = "300"
 }
 
 variable "alb_alarms_evaluation_periods" {
-  type = "string"
+  type        = "string"
   description = "The number of periods to analyze for ALB CloudWatch Alarms."
-  default = "1"
+  default     = "1"
 }
 
 variable "alb_alarms_alb_name" {
@@ -184,27 +184,27 @@ variable "ecs_alarms_enabled" {
 }
 
 variable "ecs_alarms_cpu_util_threshold" {
-  type = "string"
+  type        = "string"
   description = "The max percentage of CPU usage for ECS Service."
-  default = "80"
+  default     = "80"
 }
 
 variable "ecs_alarms_mem_util_threshold" {
-  type = "string"
+  type        = "string"
   description = "The max percentage of Memory usage for ECS Service."
-  default = "80"
+  default     = "80"
 }
 
 variable "ecs_alarms_period" {
-  type = "string"
+  type        = "string"
   description = "The period (in seconds) to analyze for ECS CloudWatch Alarms."
-  default = "300"
+  default     = "300"
 }
 
 variable "ecs_alarms_evaluation_periods" {
-  type = "string"
+  type        = "string"
   description = "The number of periods to analyze for ECS CloudWatch Alarms."
-  default = "1"
+  default     = "1"
 }
 
 variable "ecs_cluster_arn" {
