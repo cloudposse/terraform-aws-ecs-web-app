@@ -31,18 +31,6 @@ variable "tags" {
   default     = {}
 }
 
-variable "alb_name" {
-  type        = "string"
-  description = "Name of the ALB used for CloudWatch Dimensions."
-  default     = ""
-}
-
-variable "alb_arn_suffix" {
-  type        = "string"
-  description = "ARN suffix of the ALB used for CloudWatch Dimensions."
-  default     = ""
-}
-
 variable "codepipeline_enabled" {
   type        = "string"
   description = "A boolean to enable/disable AWS Codepipeline and ECR"
@@ -97,10 +85,58 @@ variable "sns_topic_name" {
   default     = ""
 }
 
-variable "alb_ingress_alarms_enabled" {
+variable "alb_alarms_enabled" {
   type        = "string"
   description = "A boolean to enable/disable CloudWatch Alarms for ALB Target metrics."
   default     = "false"
+}
+
+variable "alb_alarms_3xx_threshold" {
+  type        = "string"
+  description = "The maximum number of 3XX HTTPCodes in a given period for ECS Service."
+  default     = "25"
+}
+
+variable "alb_alarms_4xx_threshold" {
+  type        = "string"
+  description = "The maximum number of 4XX HTTPCodes in a given period for ECS Service."
+  default     = "25"
+}
+
+variable "alb_alarms_5xx_threshold" {
+  type        = "string"
+  description = "The maximum number of 5XX HTTPCodes in a given period for ECS Service."
+  default     = "25"
+}
+
+variable "alb_alarms_response_time_threshold" {
+  type = "string"
+  description = "The maximum ALB Target Group response time."
+  default = "0.5"
+}
+
+variable "alb_alarms_period" {
+  type = "string"
+  description = "The period (in seconds) to analyze for ALB CloudWatch Alarms."
+  default = "300"
+}
+
+variable "alb_alarms_evaluation_periods" {
+  type = "string"
+  description = "The number of periods to analyze for ALB CloudWatch Alarms."
+  default = "1"
+}
+
+variable "alb_alarms_alb_name" {
+  type        = "string"
+  description = "Name of the ALB used for CloudWatch Dimensions."
+  default     = ""
+}
+
+variable "alb_alarms_alb_arn_suffix" {
+  type        = "string"
+  description = "ARN suffix of the ALB used for CloudWatch Dimensions."
+  default     = ""
 }
 
 variable "alb_ingress_healthcheck_path" {
@@ -145,6 +181,30 @@ variable "ecs_alarms_enabled" {
   type        = "string"
   description = "A boolean to enable/disable CloudWatch Alarms for ECS Service metrics."
   default     = "false"
+}
+
+variable "ecs_alarms_cpu_util_threshold" {
+  type = "string"
+  description = "The max percentage of CPU usage for ECS Service."
+  default = "80"
+}
+
+variable "ecs_alarms_mem_util_threshold" {
+  type = "string"
+  description = "The max percentage of Memory usage for ECS Service."
+  default = "80"
+}
+
+variable "ecs_alarms_period" {
+  type = "string"
+  description = "The period (in seconds) to analyze for ECS CloudWatch Alarms."
+  default = "300"
+}
+
+variable "ecs_alarms_evaluation_periods" {
+  type = "string"
+  description = "The number of periods to analyze for ECS CloudWatch Alarms."
+  default = "1"
 }
 
 variable "ecs_cluster_arn" {
