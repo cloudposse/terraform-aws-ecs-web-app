@@ -3,18 +3,18 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| alb_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
-| alb_alarms_4xx_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
-| alb_alarms_5xx_threshold | The maximum number of 5XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
-| alb_alarms_alb_arn_suffix | ARN suffix of the ALB used for CloudWatch Dimensions. | string | `` | no |
-| alb_alarms_alb_name | Name of the ALB used for CloudWatch Dimensions. | string | `` | no |
-| alb_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics. | string | `false` | no |
-| alb_alarms_evaluation_periods | The number of periods to analyze for ALB CloudWatch Alarms. | string | `1` | no |
-| alb_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
-| alb_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
+| alb_arn_suffix | ARN suffix of the ALB for the Target Group. | string | `` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks. | string | `/` | no |
 | alb_ingress_hosts | Hosts to match in Hosts header, at least one of hosts or paths must be set | list | `<list>` | no |
 | alb_ingress_paths | Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set | list | `<list>` | no |
+| alb_name | Name of the ALB for the Target Group. | string | `` | no |
+| alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_4xx_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_5xx_threshold | The maximum number of 5XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics. | string | `false` | no |
+| alb_target_group_alarms_evaluation_periods | The number of periods to analyze for ALB CloudWatch Alarms. | string | `1` | no |
+| alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
+| alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
@@ -23,10 +23,10 @@
 | container_memory | The amount of RAM to allow container to use in MB. | string | `128` | no |
 | container_port | The port number on the container bound to assigned host_port. | string | `80` | no |
 | delimiter | The delimiter to be used in labels. | string | `-` | no |
-| ecs_alarms_cpu_util_threshold | The max percentage of CPU usage for ECS Service. | string | `80` | no |
+| ecs_alarms_cpu_utilization_threshold | The max percentage of CPU usage for ECS Service. | string | `80` | no |
 | ecs_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics. | string | `false` | no |
 | ecs_alarms_evaluation_periods | The number of periods to analyze for ECS CloudWatch Alarms. | string | `1` | no |
-| ecs_alarms_mem_util_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
+| ecs_alarms_mem_utilization_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
 | ecs_alarms_period | The period (in seconds) to analyze for ECS CloudWatch Alarms. | string | `300` | no |
 | ecs_cluster_arn | The ECS Cluster ARN where ECS Service will be provisioned. | string | - | yes |
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
