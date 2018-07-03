@@ -82,7 +82,7 @@ Available targets:
 | ecs_alarms_cpu_utilization_threshold | The max percentage of CPU usage for ECS Service. | string | `80` | no |
 | ecs_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics. | string | `false` | no |
 | ecs_alarms_evaluation_periods | The number of periods to analyze for ECS CloudWatch Alarms. | string | `1` | no |
-| ecs_alarms_mem_utilization_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
+| ecs_alarms_memory_utilization_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
 | ecs_alarms_period | The period (in seconds) to analyze for ECS CloudWatch Alarms. | string | `300` | no |
 | ecs_cluster_arn | The ECS Cluster ARN where ECS Service will be provisioned. | string | - | yes |
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
@@ -96,10 +96,10 @@ Available targets:
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| notify_arns | List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions. | list | - | yes |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
-| sns_topic_name | SNS topic name to send CloudWatch Alarm notifications. | string | `` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Map of key-value pairs to use for tags. | map | `<map>` | no |
 | vpc_id | The VPC ID where resources are created. | string | - | yes |
