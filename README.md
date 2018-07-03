@@ -59,9 +59,18 @@ Available targets:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| alb_arn_suffix | ARN suffix of the ALB for the Target Group. | string | `` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks. | string | `/` | no |
 | alb_ingress_hosts | Hosts to match in Hosts header, at least one of hosts or paths must be set | list | `<list>` | no |
 | alb_ingress_paths | Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set | list | `<list>` | no |
+| alb_name | Name of the ALB for the Target Group. | string | `` | no |
+| alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_4xx_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_5xx_threshold | The maximum number of 5XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics. | string | `false` | no |
+| alb_target_group_alarms_evaluation_periods | The number of periods to analyze for ALB CloudWatch Alarms. | string | `1` | no |
+| alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
+| alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
@@ -70,6 +79,11 @@ Available targets:
 | container_memory | The amount of RAM to allow container to use in MB. | string | `128` | no |
 | container_port | The port number on the container bound to assigned host_port. | string | `80` | no |
 | delimiter | The delimiter to be used in labels. | string | `-` | no |
+| ecs_alarms_cpu_utilization_threshold | The max percentage of CPU usage for ECS Service. | string | `80` | no |
+| ecs_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics. | string | `false` | no |
+| ecs_alarms_evaluation_periods | The number of periods to analyze for ECS CloudWatch Alarms. | string | `1` | no |
+| ecs_alarms_memory_utilization_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
+| ecs_alarms_period | The period (in seconds) to analyze for ECS CloudWatch Alarms. | string | `300` | no |
 | ecs_cluster_arn | The ECS Cluster ARN where ECS Service will be provisioned. | string | - | yes |
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
@@ -82,6 +96,7 @@ Available targets:
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| notify_arns | List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions. | list | - | yes |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
@@ -212,12 +227,12 @@ Check out [our other projects][github], [apply for a job][jobs], or [hire us][hi
 |---|---|---|---|
 
   [osterman_homepage]: https://github.com/osterman
-  [osterman_avatar]: http://s.gravatar.com/avatar/88c480d4f73b813904e00a5695a454cb?s=144
+  [osterman_avatar]: https://github.com/osterman.png?size=150
   [goruha_homepage]: https://github.com/goruha
-  [goruha_avatar]: http://s.gravatar.com/avatar/bc70834d32ed4517568a1feb0b9be7e2?s=144
+  [goruha_avatar]: https://github.com/goruha.png?size=150
   [aknysh_homepage]: https://github.com/aknysh
-  [aknysh_avatar]: https://avatars0.githubusercontent.com/u/7356997?v=4&u=ed9ce1c9151d552d985bdf5546772e14ef7ab617&s=144
+  [aknysh_avatar]: https://github.com/aknysh.png?size=150
   [sarkis_homepage]: https://github.com/sarkis
-  [sarkis_avatar]: https://avatars3.githubusercontent.com/u/42673?s=144&v=4
+  [sarkis_avatar]: https://github.com/sarkis.png?size=150
 
 
