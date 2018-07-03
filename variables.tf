@@ -79,10 +79,9 @@ variable "healthcheck" {
   default     = {}
 }
 
-variable "sns_topic_name" {
-  type        = "string"
-  description = "SNS topic name to send CloudWatch Alarm notifications."
-  default     = ""
+variable "notify_arns" {
+  type        = "list"
+  description = "List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions."
 }
 
 variable "alb_target_group_alarms_enabled" {
@@ -189,7 +188,7 @@ variable "ecs_alarms_cpu_utilization_threshold" {
   default     = "80"
 }
 
-variable "ecs_alarms_mem_utilization_threshold" {
+variable "ecs_alarms_memory_utilization_threshold" {
   type        = "string"
   description = "The max percentage of Memory usage for ECS Service."
   default     = "80"

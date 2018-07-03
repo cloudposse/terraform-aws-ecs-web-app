@@ -1,5 +1,5 @@
 module "default_label" {
-  source    = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.2"
+  source    = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
   name      = "${var.name}"
   namespace = "${var.namespace}"
   stage     = "${var.stage}"
@@ -47,7 +47,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.2.0"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.2.1"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
@@ -79,28 +79,26 @@ module "ecs_codepipeline" {
 
 module "ecs_alarms" {
   enabled                      = "${var.ecs_alarms_enabled}"
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.2.0"
-  create_sns_topic             = "false"
-  sns_topic_name               = "${var.sns_topic_name}"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.3.0"
+  notify_arns                  = ["${var.notify_arns}"]
   name                         = "${var.name}"
   namespace                    = "${var.namespace}"
   stage                        = "${var.stage}"
   cluster_name                 = "${var.ecs_cluster_name}"
   service_name                 = "${module.ecs_alb_service_task.service_name}"
   cpu_utilization_threshold    = "${var.ecs_alarms_cpu_utilization_threshold}"
-  memory_utilization_threshold = "${var.ecs_alarms_mem_utilization_threshold}"
+  memory_utilization_threshold = "${var.ecs_alarms_memory_utilization_threshold}"
   period                       = "${var.ecs_alarms_period}"
   evaluation_periods           = "${var.ecs_alarms_evaluation_periods}"
 }
 
 module "alb_target_group_alarms" {
   enabled                        = "${var.alb_target_group_alarms_enabled}"
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-targetgroup-cloudwatch-sns-alarms.git?ref=tags/0.1.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.2.0"
   name                           = "${var.name}"
   namespace                      = "${var.namespace}"
   stage                          = "${var.stage}"
-  create_sns_topic               = "false"
-  sns_topic_name                 = "${var.sns_topic_name}"
+  notify_arns                    = ["${var.notify_arns}"]
   alb_name                       = "${var.alb_name}"
   alb_arn_suffix                 = "${var.alb_arn_suffix}"
   target_group_name              = "${module.alb_ingress.target_group_name}"
