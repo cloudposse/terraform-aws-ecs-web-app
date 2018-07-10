@@ -23,7 +23,7 @@ badges:
     url: "https://travis-ci.org/cloudposse/terraform-aws-ecs-web-app"
   - name: "Latest Release"
     image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg"
-    url: "https://github.com/cloudposse/terraform-aws-ecs-web-app/releases"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"
   - name: "Slack Community"
     image: "https://slack.cloudposse.com/badge.svg"
     url: "https://slack.cloudposse.com"
