@@ -29,6 +29,7 @@ module "alb_ingress" {
   listener_arns_count = "${var.listener_arns_count}"
   health_check_path   = "${var.alb_ingress_healthcheck_path}"
   paths               = ["${var.alb_ingress_paths}"]
+  priority            = "${var.alb_ingress_listener_priority}"
   hosts               = ["${var.alb_ingress_hosts}"]
 }
 
@@ -72,6 +73,7 @@ module "ecs_codepipeline" {
   repo_owner         = "${var.repo_owner}"
   repo_name          = "${var.repo_name}"
   branch             = "${var.branch}"
+  image_repo_name    = "${module.ecr.repository_name}"
   service_name       = "${module.ecs_alb_service_task.service_name}"
   ecs_cluster_name   = "${var.ecs_cluster_name}"
   privileged_mode    = "true"
