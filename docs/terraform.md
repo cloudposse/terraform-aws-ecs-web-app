@@ -6,6 +6,7 @@
 | alb_arn_suffix | ARN suffix of the ALB for the Target Group. | string | `` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks. | string | `/` | no |
 | alb_ingress_hosts | Hosts to match in Hosts header, at least one of hosts or paths must be set | list | `<list>` | no |
+| alb_ingress_listener_priority | Priority of the listeners, a number between 1 - 50000 (1 is highest priority) | string | `1000` | no |
 | alb_ingress_paths | Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set | list | `<list>` | no |
 | alb_name | Name of the ALB for the Target Group. | string | `` | no |
 | alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service. | string | `25` | no |

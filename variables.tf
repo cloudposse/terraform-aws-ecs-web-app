@@ -144,16 +144,22 @@ variable "alb_ingress_healthcheck_path" {
   default     = "/"
 }
 
+variable "alb_ingress_hosts" {
+  type        = "list"
+  default     = []
+  description = "Hosts to match in Hosts header, at least one of hosts or paths must be set"
+}
+
 variable "alb_ingress_paths" {
   type        = "list"
   default     = []
   description = "Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set"
 }
 
-variable "alb_ingress_hosts" {
-  type        = "list"
-  default     = []
-  description = "Hosts to match in Hosts header, at least one of hosts or paths must be set"
+variable "alb_ingress_listener_priority" {
+  type        = "string"
+  default     = "1000"
+  description = "Priority of the listeners, a number between 1 - 50000 (1 is highest priority)"
 }
 
 variable "vpc_id" {
