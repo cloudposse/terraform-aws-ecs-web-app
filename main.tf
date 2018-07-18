@@ -19,11 +19,11 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.2.3"
+  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.3.0"
   name                = "${var.name}"
   namespace           = "${var.namespace}"
   stage               = "${var.stage}"
-  attributes          = "${compact(concat(var.attributes, list("alb", "ingress")))}"
+  attributes          = "${var.attributes}"
   vpc_id              = "${var.vpc_id}"
   listener_arns       = ["${var.listener_arns}"]
   listener_arns_count = "${var.listener_arns_count}"
@@ -34,11 +34,12 @@ module "alb_ingress" {
 }
 
 module "container_definition" {
-  source           = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.1.3"
+  source           = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.1.4"
   container_name   = "${module.default_label.id}"
   container_image  = "${var.container_image}"
   container_memory = "${var.container_memory}"
   container_port   = "${var.container_port}"
+  healthcheck      = "${var.healthcheck}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
@@ -48,7 +49,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.2.1"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.3.0"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
@@ -65,7 +66,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled            = "${var.codepipeline_enabled}"
-  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.1.2"
+  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
   name               = "${var.name}"
   namespace          = "${var.namespace}"
   stage              = "${var.stage}"

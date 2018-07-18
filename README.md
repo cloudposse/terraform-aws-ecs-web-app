@@ -23,6 +23,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 
+
 ## Usage
 
 ```
@@ -109,6 +110,12 @@ Available targets:
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Map of key-value pairs to use for tags. | map | `<map>` | no |
 | vpc_id | The VPC ID where resources are created. | string | - | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| task_role_arn | ECS Task role ARN |
 
 
 
