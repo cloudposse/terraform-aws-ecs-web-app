@@ -1,12 +1,12 @@
 module "default_label" {
-  source    = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  source    = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.4"
   name      = "${var.name}"
   namespace = "${var.namespace}"
   stage     = "${var.stage}"
 }
 
 module "ecr" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.2.5"
+  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.2.8"
   name       = "${var.name}"
   namespace  = "${var.namespace}"
   stage      = "${var.stage}"
@@ -49,7 +49,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.3.0"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.4.0"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
@@ -65,39 +65,62 @@ module "ecs_alb_service_task" {
 }
 
 module "ecs_codepipeline" {
-  enabled            = "${var.codepipeline_enabled}"
-  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
-  name               = "${var.name}"
-  namespace          = "${var.namespace}"
-  stage              = "${var.stage}"
-  github_oauth_token = "${var.github_oauth_token}"
-  repo_owner         = "${var.repo_owner}"
-  repo_name          = "${var.repo_name}"
-  branch             = "${var.branch}"
-  image_repo_name    = "${module.ecr.repository_name}"
-  service_name       = "${module.ecs_alb_service_task.service_name}"
-  ecs_cluster_name   = "${var.ecs_cluster_name}"
-  privileged_mode    = "true"
+  enabled               = "${var.codepipeline_enabled}"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
+  name                  = "${var.name}"
+  namespace             = "${var.namespace}"
+  stage                 = "${var.stage}"
+  github_oauth_token    = "${var.github_oauth_token}"
+  repo_owner            = "${var.repo_owner}"
+  repo_name             = "${var.repo_name}"
+  branch                = "${var.branch}"
+  image_repo_name       = "${module.ecr.repository_name}"
+  service_name          = "${module.ecs_alb_service_task.service_name}"
+  ecs_cluster_name      = "${var.ecs_cluster_name}"
+  privileged_mode       = "true"
+  environment_variables = [{"name" = "CONTAINER_NAME", "value" = "${module.default_label.id}"}]
 }
 
 module "ecs_alarms" {
-  enabled                      = "${var.ecs_alarms_enabled}"
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.3.0"
-  notify_arns                  = ["${var.notify_arns}"]
-  name                         = "${var.name}"
-  namespace                    = "${var.namespace}"
-  stage                        = "${var.stage}"
-  cluster_name                 = "${var.ecs_cluster_name}"
-  service_name                 = "${module.ecs_alb_service_task.service_name}"
-  cpu_utilization_threshold    = "${var.ecs_alarms_cpu_utilization_threshold}"
-  memory_utilization_threshold = "${var.ecs_alarms_memory_utilization_threshold}"
-  period                       = "${var.ecs_alarms_period}"
-  evaluation_periods           = "${var.ecs_alarms_evaluation_periods}"
+  source     = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.4.0"
+  name       = "${var.name}"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${var.attributes}"
+  tags       = "${var.tags}"
+
+  enabled      = "${var.ecs_alarms_enabled}"
+  cluster_name = "${var.ecs_cluster_name}"
+  service_name = "${module.ecs_alb_service_task.service_name}"
+
+  cpu_utilization_high_threshold          = "${var.ecs_alarms_cpu_utilization_high_threshold}"
+  cpu_utilization_high_evaluation_periods = "${var.ecs_alarms_cpu_utilization_high_evaluation_periods}"
+  cpu_utilization_high_period             = "${var.ecs_alarms_cpu_utilization_high_period}"
+  cpu_utilization_high_alarm_actions      = "${var.ecs_alarms_cpu_utilization_high_alarm_actions}"
+  cpu_utilization_high_ok_actions         = "${var.ecs_alarms_cpu_utilization_high_ok_actions}"
+
+  cpu_utilization_low_threshold          = "${var.ecs_alarms_cpu_utilization_low_threshold}"
+  cpu_utilization_low_evaluation_periods = "${var.ecs_alarms_cpu_utilization_low_evaluation_periods}"
+  cpu_utilization_low_period             = "${var.ecs_alarms_cpu_utilization_low_period}"
+  cpu_utilization_low_alarm_actions      = "${var.ecs_alarms_cpu_utilization_low_alarm_actions}"
+  cpu_utilization_low_ok_actions         = "${var.ecs_alarms_cpu_utilization_low_ok_actions}"
+
+  memory_utilization_high_threshold          = "${var.ecs_alarms_memory_utilization_high_threshold}"
+  memory_utilization_high_evaluation_periods = "${var.ecs_alarms_memory_utilization_high_evaluation_periods}"
+  memory_utilization_high_period             = "${var.ecs_alarms_memory_utilization_high_period}"
+  memory_utilization_high_alarm_actions      = "${var.ecs_alarms_memory_utilization_high_alarm_actions}"
+  memory_utilization_high_ok_actions         = "${var.ecs_alarms_memory_utilization_high_ok_actions}"
+
+  memory_utilization_low_threshold          = "${var.ecs_alarms_memory_utilization_low_threshold}"
+  memory_utilization_low_evaluation_periods = "${var.ecs_alarms_memory_utilization_low_evaluation_periods}"
+  memory_utilization_low_period             = "${var.ecs_alarms_memory_utilization_low_period}"
+  memory_utilization_low_alarm_actions      = "${var.ecs_alarms_memory_utilization_low_alarm_actions}"
+  memory_utilization_low_ok_actions         = "${var.ecs_alarms_memory_utilization_low_ok_actions}"
 }
 
 module "alb_target_group_alarms" {
   enabled                        = "${var.alb_target_group_alarms_enabled}"
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.2.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.4.0"
   name                           = "${var.name}"
   namespace                      = "${var.namespace}"
   stage                          = "${var.stage}"
