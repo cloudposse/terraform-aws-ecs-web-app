@@ -65,20 +65,25 @@ module "ecs_alb_service_task" {
 }
 
 module "ecs_codepipeline" {
-  enabled               = "${var.codepipeline_enabled}"
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
-  name                  = "${var.name}"
-  namespace             = "${var.namespace}"
-  stage                 = "${var.stage}"
-  github_oauth_token    = "${var.github_oauth_token}"
-  repo_owner            = "${var.repo_owner}"
-  repo_name             = "${var.repo_name}"
-  branch                = "${var.branch}"
-  image_repo_name       = "${module.ecr.repository_name}"
-  service_name          = "${module.ecs_alb_service_task.service_name}"
-  ecs_cluster_name      = "${var.ecs_cluster_name}"
-  privileged_mode       = "true"
-  environment_variables = [{"name" = "CONTAINER_NAME", "value" = "${module.default_label.id}"}]
+  enabled            = "${var.codepipeline_enabled}"
+  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
+  name               = "${var.name}"
+  namespace          = "${var.namespace}"
+  stage              = "${var.stage}"
+  github_oauth_token = "${var.github_oauth_token}"
+  repo_owner         = "${var.repo_owner}"
+  repo_name          = "${var.repo_name}"
+  branch             = "${var.branch}"
+  image_repo_name    = "${module.ecr.repository_name}"
+  service_name       = "${module.ecs_alb_service_task.service_name}"
+  ecs_cluster_name   = "${var.ecs_cluster_name}"
+  privileged_mode    = "true"
+
+  environment_variables = [{
+    "name" = "CONTAINER_NAME"
+
+    "value" = "${module.default_label.id}"
+  }]
 }
 
 module "ecs_alarms" {
