@@ -86,11 +86,27 @@ Available targets:
 | container_memory | The amount of RAM to allow container to use in MB. | string | `128` | no |
 | container_port | The port number on the container bound to assigned host_port. | string | `80` | no |
 | delimiter | The delimiter to be used in labels. | string | `-` | no |
-| ecs_alarms_cpu_utilization_threshold | The max percentage of CPU usage for ECS Service. | string | `80` | no |
+| ecs_alarms_cpu_utilization_high_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action. | list | `<list>` | no |
+| ecs_alarms_cpu_utilization_high_evaluation_periods | Number of periods to evaluate for the alarm. | string | `1` | no |
+| ecs_alarms_cpu_utilization_high_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action. | list | `<list>` | no |
+| ecs_alarms_cpu_utilization_high_period | Duration in seconds to evaluate for the alarm. | string | `300` | no |
+| ecs_alarms_cpu_utilization_high_threshold | The maximum percentage of CPU utilization average. | string | `80` | no |
+| ecs_alarms_cpu_utilization_low_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low Alarm action. | list | `<list>` | no |
+| ecs_alarms_cpu_utilization_low_evaluation_periods | Number of periods to evaluate for the alarm. | string | `1` | no |
+| ecs_alarms_cpu_utilization_low_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low OK action. | list | `<list>` | no |
+| ecs_alarms_cpu_utilization_low_period | Duration in seconds to evaluate for the alarm. | string | `300` | no |
+| ecs_alarms_cpu_utilization_low_threshold | The minimum percentage of CPU utilization average. | string | `20` | no |
 | ecs_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics. | string | `false` | no |
-| ecs_alarms_evaluation_periods | The number of periods to analyze for ECS CloudWatch Alarms. | string | `1` | no |
-| ecs_alarms_memory_utilization_threshold | The max percentage of Memory usage for ECS Service. | string | `80` | no |
-| ecs_alarms_period | The period (in seconds) to analyze for ECS CloudWatch Alarms. | string | `300` | no |
+| ecs_alarms_memory_utilization_high_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High Alarm action. | list | `<list>` | no |
+| ecs_alarms_memory_utilization_high_evaluation_periods | Number of periods to evaluate for the alarm. | string | `1` | no |
+| ecs_alarms_memory_utilization_high_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High OK action. | list | `<list>` | no |
+| ecs_alarms_memory_utilization_high_period | Duration in seconds to evaluate for the alarm. | string | `300` | no |
+| ecs_alarms_memory_utilization_high_threshold | The maximum percentage of Memory utilization average. | string | `80` | no |
+| ecs_alarms_memory_utilization_low_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low Alarm action. | list | `<list>` | no |
+| ecs_alarms_memory_utilization_low_evaluation_periods | Number of periods to evaluate for the alarm. | string | `1` | no |
+| ecs_alarms_memory_utilization_low_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action. | list | `<list>` | no |
+| ecs_alarms_memory_utilization_low_period | Duration in seconds to evaluate for the alarm. | string | `300` | no |
+| ecs_alarms_memory_utilization_low_threshold | The minimum percentage of Memory utilization average. | string | `20` | no |
 | ecs_cluster_arn | The ECS Cluster ARN where ECS Service will be provisioned. | string | - | yes |
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
@@ -103,7 +119,7 @@ Available targets:
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
-| notify_arns | List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions. | list | - | yes |
+| notify_arns | List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions. | list | `<list>` | no |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
@@ -141,11 +157,11 @@ Check out these related projects.
 
 File a GitHub [issue](https://github.com/cloudposse/terraform-aws-ecs-web-app/issues), send us an [email][email] or join our [Slack Community][slack].
 
-## Commerical Support
+## Commercial Support
 
 Work directly with our team of DevOps experts via email, slack, and video conferencing. 
 
-We provide *commercial support* for all of our [Open Source][github] projects. As a *Dedicated Support* customer, you have access to our team of subject matter experts at a fraction of the cost of a fulltime engineer. 
+We provide [*commercial support*][commercial_support] for all of our [Open Source][github] projects. As a *Dedicated Support* customer, you have access to our team of subject matter experts at a fraction of the cost of a full-time engineer. 
 
 [![E-Mail](https://img.shields.io/badge/email-hello@cloudposse.com-blue.svg)](mailto:hello@cloudposse.com)
 
@@ -155,7 +171,7 @@ We provide *commercial support* for all of our [Open Source][github] projects. A
 - **Bug Fixes.** We'll rapidly work to fix any bugs in our projects.
 - **Build New Terraform Modules.** We'll develop original modules to provision infrastructure.
 - **Cloud Architecture.** We'll assist with your cloud strategy and design.
-- **Implementation.** We'll provide hands on support to implement our reference architectures. 
+- **Implementation.** We'll provide hands-on support to implement our reference architectures. 
 
 
 ## Community Forum
@@ -239,6 +255,7 @@ Check out [our other projects][github], [apply for a job][jobs], or [hire us][hi
   [docs]: https://docs.cloudposse.com/
   [website]: https://cloudposse.com/
   [github]: https://github.com/cloudposse/
+  [commercial_support]: https://github.com/orgs/cloudposse/projects
   [jobs]: https://cloudposse.com/jobs/
   [hire]: https://cloudposse.com/contact/
   [slack]: https://slack.cloudposse.com/
