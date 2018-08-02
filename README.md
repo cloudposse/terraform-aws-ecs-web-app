@@ -79,14 +79,6 @@ Available targets:
 | alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
-| autoscaling_dimension | Dimension to autoscale on (valid options: cpu, memory) | string | `memory` | no |
-| autoscaling_enabled | A boolean to enable/disable Autoscaling policy for ECS Service. | string | `false` | no |
-| autoscaling_max_capacity | Maximum number of running instances of a Service. | string | `2` | no |
-| autoscaling_min_capacity | Minimum number of running instances of a Service. | string | `1` | no |
-| autoscaling_scale_down_adjustment | Scaling adjustment to make during scale down event. | string | `-1` | no |
-| autoscaling_scale_down_cooldown | Period (in seconds) to wait between scale down events. | string | `300` | no |
-| autoscaling_scale_up_adjustment | Scaling adjustment to make during scale up event. | string | `1` | no |
-| autoscaling_scale_up_cooldown | Period (in seconds) to wait between scale up events. | string | `60` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
 | codepipeline_enabled | A boolean to enable/disable AWS Codepipeline and ECR | string | `true` | no |
@@ -139,9 +131,6 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
-| scale_down_policy_arn | Autoscaling scale up policy ARN |
-| scale_up_policy_arn | Autoscaling scale up policy ARN |
-| service_name | ECS Service Name |
 | task_role_arn | ECS Task role ARN |
 
 
