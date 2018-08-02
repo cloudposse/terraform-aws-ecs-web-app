@@ -88,7 +88,7 @@ module "ecs_codepipeline" {
 
 module "autoscaling" {
   enabled      = "${var.autoscaling_enabled}"
-  source       = "../terraform-aws-ecs-cloudwatch-autoscaling"
+  source       = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=init"
   name         = "${var.name}"
   namespace    = "${var.namespace}"
   stage        = "${var.stage}"
