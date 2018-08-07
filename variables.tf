@@ -43,16 +43,34 @@ variable "container_image" {
   default     = "cloudposse/default-backend"
 }
 
+variable "container_cpu" {
+  type        = "string"
+  description = "The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html)"
+  default     = "256"
+}
+
 variable "container_memory" {
   type        = "string"
-  description = "The amount of RAM to allow container to use in MB."
-  default     = "128"
+  description = "The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html)"
+  default     = "512"
+}
+
+variable "container_memory_reservation" {
+  type        = "string"
+  description = "The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than container_memory if set."
+  default     = ""
 }
 
 variable "container_port" {
   type        = "string"
   description = "The port number on the container bound to assigned host_port."
   default     = "80"
+}
+
+variable "desired_count" {
+  type        = "string"
+  description = "The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type)"
+  default     = "1"
 }
 
 variable "host_port" {
@@ -77,12 +95,6 @@ variable "healthcheck" {
   type        = "map"
   description = "A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
   default     = {}
-}
-
-variable "notify_arns" {
-  type        = "list"
-  description = "List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions."
-  default     = []
 }
 
 variable "alb_target_group_alarms_enabled" {
@@ -125,6 +137,24 @@ variable "alb_target_group_alarms_evaluation_periods" {
   type        = "string"
   description = "The number of periods to analyze for ALB CloudWatch Alarms."
   default     = "1"
+}
+
+variable "alb_target_group_alarms_alarm_actions" {
+  type        = "list"
+  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state."
+  default     = []
+}
+
+variable "alb_target_group_alarms_ok_actions" {
+  type        = "list"
+  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state."
+  default     = []
+}
+
+variable "alb_target_group_alarms_insufficient_data_actions" {
+  type        = "list"
+  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT_DATA state from any other state."
+  default     = []
 }
 
 variable "alb_name" {

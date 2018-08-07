@@ -12,8 +12,11 @@
 | alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
 | alb_target_group_alarms_4xx_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
 | alb_target_group_alarms_5xx_threshold | The maximum number of 5XX HTTPCodes in a given period for ECS Service. | string | `25` | no |
+| alb_target_group_alarms_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state. | list | `<list>` | no |
 | alb_target_group_alarms_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics. | string | `false` | no |
 | alb_target_group_alarms_evaluation_periods | The number of periods to analyze for ALB CloudWatch Alarms. | string | `1` | no |
+| alb_target_group_alarms_insufficient_data_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT_DATA state from any other state. | list | `<list>` | no |
+| alb_target_group_alarms_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state. | list | `<list>` | no |
 | alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
@@ -28,10 +31,13 @@
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
 | codepipeline_enabled | A boolean to enable/disable AWS Codepipeline and ECR | string | `true` | no |
+| container_cpu | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | string | `256` | no |
 | container_image | The default container image to use in container definition. | string | `cloudposse/default-backend` | no |
-| container_memory | The amount of RAM to allow container to use in MB. | string | `128` | no |
+| container_memory | The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | string | `512` | no |
+| container_memory_reservation | The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than container_memory if set. | string | `` | no |
 | container_port | The port number on the container bound to assigned host_port. | string | `80` | no |
 | delimiter | The delimiter to be used in labels. | string | `-` | no |
+| desired_count | The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type) | string | `1` | no |
 | ecs_alarms_cpu_utilization_high_alarm_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action. | list | `<list>` | no |
 | ecs_alarms_cpu_utilization_high_evaluation_periods | Number of periods to evaluate for the alarm. | string | `1` | no |
 | ecs_alarms_cpu_utilization_high_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action. | list | `<list>` | no |
@@ -65,7 +71,6 @@
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
-| notify_arns | List of ARNs to send notifications on CloudWatch `ALARM` and `OK` actions. | list | `<list>` | no |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
