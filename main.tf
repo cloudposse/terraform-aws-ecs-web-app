@@ -6,7 +6,7 @@ module "default_label" {
 }
 
 module "ecr" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.2.8"
+  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.2.9"
   name       = "${var.name}"
   namespace  = "${var.namespace}"
   stage      = "${var.stage}"
@@ -34,12 +34,14 @@ module "alb_ingress" {
 }
 
 module "container_definition" {
-  source           = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.1.4"
-  container_name   = "${module.default_label.id}"
-  container_image  = "${var.container_image}"
-  container_memory = "${var.container_memory}"
-  container_port   = "${var.container_port}"
-  healthcheck      = "${var.healthcheck}"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.2.0"
+  container_name               = "${module.default_label.id}"
+  container_image              = "${var.container_image}"
+  container_memory             = "${var.container_memory}"
+  container_memory_reservation = "${var.container_memory_reservation}"
+  container_cpu                = "${var.container_cpu}"
+  container_port               = "${var.container_port}"
+  healthcheck                  = "${var.healthcheck}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
@@ -49,13 +51,16 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.4.0"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.5.0"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
   alb_target_group_arn      = "${module.alb_ingress.target_group_arn}"
   container_definition_json = "${module.container_definition.json}"
   container_name            = "${module.default_label.id}"
+  desired_count             = "${var.desired_count}"
+  task_cpu                  = "${var.container_cpu}"
+  task_memory               = "${var.container_memory}"
   ecr_repository_name       = "${module.ecr.repository_name}"
   ecs_cluster_arn           = "${var.ecs_cluster_arn}"
   launch_type               = "${var.launch_type}"
@@ -87,13 +92,19 @@ module "ecs_codepipeline" {
 }
 
 module "autoscaling" {
-  enabled      = "${var.autoscaling_enabled}"
-  source       = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.1.0"
-  name         = "${var.name}"
-  namespace    = "${var.namespace}"
-  stage        = "${var.stage}"
-  service_name = "${module.ecs_alb_service_task.service_name}"
-  cluster_name = "${var.ecs_cluster_name}"
+  enabled               = "${var.autoscaling_enabled}"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.1.0"
+  name                  = "${var.name}"
+  namespace             = "${var.namespace}"
+  stage                 = "${var.stage}"
+  service_name          = "${module.ecs_alb_service_task.service_name}"
+  cluster_name          = "${var.ecs_cluster_name}"
+  min_capacity          = "${var.autoscaling_min_capacity}"
+  max_capacity          = "${var.autoscaling_max_capacity}"
+  scale_down_adjustment = "${var.autoscaling_scale_down_adjustment}"
+  scale_down_cooldown   = "${var.autoscaling_scale_down_cooldown}"
+  scale_up_adjustment   = "${var.autoscaling_scale_down_adjustment}"
+  scale_up_cooldown     = "${var.autoscaling_scale_down_cooldown}"
 }
 
 locals {
@@ -142,11 +153,13 @@ module "ecs_alarms" {
 
 module "alb_target_group_alarms" {
   enabled                        = "${var.alb_target_group_alarms_enabled}"
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.4.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.5.0"
   name                           = "${var.name}"
   namespace                      = "${var.namespace}"
   stage                          = "${var.stage}"
-  notify_arns                    = ["${var.notify_arns}"]
+  alarm_actions                  = ["${var.alb_target_group_alarms_alarm_actions}"]
+  ok_actions                     = ["${var.alb_target_group_alarms_ok_actions}"]
+  insufficient_data_actions      = ["${var.alb_target_group_alarms_insufficient_data_actions}"]
   alb_name                       = "${var.alb_name}"
   alb_arn_suffix                 = "${var.alb_arn_suffix}"
   target_group_name              = "${module.alb_ingress.target_group_name}"
