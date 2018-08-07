@@ -36,7 +36,7 @@ module "alb_ingress" {
 module "container_definition" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.2.0"
   container_name               = "${module.default_label.id}"
-  container_image              = "${var.container_image == "" ? module.ecr.registry_url : var.container_image}:latest"
+  container_image              = "${var.container_image}"
   container_memory             = "${var.container_memory}"
   container_memory_reservation = "${var.container_memory_reservation}"
   container_cpu                = "${var.container_cpu}"
