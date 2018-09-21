@@ -10,7 +10,7 @@ A Terraform module which implements a web app on ECS and supporting AWS resource
 
 ---
 
-This project is part of our comprehensive ["SweetOps"](https://docs.cloudposse.com) approach towards DevOps. 
+This project is part of our comprehensive ["SweetOps"](https://docs.cloudposse.com) approach towards DevOps.
 
 
 It's 100% Open Source and licensed under the [APACHE2](LICENSE).
@@ -125,6 +125,7 @@ Available targets:
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
 | ecs_security_group_ids | Additional Security Group IDs to allow into ECS Service. | list | `<list>` | no |
+|environment   |The environment variables to pas to the container. This is a list of maps.   |  string | <list>  |  no |
 | github_oauth_token | GitHub Oauth Token with permissions to access private repositories | string | `` | no |
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map | `<map>` | no |
 | host_port | The port number to bind container_port to on the host | string | `` | no |
@@ -175,9 +176,9 @@ File a GitHub [issue](https://github.com/cloudposse/terraform-aws-ecs-web-app/is
 
 ## Commercial Support
 
-Work directly with our team of DevOps experts via email, slack, and video conferencing. 
+Work directly with our team of DevOps experts via email, slack, and video conferencing.
 
-We provide [*commercial support*][commercial_support] for all of our [Open Source][github] projects. As a *Dedicated Support* customer, you have access to our team of subject matter experts at a fraction of the cost of a full-time engineer. 
+We provide [*commercial support*][commercial_support] for all of our [Open Source][github] projects. As a *Dedicated Support* customer, you have access to our team of subject matter experts at a fraction of the cost of a full-time engineer.
 
 [![E-Mail](https://img.shields.io/badge/email-hello@cloudposse.com-blue.svg)](mailto:hello@cloudposse.com)
 
@@ -187,7 +188,7 @@ We provide [*commercial support*][commercial_support] for all of our [Open Sourc
 - **Bug Fixes.** We'll rapidly work to fix any bugs in our projects.
 - **Build New Terraform Modules.** We'll develop original modules to provision infrastructure.
 - **Cloud Architecture.** We'll assist with your cloud strategy and design.
-- **Implementation.** We'll provide hands-on support to implement our reference architectures. 
+- **Implementation.** We'll provide hands-on support to implement our reference architectures.
 
 
 ## Community Forum
@@ -221,9 +222,9 @@ Copyright © 2017-2018 [Cloud Posse, LLC](https://cloudposse.com)
 
 
 
-## License 
+## License
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 See [LICENSE](LICENSE) for full details.
 
@@ -293,5 +294,3 @@ Check out [our other projects][github], [apply for a job][jobs], or [hire us][hi
   [aknysh_avatar]: https://github.com/aknysh.png?size=150
   [sarkis_homepage]: https://github.com/sarkis
   [sarkis_avatar]: https://github.com/sarkis.png?size=150
-
-
