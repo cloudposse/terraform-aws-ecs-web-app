@@ -85,6 +85,12 @@ variable "launch_type" {
   default     = "FARGATE"
 }
 
+variable "environment" {
+  type        = "list"
+  description = "The environment variables for the task definition. This is a list of maps"
+  default     = []
+}
+
 variable "protocol" {
   type        = "string"
   description = "The protocol used for the port mapping. Options: tcp or udp."

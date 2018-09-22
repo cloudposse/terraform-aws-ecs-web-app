@@ -63,6 +63,7 @@
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
 | ecs_security_group_ids | Additional Security Group IDs to allow into ECS Service. | list | `<list>` | no |
+| environment | The environment variables for the task definition. This is a list of maps | list | `<list>` | no |
 | github_oauth_token | GitHub Oauth Token with permissions to access private repositories | string | `` | no |
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map | `<map>` | no |
 | host_port | The port number to bind container_port to on the host | string | `` | no |

@@ -80,6 +80,16 @@ usage: |-
     alb_ingress_healthcheck_path = "/healthz"
     alb_ingress_paths            = ["/*"]
     codepipeline_enabled         = "false"
+    environment = [
+        {
+          name = "COOKIE"
+          value = "cookiemonster"
+        },
+        {
+          name = "PORT"
+          value = "80"
+        }
+      ]
   }
   ```
 

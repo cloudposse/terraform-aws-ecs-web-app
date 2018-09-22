@@ -43,6 +43,16 @@ module "default-backend-web-app" {
   alb_ingress_healthcheck_path = "/healthz"
   alb_ingress_paths            = ["/*"]
   codepipeline_enabled         = "false"
+  environment = [
+      {
+        name = "COOKIE"
+        value = "cookiemonster"
+      },
+      {
+        name = "PORT"
+        value = "80"
+      }
+    ]
 }
 ```
 
@@ -55,8 +65,9 @@ module "default-backend-web-app" {
 ```
 Available targets:
 
-  help                                This help screen
+  help                                Help screen
   help/all                            Display help for all targets
+  help/short                          This help short screen
   lint                                Lint terraform code
 
 ```
@@ -125,6 +136,7 @@ Available targets:
 | ecs_cluster_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step. | string | - | yes |
 | ecs_private_subnet_ids | List of Private Subnet IDs to provision ECS Service onto. | list | - | yes |
 | ecs_security_group_ids | Additional Security Group IDs to allow into ECS Service. | list | `<list>` | no |
+| environment | The environment variables for the task definition. This is a list of maps | list | `<list>` | no |
 | github_oauth_token | GitHub Oauth Token with permissions to access private repositories | string | `` | no |
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map | `<map>` | no |
 | host_port | The port number to bind container_port to on the host | string | `` | no |

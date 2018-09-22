@@ -42,6 +42,7 @@ module "container_definition" {
   container_cpu                = "${var.container_cpu}"
   container_port               = "${var.container_port}"
   healthcheck                  = "${var.healthcheck}"
+  environment                  = "${var.environment}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
