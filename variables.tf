@@ -86,6 +86,7 @@ variable "launch_type" {
 }
 
 variable "environment" {
+  type        = "list"
   description = "The environment variables for the task definition. This is a list of maps"
   default     = []
 }
