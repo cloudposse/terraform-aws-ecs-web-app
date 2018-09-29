@@ -18,7 +18,7 @@ output "task_role_arn" {
   value       = "${module.ecs_alb_service_task.task_role_arn}"
 }
 
-output "ecs_sg_id" {
+output "service_security_group_id" {
   description = "Security Group id of the ECS task"
   value = "${module.ecs_alb_service_task.service_security_group_id}"
 }
