@@ -115,9 +115,9 @@ variable "healthcheck" {
 }
 
 variable "alb_target_group_arn" {
-  type = "string"
+  type        = "string"
   description = "Pass target group down to module"
-  default = ""
+  default     = ""
 }
 
 variable "alb_target_group_alarms_enabled" {
