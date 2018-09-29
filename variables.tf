@@ -67,6 +67,17 @@ variable "container_port" {
   default     = "80"
 }
 
+variable "port_mappings" {
+  type        = "list"
+  description = "The port mappings to configure for the container. This is a list of maps. Each map should contain \"containerPort\", \"hostPort\", and \"protocol\", where \"protocol\" is one of \"tcp\" or \"udp\". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort."
+
+  default = [{
+    "containerPort" = 80
+    "hostPort"      = 80
+    "protocol"      = "tcp"
+  }]
+}
+
 variable "desired_count" {
   type        = "string"
   description = "The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type)"
@@ -101,6 +112,12 @@ variable "healthcheck" {
   type        = "map"
   description = "A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
   default     = {}
+}
+
+variable "alb_target_group_arn" {
+  type = "string"
+  description = "Pass target group down to module"
+  default = ""
 }
 
 variable "alb_target_group_alarms_enabled" {
