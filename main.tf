@@ -19,30 +19,31 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.3.0"
+  source              = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.3.1"
   name                = "${var.name}"
   namespace           = "${var.namespace}"
   stage               = "${var.stage}"
   attributes          = "${var.attributes}"
   vpc_id              = "${var.vpc_id}"
-  listener_arns       = ["${var.listener_arns}"]
+  listener_arns       = "${var.listener_arns}"
   listener_arns_count = "${var.listener_arns_count}"
   health_check_path   = "${var.alb_ingress_healthcheck_path}"
   paths               = ["${var.alb_ingress_paths}"]
   priority            = "${var.alb_ingress_listener_priority}"
   hosts               = ["${var.alb_ingress_hosts}"]
+  port                = "${var.container_port}"
 }
 
 module "container_definition" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.2.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.3.0"
   container_name               = "${module.default_label.id}"
   container_image              = "${var.container_image}"
   container_memory             = "${var.container_memory}"
   container_memory_reservation = "${var.container_memory_reservation}"
   container_cpu                = "${var.container_cpu}"
-  container_port               = "${var.container_port}"
   healthcheck                  = "${var.healthcheck}"
   environment                  = "${var.environment}"
+  port_mappings                = "${var.port_mappings}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
@@ -52,7 +53,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.5.0"
+  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.6.0"
   name                      = "${var.name}"
   namespace                 = "${var.namespace}"
   stage                     = "${var.stage}"
@@ -68,6 +69,7 @@ module "ecs_alb_service_task" {
   vpc_id                    = "${var.vpc_id}"
   security_group_ids        = ["${var.ecs_security_group_ids}"]
   private_subnet_ids        = ["${var.ecs_private_subnet_ids}"]
+  container_port            = "${var.container_port}"
 }
 
 module "ecs_codepipeline" {
