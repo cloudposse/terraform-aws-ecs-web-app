@@ -44,6 +44,7 @@ module "container_definition" {
   healthcheck                  = "${var.healthcheck}"
   environment                  = "${var.environment}"
   port_mappings                = "${var.port_mappings}"
+
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"
     "awslogs-group"         = "${aws_cloudwatch_log_group.app.name}"
