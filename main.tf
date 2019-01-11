@@ -64,7 +64,6 @@ module "ecs_alb_service_task" {
   desired_count             = "${var.desired_count}"
   task_cpu                  = "${var.container_cpu}"
   task_memory               = "${var.container_memory}"
-  ecr_repository_name       = "${module.ecr.repository_name}"
   ecs_cluster_arn           = "${var.ecs_cluster_arn}"
   launch_type               = "${var.launch_type}"
   vpc_id                    = "${var.vpc_id}"
