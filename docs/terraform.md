@@ -1,4 +1,3 @@
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -19,6 +18,7 @@
 | alb_target_group_alarms_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state. | list | `<list>` | no |
 | alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms. | string | `300` | no |
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time. | string | `0.5` | no |
+| alb_target_group_arn | Pass target group down to module | string | `` | no |
 | attributes | List of attributes to add to label. | list | `<list>` | no |
 | autoscaling_dimension | Dimension to autoscale on (valid options: cpu, memory) | string | `memory` | no |
 | autoscaling_enabled | A boolean to enable/disable Autoscaling policy for ECS Service. | string | `false` | no |
@@ -72,6 +72,7 @@
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| port_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort. | list | `<list>` | no |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
 | repo_owner | GitHub Organization or Username. | string | `` | no |
@@ -86,5 +87,7 @@
 | scale_down_policy_arn | Autoscaling scale up policy ARN |
 | scale_up_policy_arn | Autoscaling scale up policy ARN |
 | service_name | ECS Service Name |
+| service_security_group_id | Security Group id of the ECS task |
 | task_role_arn | ECS Task role ARN |
+| task_role_name | ECS Task role name |
 

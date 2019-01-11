@@ -13,6 +13,11 @@ output "service_name" {
   value       = "${module.ecs_alb_service_task.service_name}"
 }
 
+output "task_role_name" {
+  description = "ECS Task role name"
+  value       = "${module.ecs_alb_service_task.task_role_name}"
+}
+
 output "task_role_arn" {
   description = "ECS Task role ARN"
   value       = "${module.ecs_alb_service_task.task_role_arn}"
