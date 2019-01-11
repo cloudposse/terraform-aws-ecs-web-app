@@ -1,8 +1,9 @@
 module "default_label" {
-  source    = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.4"
-  name      = "${var.name}"
-  namespace = "${var.namespace}"
-  stage     = "${var.stage}"
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.4"
+  name       = "${var.name}"
+  namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${var.attributes}"
 }
 
 module "ecr" {
