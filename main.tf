@@ -75,7 +75,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled            = "${var.codepipeline_enabled}"
-  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.2.0"
+  source             = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=add-params"
   name               = "${var.name}"
   namespace          = "${var.namespace}"
   stage              = "${var.stage}"
@@ -84,6 +84,9 @@ module "ecs_codepipeline" {
   repo_owner         = "${var.repo_owner}"
   repo_name          = "${var.repo_name}"
   branch             = "${var.branch}"
+  badge_enabled      = "${var.badge_enabled}"
+  build_timeout      = "${var.build_timeout}"
+  buildspec          = "${var.buildspec}"
   image_repo_name    = "${module.ecr.repository_name}"
   service_name       = "${module.ecs_alb_service_task.service_name}"
   ecs_cluster_name   = "${var.ecs_cluster_name}"

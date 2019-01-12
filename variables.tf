@@ -407,6 +407,23 @@ variable "branch" {
   default     = ""
 }
 
+variable "badge_enabled" {
+  type        = "string"
+  default     = "true"
+  description = "Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled."
+}
+
+variable "build_timeout" {
+  type        = "string"
+  default     = "60"
+  description = "How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed."
+}
+
+variable "buildspec" {
+  default     = ""
+  description = "Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
+}
+
 variable "autoscaling_enabled" {
   type        = "string"
   description = "A boolean to enable/disable Autoscaling policy for ECS Service."

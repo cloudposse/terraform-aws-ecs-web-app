@@ -27,3 +27,8 @@ output "service_security_group_id" {
   description = "Security Group id of the ECS task"
   value       = "${module.ecs_alb_service_task.service_security_group_id}"
 }
+
+output "badge_url" {
+  description = "The URL of the build badge when badge_enabled is enabled"
+  value       = "${module.ecs_pipeline.badge_url)}"
+}

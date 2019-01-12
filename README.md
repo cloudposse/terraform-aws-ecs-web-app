@@ -118,7 +118,10 @@ Available targets:
 | autoscaling_scale_up_adjustment | Scaling adjustment to make during scale up event. | string | `1` | no |
 | autoscaling_scale_up_cooldown | Period (in seconds) to wait between scale up events. | string | `60` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
+| badge_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled. | string | `true` | no |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
+| build_timeout | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. | string | `60` | no |
+| buildspec | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | string | `` | no |
 | codepipeline_enabled | A boolean to enable/disable AWS Codepipeline and ECR | string | `true` | no |
 | container_cpu | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | string | `256` | no |
 | container_image | The default container image to use in container definition. | string | `cloudposse/default-backend` | no |
@@ -173,6 +176,7 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
+| badge_url | The URL of the build badge when badge_enabled is enabled |
 | scale_down_policy_arn | Autoscaling scale up policy ARN |
 | scale_up_policy_arn | Autoscaling scale up policy ARN |
 | service_name | ECS Service Name |
