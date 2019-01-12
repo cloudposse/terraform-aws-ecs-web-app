@@ -30,5 +30,5 @@ output "service_security_group_id" {
 
 output "badge_url" {
   description = "the url of the build badge when badge_enabled is enabled"
-  value       = "${module.ecs_pipeline.badge_url}"
+  value       = "${module.ecs_codepipeline.badge_url}"
 }
