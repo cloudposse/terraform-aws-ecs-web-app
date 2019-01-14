@@ -389,6 +389,11 @@ variable "github_oauth_token" {
   default     = ""
 }
 
+variable "github_webhook_events" {
+  description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)."
+  default     = ["push"]
+}
+
 variable "repo_owner" {
   type        = "string"
   description = "GitHub Organization or Username."
@@ -470,4 +475,37 @@ variable "autoscaling_scale_down_cooldown" {
   type        = "string"
   description = "Period (in seconds) to wait between scale down events."
   default     = "300"
+}
+
+# https://www.terraform.io/docs/configuration/variables.html
+# It is recommended you avoid using boolean values and use explicit strings
+variable "poll_source_changes" {
+  type        = "string"
+  default     = "false"
+  description = "Periodically check the location of your source content and run the pipeline if changes are detected"
+}
+
+variable "webhook_enabled" {
+  description = "Set to false to prevent the module from creating any webhook resources"
+  default     = "true"
+}
+
+variable "webhook_target_action" {
+  description = "The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline."
+  default     = "Source"
+}
+
+variable "webhook_authentication" {
+  description = "The type of authentication to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED."
+  default     = "GITHUB_HMAC"
+}
+
+variable "webhook_filter_json_path" {
+  description = "The JSON path to filter on."
+  default     = "$.ref"
+}
+
+variable "webhook_filter_match_equals" {
+  description = "The value to match on (e.g. refs/heads/{Branch})"
+  default     = "refs/heads/{Branch}"
 }
