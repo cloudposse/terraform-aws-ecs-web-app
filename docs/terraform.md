@@ -29,7 +29,10 @@
 | autoscaling_scale_up_adjustment | Scaling adjustment to make during scale up event. | string | `1` | no |
 | autoscaling_scale_up_cooldown | Period (in seconds) to wait between scale up events. | string | `60` | no |
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
+| badge_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled. | string | `false` | no |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
+| build_timeout | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. | string | `60` | no |
+| buildspec | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | string | `` | no |
 | codepipeline_enabled | A boolean to enable/disable AWS Codepipeline and ECR | string | `true` | no |
 | container_cpu | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | string | `256` | no |
 | container_image | The default container image to use in container definition. | string | `cloudposse/default-backend` | no |
@@ -65,6 +68,7 @@
 | ecs_security_group_ids | Additional Security Group IDs to allow into ECS Service. | list | `<list>` | no |
 | environment | The environment variables for the task definition. This is a list of maps | list | `<list>` | no |
 | github_oauth_token | GitHub Oauth Token with permissions to access private repositories | string | `` | no |
+| github_webhook_events | A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/). | list | `<list>` | no |
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map | `<map>` | no |
 | host_port | The port number to bind container_port to on the host | string | `` | no |
 | launch_type | The ECS launch type (valid options: FARGATE or EC2) | string | `FARGATE` | no |
@@ -72,6 +76,7 @@
 | listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service. | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
+| poll_source_changes | Periodically check the location of your source content and run the pipeline if changes are detected | string | `false` | no |
 | port_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort. | list | `<list>` | no |
 | protocol | The protocol used for the port mapping. Options: tcp or udp. | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS. | string | `` | no |
@@ -79,15 +84,23 @@
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Map of key-value pairs to use for tags. | map | `<map>` | no |
 | vpc_id | The VPC ID where resources are created. | string | - | yes |
+| webhook_authentication | The type of authentication to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED. | string | `GITHUB_HMAC` | no |
+| webhook_enabled | Set to false to prevent the module from creating any webhook resources | string | `true` | no |
+| webhook_filter_json_path | The JSON path to filter on. | string | `$.ref` | no |
+| webhook_filter_match_equals | The value to match on (e.g. refs/heads/{Branch}) | string | `refs/heads/{Branch}` | no |
+| webhook_target_action | The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline. | string | `Source` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| badge_url | The URL of the build badge when `badge_enabled` is enabled |
 | scale_down_policy_arn | Autoscaling scale up policy ARN |
 | scale_up_policy_arn | Autoscaling scale up policy ARN |
 | service_name | ECS Service Name |
 | service_security_group_id | Security Group id of the ECS task |
 | task_role_arn | ECS Task role ARN |
 | task_role_name | ECS Task role name |
+| webhook_id | The CodePipeline webhook's ARN. |
+| webhook_url | The CodePipeline webhook's URL. POST events to this endpoint to trigger the target. |
 
