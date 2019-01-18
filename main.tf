@@ -86,6 +86,7 @@ module "ecs_codepipeline" {
   repo_name             = "${var.repo_name}"
   branch                = "${var.branch}"
   badge_enabled         = "${var.badge_enabled}"
+  build_image           = "${var.build_image}"
   build_timeout         = "${var.build_timeout}"
   buildspec             = "${var.buildspec}"
   image_repo_name       = "${module.ecr.repository_name}"
