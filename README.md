@@ -44,7 +44,7 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ```
 module "default-backend-web-app" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=tags/0.11.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git"
   name                         = "appname"
   namespace                    = "eg"
   stage                        = "testing"

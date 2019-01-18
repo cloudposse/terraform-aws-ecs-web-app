@@ -65,7 +65,7 @@ description: |-
 usage: |-
   ```
   module "default-backend-web-app" {
-    source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=tags/0.1.0"
+    source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git"
     name                         = "appname"
     namespace                    = "eg"
     stage                        = "testing"
