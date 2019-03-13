@@ -424,6 +424,11 @@ variable "badge_enabled" {
   description = "Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled."
 }
 
+variable "build_image" {
+  default     = "aws/codebuild/docker:17.09.0"
+  description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0`"
+}
+
 variable "build_timeout" {
   type        = "string"
   default     = "60"
