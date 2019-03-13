@@ -120,6 +120,7 @@ Available targets:
 | aws_logs_region | The region for the AWS Cloudwatch Logs group. | string | - | yes |
 | badge_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled. | string | `false` | no |
 | branch | Branch of the GitHub repository, e.g. master | string | `` | no |
+| build_image | Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0` | string | `aws/codebuild/docker:17.09.0` | no |
 | build_timeout | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed. | string | `60` | no |
 | buildspec | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | string | `` | no |
 | codepipeline_enabled | A boolean to enable/disable AWS Codepipeline and ECR | string | `true` | no |
