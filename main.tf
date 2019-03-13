@@ -54,23 +54,24 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.6.3"
-  name                      = "${var.name}"
-  namespace                 = "${var.namespace}"
-  stage                     = "${var.stage}"
-  attributes                = "${var.attributes}"
-  alb_target_group_arn      = "${module.alb_ingress.target_group_arn}"
-  container_definition_json = "${module.container_definition.json}"
-  container_name            = "${module.default_label.id}"
-  desired_count             = "${var.desired_count}"
-  task_cpu                  = "${var.container_cpu}"
-  task_memory               = "${var.container_memory}"
-  ecs_cluster_arn           = "${var.ecs_cluster_arn}"
-  launch_type               = "${var.launch_type}"
-  vpc_id                    = "${var.vpc_id}"
-  security_group_ids        = ["${var.ecs_security_group_ids}"]
-  private_subnet_ids        = ["${var.ecs_private_subnet_ids}"]
-  container_port            = "${var.container_port}"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.9.0"
+  name                              = "${var.name}"
+  namespace                         = "${var.namespace}"
+  stage                             = "${var.stage}"
+  attributes                        = "${var.attributes}"
+  alb_target_group_arn              = "${module.alb_ingress.target_group_arn}"
+  container_definition_json         = "${module.container_definition.json}"
+  container_name                    = "${module.default_label.id}"
+  desired_count                     = "${var.desired_count}"
+  health_check_grace_period_seconds = "${var.health_check_grace_period_seconds}"
+  task_cpu                          = "${var.container_cpu}"
+  task_memory                       = "${var.container_memory}"
+  ecs_cluster_arn                   = "${var.ecs_cluster_arn}"
+  launch_type                       = "${var.launch_type}"
+  vpc_id                            = "${var.vpc_id}"
+  security_group_ids                = ["${var.ecs_security_group_ids}"]
+  private_subnet_ids                = ["${var.ecs_private_subnet_ids}"]
+  container_port                    = "${var.container_port}"
 }
 
 module "ecs_codepipeline" {
