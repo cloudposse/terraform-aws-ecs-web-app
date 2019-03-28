@@ -43,7 +43,7 @@ module "alb" {
   https_enabled             = "true"
   http_ingress_cidr_blocks  = ["0.0.0.0/0"]
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
-  certificate_arn           = "arn:aws:acm:us-east-2:XXXXXXXX:certificate/XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX"
+  certificate_arn           = "${var.certificate_arn}"
   health_check_interval     = "60"
 }
 
@@ -84,7 +84,7 @@ module "web_app" {
   ]
 
   desired_count    = 1
-  container_image  = "nginxdemos/hello:latest"
+  container_image  = "${var.default_container_image}"
   container_cpu    = "256"
   container_memory = "512"
   container_port   = "80"

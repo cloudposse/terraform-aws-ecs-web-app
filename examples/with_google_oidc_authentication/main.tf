@@ -43,7 +43,7 @@ module "alb" {
   https_enabled             = "true"
   http_ingress_cidr_blocks  = ["0.0.0.0/0"]
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
-  certificate_arn           = "arn:aws:acm:us-east-2:XXXXXXXX:certificate/XXXXXX-XXXX-XXXX-XXXX-XXXXXXXX"
+  certificate_arn           = "${var.certificate_arn}"
   health_check_interval     = "60"
 }
 
@@ -84,7 +84,7 @@ module "web_app" {
   ]
 
   desired_count    = 1
-  container_image  = "nginxdemos/hello:latest"
+  container_image  = "${var.default_container_image}"
   container_cpu    = "256"
   container_memory = "512"
   container_port   = "80"
@@ -142,8 +142,8 @@ module "web_app" {
 
     authenticate_oidc = [{
       # Use this URL to create a Google OAuth 2.0 Client and obtain the Client ID and Client Secret: https://console.developers.google.com/apis/credentials
-      client_id     = "XXXXXXXX-XXXXXXXXXXXXXXXXXXXX.apps.googleusercontent.com"
-      client_secret = "XXXXXXXXXXX_XXXXXXXX"
+      client_id     = "${var.google_oidc_client_id}"
+      client_secret = "${var.google_oidc_client_secret}"
 
       # Use this URL to get Google Auth endpoints: https://accounts.google.com/.well-known/openid-configuration
       issuer                 = "https://accounts.google.com"
