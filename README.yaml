@@ -53,8 +53,15 @@ related:
   - name: "terraform-aws-lb-s3-bucket"
     description: "Terraform module to provision an S3 bucket with built in IAM policy to allow AWS Load Balancers to ship access logs."
     url: "https://github.com/cloudposse/terraform-aws-lb-s3-bucket"
-
-
+  - name: "terraform-aws-eks-cluster"
+    description: "Terraform module for provisioning an EKS cluster"
+    url: "https://github.com/cloudposse/terraform-aws-eks-cluster"
+  - name: "terraform-aws-eks-workers"
+    description: "Terraform module to provision an AWS AutoScaling Group, IAM Role, and Security Group for EKS Workers"
+    url: "https://github.com/cloudposse/terraform-aws-eks-workers"
+  - name: "terraform-aws-ec2-autoscale-group"
+    description: "Terraform module to provision Auto Scaling Group and Launch Template on AWS"
+    url: "https://github.com/cloudposse/terraform-aws-ec2-autoscale-group"
 
 
 # Short description of this project
@@ -63,9 +70,15 @@ description: |-
 
 # How to use this project
 usage: |-
+  Module usage examples:
+
+  - [without authentication](examples/without_authentication) - complete example without authentication
+  - [with Google OIDC authentication](examples/with_google_oidc_authentication) - complete example with Google OIDC authentication
+
+
   ```
   module "default-backend-web-app" {
-    source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=tags/0.1.0"
+    source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=master"
     name                         = "appname"
     namespace                    = "eg"
     stage                        = "testing"
