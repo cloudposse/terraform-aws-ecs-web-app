@@ -139,18 +139,12 @@ module "web_app" {
 
   # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
   authentication_action = {
-    type = "authenticate-oidc"
+    type = "authenticate-cognito"
 
-    authenticate_oidc = [{
-      # Use this URL to create a Google OAuth 2.0 Client and obtain the Client ID and Client Secret: https://console.developers.google.com/apis/credentials
-      client_id     = "${var.google_oidc_client_id}"
-      client_secret = "${var.google_oidc_client_secret}"
-
-      # Use this URL to get Google Auth endpoints: https://accounts.google.com/.well-known/openid-configuration
-      issuer                 = "https://accounts.google.com"
-      authorization_endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
-      token_endpoint         = "https://oauth2.googleapis.com/token"
-      user_info_endpoint     = "https://openidconnect.googleapis.com/v1/userinfo"
+    authenticate_cognito = [{
+      user_pool_arn       = "${var.cognito_user_pool_arn}"
+      user_pool_client_id = "${var.cognito_user_pool_client_id}"
+      user_pool_domain    = "${var.cognito_user_pool_domain}"
     }]
   }
 }

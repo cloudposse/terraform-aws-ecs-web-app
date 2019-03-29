@@ -46,6 +46,7 @@ Module usage examples:
 
 - [without authentication](examples/without_authentication) - complete example without authentication
 - [with Google OIDC authentication](examples/with_google_oidc_authentication) - complete example with Google OIDC authentication
+- [with Cognito authentication](examples/with_cognito_authentication) - complete example with Cognito authentication
 
 
 ```
