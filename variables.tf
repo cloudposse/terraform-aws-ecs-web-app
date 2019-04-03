@@ -204,22 +204,40 @@ variable "alb_ingress_healthcheck_path" {
   default     = "/"
 }
 
-variable "alb_ingress_hosts" {
-  type        = "list"
-  default     = []
-  description = "Hosts to match in Hosts header, at least one of hosts or paths must be set"
-}
-
-variable "alb_ingress_paths" {
-  type        = "list"
-  default     = []
-  description = "Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set"
-}
-
-variable "alb_ingress_listener_priority" {
+variable "alb_ingress_listener_unauthenticated_priority" {
   type        = "string"
   default     = "1000"
-  description = "Priority of the listeners, a number between 1 - 50000 (1 is highest priority)"
+  description = "The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority"
+}
+
+variable "alb_ingress_listener_authenticated_priority" {
+  type        = "string"
+  default     = "300"
+  description = "The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority"
+}
+
+variable "alb_ingress_unauthenticated_hosts" {
+  type        = "list"
+  default     = []
+  description = "Unauthenticated hosts to match in Hosts header"
+}
+
+variable "alb_ingress_authenticated_hosts" {
+  type        = "list"
+  default     = []
+  description = "Authenticated hosts to match in Hosts header"
+}
+
+variable "alb_ingress_unauthenticated_paths" {
+  type        = "list"
+  default     = []
+  description = "Unauthenticated path pattern to match (a maximum of 1 can be defined)"
+}
+
+variable "alb_ingress_authenticated_paths" {
+  type        = "list"
+  default     = []
+  description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
 }
 
 variable "vpc_id" {
@@ -522,14 +540,8 @@ variable "webhook_filter_match_equals" {
   default     = "refs/heads/{Branch}"
 }
 
-variable "authentication_enabled" {
-  type        = "string"
-  default     = "false"
-  description = "Whether to enable authentication action for ALB listener to authenticate users with Cognito or OIDC"
-}
-
 variable "authentication_action" {
   type        = "map"
   default     = {}
-  description = "Authentication action to be placed in front of all other ALB listener actions to authenticate users with Cognito or OIDC. Required when `authentication_enabled=true`"
+  description = "Authentication action to be placed in front of all other ALB listener actions to authenticate users with Cognito or OIDC. Required when `alb_ingress_authenticated_hosts` or `alb_ingress_authenticated_paths` are provided"
 }

@@ -20,21 +20,23 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source                 = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.4.0"
-  name                   = "${var.name}"
-  namespace              = "${var.namespace}"
-  stage                  = "${var.stage}"
-  attributes             = "${var.attributes}"
-  vpc_id                 = "${var.vpc_id}"
-  listener_arns          = "${var.listener_arns}"
-  listener_arns_count    = "${var.listener_arns_count}"
-  health_check_path      = "${var.alb_ingress_healthcheck_path}"
-  paths                  = ["${var.alb_ingress_paths}"]
-  priority               = "${var.alb_ingress_listener_priority}"
-  hosts                  = ["${var.alb_ingress_hosts}"]
-  port                   = "${var.container_port}"
-  authentication_enabled = "${var.authentication_enabled}"
-  authentication_action  = "${var.authentication_action}"
+  source                   = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.5.0"
+  name                     = "${var.name}"
+  namespace                = "${var.namespace}"
+  stage                    = "${var.stage}"
+  attributes               = "${var.attributes}"
+  vpc_id                   = "${var.vpc_id}"
+  listener_arns            = "${var.listener_arns}"
+  listener_arns_count      = "${var.listener_arns_count}"
+  port                     = "${var.container_port}"
+  health_check_path        = "${var.alb_ingress_healthcheck_path}"
+  authenticated_paths      = ["${var.alb_ingress_authenticated_paths}"]
+  unauthenticated_paths    = ["${var.alb_ingress_unauthenticated_paths}"]
+  authenticated_hosts      = ["${var.alb_ingress_authenticated_hosts}"]
+  unauthenticated_hosts    = ["${var.alb_ingress_unauthenticated_hosts}"]
+  authenticated_priority   = "${var.alb_ingress_listener_authenticated_priority}"
+  unauthenticated_priority = "${var.alb_ingress_listener_unauthenticated_priority}"
+  authentication_action    = "${var.authentication_action}"
 }
 
 module "container_definition" {
@@ -78,7 +80,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = "${var.codepipeline_enabled}"
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.6.0"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.6.1"
   name                  = "${var.name}"
   namespace             = "${var.namespace}"
   stage                 = "${var.stage}"

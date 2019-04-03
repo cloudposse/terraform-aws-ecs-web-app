@@ -116,10 +116,6 @@ module "web_app" {
   ecs_security_group_ids = ["${module.vpc.vpc_default_security_group_id}"]
   ecs_private_subnet_ids = ["${module.subnets.private_subnet_ids}"]
 
-  alb_ingress_healthcheck_path  = "/"
-  alb_ingress_paths             = ["/*"]
-  alb_ingress_listener_priority = "100"
-
   alb_target_group_alarms_enabled                 = "true"
   alb_target_group_alarms_3xx_threshold           = "25"
   alb_target_group_alarms_4xx_threshold           = "25"
@@ -135,7 +131,15 @@ module "web_app" {
   listener_arns       = ["${module.alb.https_listener_arn}"]
   listener_arns_count = 1
 
-  authentication_enabled = "true"
+  # Unauthenticated paths (have higher priority than the authenticated paths)
+  alb_ingress_unauthenticated_paths             = ["/events"]
+  alb_ingress_listener_unauthenticated_priority = "50"
+
+  # Authenticated paths
+  alb_ingress_authenticated_paths             = ["/*"]
+  alb_ingress_listener_authenticated_priority = "100"
+
+  alb_ingress_healthcheck_path = "/"
 
   # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
   authentication_action = {
