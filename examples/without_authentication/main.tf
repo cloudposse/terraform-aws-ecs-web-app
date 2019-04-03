@@ -96,11 +96,11 @@ module "web_app" {
     "protocol"      = "tcp"
   }]
 
-  codepipeline_enabled = "true"
-  webhook_enabled      = "true"
+  codepipeline_enabled = "false"
+  webhook_enabled      = "false"
   badge_enabled        = "false"
-  ecs_alarms_enabled   = "true"
-  autoscaling_enabled  = "true"
+  ecs_alarms_enabled   = "false"
+  autoscaling_enabled  = "false"
 
   autoscaling_dimension             = "cpu"
   autoscaling_min_capacity          = 1
@@ -127,6 +127,8 @@ module "web_app" {
   alb_arn_suffix = "${module.alb.alb_arn_suffix}"
   alb_name       = "${module.alb.alb_name}"
 
+  alb_ingress_healthcheck_path = "/"
+
   # Without authentication, both HTTP and HTTPS endpoints are supported
   listener_arns       = ["${module.alb.listener_arns}"]
   listener_arns_count = 2
@@ -134,6 +136,4 @@ module "web_app" {
   # All paths are unauthenticated
   alb_ingress_unauthenticated_paths             = ["/*"]
   alb_ingress_listener_unauthenticated_priority = "100"
-
-  alb_ingress_healthcheck_path = "/"
 }
