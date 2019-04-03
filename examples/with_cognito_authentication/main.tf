@@ -96,11 +96,11 @@ module "web_app" {
     "protocol"      = "tcp"
   }]
 
-  codepipeline_enabled = "true"
-  webhook_enabled      = "true"
+  codepipeline_enabled = "false"
+  webhook_enabled      = "false"
   badge_enabled        = "false"
-  ecs_alarms_enabled   = "true"
-  autoscaling_enabled  = "true"
+  ecs_alarms_enabled   = "false"
+  autoscaling_enabled  = "false"
 
   autoscaling_dimension             = "cpu"
   autoscaling_min_capacity          = 1
@@ -116,10 +116,6 @@ module "web_app" {
   ecs_security_group_ids = ["${module.vpc.vpc_default_security_group_id}"]
   ecs_private_subnet_ids = ["${module.subnets.private_subnet_ids}"]
 
-  alb_ingress_healthcheck_path  = "/"
-  alb_ingress_paths             = ["/*"]
-  alb_ingress_listener_priority = "100"
-
   alb_target_group_alarms_enabled                 = "true"
   alb_target_group_alarms_3xx_threshold           = "25"
   alb_target_group_alarms_4xx_threshold           = "25"
@@ -131,11 +127,19 @@ module "web_app" {
   alb_arn_suffix = "${module.alb.alb_arn_suffix}"
   alb_name       = "${module.alb.alb_name}"
 
+  alb_ingress_healthcheck_path = "/"
+
   # NOTE: Cognito and OIDC authentication only supported on HTTPS endpoints; here we provide `https_listener_arn` from ALB
   listener_arns       = ["${module.alb.https_listener_arn}"]
   listener_arns_count = 1
 
-  authentication_enabled = "true"
+  # Unauthenticated paths (with higher priority than the authenticated paths)
+  alb_ingress_unauthenticated_paths             = ["/events"]
+  alb_ingress_listener_unauthenticated_priority = "50"
+
+  # Authenticated paths
+  alb_ingress_authenticated_paths             = ["/*"]
+  alb_ingress_listener_authenticated_priority = "100"
 
   # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
   authentication_action = {

@@ -1,7 +1,7 @@
 variable "namespace" {
   type        = "string"
   description = "Namespace (e.g. `cp` or `cloudposse`)"
-  default     = "ex2"
+  default     = "eg"
 }
 
 variable "stage" {

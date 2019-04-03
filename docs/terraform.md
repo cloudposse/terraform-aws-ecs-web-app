@@ -3,10 +3,13 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | alb_arn_suffix | ARN suffix of the ALB for the Target Group | string | `` | no |
+| alb_ingress_authenticated_hosts | Authenticated hosts to match in Hosts header | list | `<list>` | no |
+| alb_ingress_authenticated_paths | Authenticated path pattern to match (a maximum of 1 can be defined) | list | `<list>` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks | string | `/` | no |
-| alb_ingress_hosts | Hosts to match in Hosts header, at least one of hosts or paths must be set | list | `<list>` | no |
-| alb_ingress_listener_priority | Priority of the listeners, a number between 1 - 50000 (1 is highest priority) | string | `1000` | no |
-| alb_ingress_paths | Path pattern to match (a maximum of 1 can be defined), at least one of hosts or paths must be set | list | `<list>` | no |
+| alb_ingress_listener_authenticated_priority | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | string | `300` | no |
+| alb_ingress_listener_unauthenticated_priority | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | string | `1000` | no |
+| alb_ingress_unauthenticated_hosts | Unauthenticated hosts to match in Hosts header | list | `<list>` | no |
+| alb_ingress_unauthenticated_paths | Unauthenticated path pattern to match (a maximum of 1 can be defined) | list | `<list>` | no |
 | alb_name | Name of the ALB for the Target Group | string | `` | no |
 | alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service | string | `25` | no |
 | alb_target_group_alarms_4xx_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service | string | `25` | no |
@@ -20,8 +23,7 @@
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time | string | `0.5` | no |
 | alb_target_group_arn | Pass target group down to module | string | `` | no |
 | attributes | List of attributes to add to label | list | `<list>` | no |
-| authentication_action | Authentication action to be placed in front of all other ALB listener actions to authenticate users with Cognito or OIDC. Required when `authentication_enabled=true` | map | `<map>` | no |
-| authentication_enabled | Whether to enable authentication action for ALB listener to authenticate users with Cognito or OIDC | string | `false` | no |
+| authentication_action | Authentication action to be placed in front of all other ALB listener actions to authenticate users with Cognito or OIDC. Required when `alb_ingress_authenticated_hosts` or `alb_ingress_authenticated_paths` are provided | map | `<map>` | no |
 | autoscaling_dimension | Dimension to autoscale on (valid options: cpu, memory) | string | `memory` | no |
 | autoscaling_enabled | A boolean to enable/disable Autoscaling policy for ECS Service | string | `false` | no |
 | autoscaling_max_capacity | Maximum number of running instances of a Service | string | `2` | no |

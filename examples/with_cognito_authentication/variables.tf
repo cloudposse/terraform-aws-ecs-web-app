@@ -1,7 +1,7 @@
 variable "namespace" {
   type        = "string"
   description = "Namespace (e.g. `cp` or `cloudposse`)"
-  default     = "ex2"
+  default     = "eg"
 }
 
 variable "stage" {
@@ -40,15 +40,15 @@ variable "region" {
   default     = "us-west-2"
 }
 
-variable "certificate_arn" {
-  type        = "string"
-  description = "SSL certificate ARN for ALB HTTPS endpoints"
-}
-
 variable "default_container_image" {
   type        = "string"
   description = "The default container image to use in container definition"
   default     = "nginxdemos/hello:latest"
+}
+
+variable "certificate_arn" {
+  type        = "string"
+  description = "SSL certificate ARN for ALB HTTPS endpoints"
 }
 
 variable "cognito_user_pool_arn" {
@@ -63,5 +63,5 @@ variable "cognito_user_pool_client_id" {
 
 variable "cognito_user_pool_domain" {
   type        = "string"
-  description = "Cognito User Pool domain"
+  description = "Cognito User Pool Domain"
 }

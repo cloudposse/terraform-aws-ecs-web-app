@@ -1,7 +1,7 @@
 variable "namespace" {
   type        = "string"
   description = "Namespace (e.g. `cp` or `cloudposse`)"
-  default     = "ex2"
+  default     = "eg"
 }
 
 variable "stage" {
@@ -40,6 +40,12 @@ variable "region" {
   default     = "us-west-2"
 }
 
+variable "default_container_image" {
+  type        = "string"
+  description = "The default container image to use in container definition"
+  default     = "nginxdemos/hello:latest"
+}
+
 variable "certificate_arn" {
   type        = "string"
   description = "SSL certificate ARN for ALB HTTPS endpoints"
@@ -53,10 +59,4 @@ variable "google_oidc_client_id" {
 variable "google_oidc_client_secret" {
   type        = "string"
   description = "Google OIDC Client Secret. Use this URL to create a Google OAuth 2.0 Client and obtain the Client ID and Client Secret: https://console.developers.google.com/apis/credentials"
-}
-
-variable "default_container_image" {
-  type        = "string"
-  description = "The default container image to use in container definition"
-  default     = "nginxdemos/hello:latest"
 }
