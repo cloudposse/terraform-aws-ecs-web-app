@@ -57,9 +57,9 @@ Module usage examples:
 ```
 module "default-backend-web-app" {
   source                                          = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=master"
-  name                                            = "appname"
   namespace                                       = "eg"
   stage                                           = "testing"
+  name                                            = "appname"
   vpc_id                                          = "${module.vpc.vpc_id}"
   alb_ingress_unauthenticated_listener_arns       = "${module.alb.listener_arns}"
   alb_ingress_unauthenticated_listener_arns_count = "1"
