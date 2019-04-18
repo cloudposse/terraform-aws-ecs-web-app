@@ -130,8 +130,8 @@ module "web_app" {
   alb_ingress_healthcheck_path = "/"
 
   # NOTE: Cognito and OIDC authentication only supported on HTTPS endpoints; here we provide `https_listener_arn` from ALB
-  listener_arns       = ["${module.alb.https_listener_arn}"]
-  listener_arns_count = 1
+  alb_ingress_authenticated_listener_arns       = ["${module.alb.https_listener_arn}"]
+  alb_ingress_authenticated_listener_arns_count = 1
 
   # Unauthenticated paths (with higher priority than the authenticated paths)
   alb_ingress_unauthenticated_paths             = ["/events"]
@@ -141,20 +141,11 @@ module "web_app" {
   alb_ingress_authenticated_paths             = ["/*"]
   alb_ingress_listener_authenticated_priority = "100"
 
-  # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
-  authentication_action = {
-    type = "authenticate-oidc"
-
-    authenticate_oidc = [{
-      # Use this URL to create a Google OAuth 2.0 Client and obtain the Client ID and Client Secret: https://console.developers.google.com/apis/credentials
-      client_id     = "${var.google_oidc_client_id}"
-      client_secret = "${var.google_oidc_client_secret}"
-
-      # Use this URL to get Google Auth endpoints: https://accounts.google.com/.well-known/openid-configuration
-      issuer                 = "https://accounts.google.com"
-      authorization_endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
-      token_endpoint         = "https://oauth2.googleapis.com/token"
-      user_info_endpoint     = "https://openidconnect.googleapis.com/v1/userinfo"
-    }]
-  }
+  authentication_type                        = "OIDC"
+  authentication_oidc_client_id              = "${var.google_oidc_client_id}"
+  authentication_oidc_client_secret          = "${var.google_oidc_client_secret}"
+  authentication_oidc_issuer                 = "https://accounts.google.com"
+  authentication_oidc_authorization_endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
+  authentication_oidc_token_endpoint         = "https://oauth2.googleapis.com/token"
+  authentication_oidc_user_info_endpoint     = "https://openidconnect.googleapis.com/v1/userinfo"
 }
