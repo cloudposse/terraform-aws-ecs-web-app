@@ -130,8 +130,8 @@ module "web_app" {
   alb_ingress_healthcheck_path = "/"
 
   # NOTE: Cognito and OIDC authentication only supported on HTTPS endpoints; here we provide `https_listener_arn` from ALB
-  listener_arns       = ["${module.alb.https_listener_arn}"]
-  listener_arns_count = 1
+  alb_ingress_authenticated_listener_arns       = ["${module.alb.https_listener_arn}"]
+  alb_ingress_authenticated_listener_arns_count = 1
 
   # Unauthenticated paths (with higher priority than the authenticated paths)
   alb_ingress_unauthenticated_paths             = ["/events"]
@@ -141,14 +141,8 @@ module "web_app" {
   alb_ingress_authenticated_paths             = ["/*"]
   alb_ingress_listener_authenticated_priority = "100"
 
-  # https://www.terraform.io/docs/providers/aws/r/lb_listener_rule.html
-  authentication_action = {
-    type = "authenticate-cognito"
-
-    authenticate_cognito = [{
-      user_pool_arn       = "${var.cognito_user_pool_arn}"
-      user_pool_client_id = "${var.cognito_user_pool_client_id}"
-      user_pool_domain    = "${var.cognito_user_pool_domain}"
-    }]
-  }
+  authentication_type                        = "COGNITO"
+  authentication_cognito_user_pool_arn       = "${var.cognito_user_pool_arn}"
+  authentication_cognito_user_pool_client_id = "${var.cognito_user_pool_client_id}"
+  authentication_cognito_user_pool_domain    = "${var.cognito_user_pool_domain}"
 }

@@ -4,11 +4,15 @@
 |------|-------------|:----:|:-----:|:-----:|
 | alb_arn_suffix | ARN suffix of the ALB for the Target Group | string | `` | no |
 | alb_ingress_authenticated_hosts | Authenticated hosts to match in Hosts header | list | `<list>` | no |
+| alb_ingress_authenticated_listener_arns | A list of authenticated ALB listener ARNs to attach ALB listener rules to | list | `<list>` | no |
+| alb_ingress_authenticated_listener_arns_count | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | string | `0` | no |
 | alb_ingress_authenticated_paths | Authenticated path pattern to match (a maximum of 1 can be defined) | list | `<list>` | no |
 | alb_ingress_healthcheck_path | The path of the healthcheck which the ALB checks | string | `/` | no |
 | alb_ingress_listener_authenticated_priority | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | string | `300` | no |
 | alb_ingress_listener_unauthenticated_priority | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | string | `1000` | no |
 | alb_ingress_unauthenticated_hosts | Unauthenticated hosts to match in Hosts header | list | `<list>` | no |
+| alb_ingress_unauthenticated_listener_arns | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | list | `<list>` | no |
+| alb_ingress_unauthenticated_listener_arns_count | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | string | `0` | no |
 | alb_ingress_unauthenticated_paths | Unauthenticated path pattern to match (a maximum of 1 can be defined) | list | `<list>` | no |
 | alb_name | Name of the ALB for the Target Group | string | `` | no |
 | alb_target_group_alarms_3xx_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service | string | `25` | no |
@@ -23,7 +27,16 @@
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time | string | `0.5` | no |
 | alb_target_group_arn | Pass target group down to module | string | `` | no |
 | attributes | List of attributes to add to label | list | `<list>` | no |
-| authentication_action | Authentication action to be placed in front of all other ALB listener actions to authenticate users with Cognito or OIDC. Required when `alb_ingress_authenticated_hosts` or `alb_ingress_authenticated_paths` are provided | map | `<map>` | no |
+| authentication_cognito_user_pool_arn | Cognito User Pool ARN | string | `` | no |
+| authentication_cognito_user_pool_client_id | Cognito User Pool Client ID | string | `` | no |
+| authentication_cognito_user_pool_domain | Cognito User Pool Domain. The User Pool Domain should be set to the domain prefix (`xxx`) instead of full domain (https://xxx.auth.us-west-2.amazoncognito.com) | string | `` | no |
+| authentication_oidc_authorization_endpoint | OIDC Authorization Endpoint | string | `` | no |
+| authentication_oidc_client_id | OIDC Client ID | string | `` | no |
+| authentication_oidc_client_secret | OIDC Client Secret | string | `` | no |
+| authentication_oidc_issuer | OIDC Issuer | string | `` | no |
+| authentication_oidc_token_endpoint | OIDC Token Endpoint | string | `` | no |
+| authentication_oidc_user_info_endpoint | OIDC User Info Endpoint | string | `` | no |
+| authentication_type | Authentication type. Supported values are `COGNITO`, `OIDC`, `NONE` | string | `NONE` | no |
 | autoscaling_dimension | Dimension to autoscale on (valid options: cpu, memory) | string | `memory` | no |
 | autoscaling_enabled | A boolean to enable/disable Autoscaling policy for ECS Service | string | `false` | no |
 | autoscaling_max_capacity | Maximum number of running instances of a Service | string | `2` | no |
@@ -78,8 +91,6 @@
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map | `<map>` | no |
 | host_port | The port number to bind container_port to on the host | string | `` | no |
 | launch_type | The ECS launch type (valid options: FARGATE or EC2) | string | `FARGATE` | no |
-| listener_arns | List of ALB Listener ARNs for the ECS service | list | - | yes |
-| listener_arns_count | Number of elements in list of ALB Listener ARNs for the ECS service | string | - | yes |
 | name | Name (unique identifier for app or service) | string | - | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | string | - | yes |
 | poll_source_changes | Periodically check the location of your source content and run the pipeline if changes are detected | string | `false` | no |
