@@ -556,8 +556,8 @@ variable "alb_ingress_authenticated_listener_arns_count" {
 
 variable "authentication_type" {
   type        = "string"
-  default     = "NONE"
-  description = "Authentication type. Supported values are `COGNITO`, `OIDC`, `NONE`"
+  default     = ""
+  description = "Authentication type. Supported values are `COGNITO` and `OIDC`"
 }
 
 variable "authentication_cognito_user_pool_arn" {

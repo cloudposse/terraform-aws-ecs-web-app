@@ -138,7 +138,7 @@ Available targets:
 | authentication_oidc_issuer | OIDC Issuer | string | `` | no |
 | authentication_oidc_token_endpoint | OIDC Token Endpoint | string | `` | no |
 | authentication_oidc_user_info_endpoint | OIDC User Info Endpoint | string | `` | no |
-| authentication_type | Authentication type. Supported values are `COGNITO`, `OIDC`, `NONE` | string | `NONE` | no |
+| authentication_type | Authentication type. Supported values are `COGNITO` and `OIDC` | string | `` | no |
 | autoscaling_dimension | Dimension to autoscale on (valid options: cpu, memory) | string | `memory` | no |
 | autoscaling_enabled | A boolean to enable/disable Autoscaling policy for ECS Service | string | `false` | no |
 | autoscaling_max_capacity | Maximum number of running instances of a Service | string | `2` | no |
