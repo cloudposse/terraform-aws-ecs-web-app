@@ -98,6 +98,7 @@
 | protocol | The protocol used for the port mapping. Options: `tcp` or `udp` | string | `tcp` | no |
 | repo_name | GitHub repository name of the application to be built and deployed to ECS | string | `` | no |
 | repo_owner | GitHub Organization or Username | string | `` | no |
+| secrets | The secrets for the task definition. This is a list of maps | list | `<list>` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Map of key-value pairs to use for tags | map | `<map>` | no |
 | vpc_id | The VPC ID where resources are created | string | - | yes |

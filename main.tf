@@ -65,6 +65,7 @@ module "container_definition" {
   healthcheck                  = "${var.healthcheck}"
   environment                  = "${var.environment}"
   port_mappings                = "${var.port_mappings}"
+  secrets                      = "${var.secrets}"
 
   log_options = {
     "awslogs-region"        = "${var.aws_logs_region}"

@@ -102,6 +102,12 @@ variable "environment" {
   default     = []
 }
 
+variable "secrets" {
+  type        = "list"
+  description = "The secrets for the task definition. This is a list of maps"
+  default     = []
+}
+
 variable "protocol" {
   type        = "string"
   description = "The protocol used for the port mapping. Options: `tcp` or `udp`"
