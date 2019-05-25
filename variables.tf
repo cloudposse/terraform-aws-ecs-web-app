@@ -409,6 +409,12 @@ variable "github_oauth_token" {
   default     = ""
 }
 
+variable "github_webhooks_token" {
+  type        = "string"
+  description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
+  default     = ""
+}
+
 variable "github_webhook_events" {
   type        = "list"
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
@@ -618,4 +624,9 @@ variable "authentication_oidc_user_info_endpoint" {
   type        = "string"
   description = "OIDC User Info Endpoint"
   default     = ""
+}
+
+variable "codepipeline_s3_bucket_force_destroy" {
+  description = "A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error"
+  default     = false
 }
