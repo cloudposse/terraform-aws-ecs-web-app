@@ -97,7 +97,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = "${var.codepipeline_enabled}"
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=fix-codebuild-arn"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=ref=tags/0.9.0"
   name                  = "${var.name}"
   namespace             = "${var.namespace}"
   stage                 = "${var.stage}"
