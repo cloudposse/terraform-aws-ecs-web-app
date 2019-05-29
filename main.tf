@@ -1,3 +1,14 @@
+# Pin the `aws` provider
+# https://www.terraform.io/docs/configuration/providers.html
+# Any non-beta version >= 2.12.0 and < 2.13.0, e.g. 2.12.X
+provider "aws" {
+  version = "~> 2.12.0"
+}
+
+terraform {
+  required_version = "~> 0.11.0"
+}
+
 module "default_label" {
   source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
   name       = "${var.name}"
@@ -97,7 +108,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = "${var.codepipeline_enabled}"
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.8.0"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.9.0"
   name                  = "${var.name}"
   namespace             = "${var.namespace}"
   stage                 = "${var.stage}"
