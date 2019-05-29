@@ -5,6 +5,10 @@ provider "aws" {
   version = "~> 2.12.0"
 }
 
+terraform {
+  required_version = "~> 0.11.0"
+}
+
 module "default_label" {
   source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
   name       = "${var.name}"
