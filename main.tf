@@ -1,3 +1,10 @@
+# Pin the `aws` provider
+# https://www.terraform.io/docs/configuration/providers.html
+# Any non-beta version >= 2.12.0 and < 2.13.0, e.g. 2.12.X
+provider "aws" {
+  version = "~> 2.12.0"
+}
+
 module "default_label" {
   source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.2.1"
   name       = "${var.name}"
