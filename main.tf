@@ -86,12 +86,13 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.10.0"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.14.0"
   name                              = "${var.name}"
   namespace                         = "${var.namespace}"
   stage                             = "${var.stage}"
   attributes                        = "${var.attributes}"
   alb_target_group_arn              = "${module.alb_ingress.target_group_arn}"
+  alb_security_group                = "${var.alb_security_group}"
   container_definition_json         = "${module.container_definition.json}"
   container_name                    = "${module.default_label.id}"
   desired_count                     = "${var.desired_count}"
@@ -102,7 +103,7 @@ module "ecs_alb_service_task" {
   launch_type                       = "${var.launch_type}"
   vpc_id                            = "${var.vpc_id}"
   security_group_ids                = ["${var.ecs_security_group_ids}"]
-  private_subnet_ids                = ["${var.ecs_private_subnet_ids}"]
+  subnet_ids                        = ["${var.ecs_private_subnet_ids}"]
   container_port                    = "${var.container_port}"
   tags                              = "${var.tags}"
 }

@@ -204,6 +204,11 @@ variable "alb_arn_suffix" {
   default     = ""
 }
 
+variable "alb_security_group" {
+  type        = "string"
+  description = "Security group of the ALB"
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = "string"
   description = "The path of the healthcheck which the ALB checks"
