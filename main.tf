@@ -86,7 +86,7 @@ module "container_definition" {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=fix-security-groups"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.14.0"
   name                              = "${var.name}"
   namespace                         = "${var.namespace}"
   stage                             = "${var.stage}"
