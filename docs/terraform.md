@@ -25,7 +25,6 @@
 | alb_target_group_alarms_ok_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state | list(string) | `<list>` | no |
 | alb_target_group_alarms_period | The period (in seconds) to analyze for ALB CloudWatch Alarms | number | `300` | no |
 | alb_target_group_alarms_response_time_threshold | The maximum ALB Target Group response time | number | `0.5` | no |
-| alb_target_group_arn | ALB target group ARN | string | `` | no |
 | attributes | Additional attributes (_e.g._ "1") | list(string) | `<list>` | no |
 | authentication_cognito_user_pool_arn | Cognito User Pool ARN | string | `` | no |
 | authentication_cognito_user_pool_client_id | Cognito User Pool Client ID | string | `` | no |

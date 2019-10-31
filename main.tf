@@ -23,14 +23,15 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source            = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.9.0"
-  name              = var.name
-  namespace         = var.namespace
-  stage             = var.stage
-  attributes        = var.attributes
-  vpc_id            = var.vpc_id
-  port              = var.container_port
-  health_check_path = var.alb_ingress_healthcheck_path
+  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.9.0"
+  name                         = var.name
+  namespace                    = var.namespace
+  stage                        = var.stage
+  attributes                   = var.attributes
+  vpc_id                       = var.vpc_id
+  port                         = var.container_port
+  health_check_path            = var.alb_ingress_healthcheck_path
+  default_target_group_enabled = true
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
@@ -86,7 +87,6 @@ module "ecs_alb_service_task" {
   namespace                         = var.namespace
   stage                             = var.stage
   attributes                        = var.attributes
-  alb_target_group_arn              = module.alb_ingress.target_group_arn
   alb_security_group                = var.alb_security_group
   container_definition_json         = module.container_definition.json
   container_name                    = module.default_label.id
@@ -101,6 +101,14 @@ module "ecs_alb_service_task" {
   subnet_ids                        = var.ecs_private_subnet_ids
   container_port                    = var.container_port
   tags                              = var.tags
+
+  ecs_load_balancers = [
+    {
+      container_name   = module.default_label.id
+      container_port   = var.container_port
+      elb_name         = null
+      target_group_arn = module.alb_ingress.target_group_arn
+  }]
 }
 
 module "ecs_codepipeline" {
@@ -124,7 +132,7 @@ module "ecs_codepipeline" {
   image_repo_name       = module.ecr.repository_name
   service_name          = module.ecs_alb_service_task.service_name
   ecs_cluster_name      = var.ecs_cluster_name
-  privileged_mode       = "true"
+  privileged_mode       = true
   poll_source_changes   = var.poll_source_changes
 
   webhook_enabled             = var.webhook_enabled
