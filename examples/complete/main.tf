@@ -79,14 +79,42 @@ module "ecs_web_app" {
   attributes = var.attributes
   delimiter  = var.delimiter
   tags       = var.tags
-  vpc_id     = module.vpc.vpc_id
+
+  vpc_id                            = module.vpc.vpc_id
+  container_image                   = var.container_image
+  container_cpu                     = var.container_cpu
+  container_memory                  = var.container_memory
+  container_port                    = var.container_port
+  port_mappings                     = var.port_mappings
+  desired_count                     = var.desired_count
+  host_port                         = var.host_port
+  launch_type                       = var.launch_type
+  protocol                          = var.protocol
+  log_driver                        = var.log_driver
+  badge_enabled                     = var.badge_enabled
+  healthcheck                       = var.healthcheck
+  health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  alb_ingress_healthcheck_path      = var.alb_ingress_healthcheck_path
 
   // Authentication
-  authentication_type                 = var.authentication_type
-  unauthenticated_priority            = var.alb_ingress_listener_unauthenticated_priority
-  unauthenticated_paths               = var.alb_ingress_unauthenticated_paths
-  unauthenticated_listener_arns       = [module.alb.http_listener_arn]
-  unauthenticated_listener_arns_count = 1
+  authentication_type                           = var.authentication_type
+  alb_ingress_listener_unauthenticated_priority = var.alb_ingress_listener_unauthenticated_priority
+  alb_ingress_listener_authenticated_priority   = var.alb_ingress_listener_authenticated_priority
+  alb_ingress_unauthenticated_hosts             = var.alb_ingress_unauthenticated_hosts
+  alb_ingress_authenticated_hosts               = var.alb_ingress_authenticated_hosts
+  alb_ingress_unauthenticated_paths             = var.alb_ingress_unauthenticated_paths
+  alb_ingress_authenticated_paths               = var.alb_ingress_authenticated_paths
+  unauthenticated_listener_arns                 = [module.alb.http_listener_arn]
+  unauthenticated_listener_arns_count           = 1
+  authentication_cognito_user_pool_arn          = var.authentication_cognito_user_pool_arn
+  authentication_cognito_user_pool_client_id    = var.authentication_cognito_user_pool_client_id
+  authentication_cognito_user_pool_domain       = var.authentication_cognito_user_pool_domain
+  authentication_oidc_client_id                 = var.authentication_oidc_client_id
+  authentication_oidc_client_secret             = var.authentication_oidc_client_secret
+  authentication_oidc_issuer                    = var.authentication_oidc_issuer
+  authentication_oidc_authorization_endpoint    = var.authentication_oidc_authorization_endpoint
+  authentication_oidc_token_endpoint            = var.authentication_oidc_token_endpoint
+  authentication_oidc_user_info_endpoint        = var.authentication_oidc_user_info_endpoint
 
   // AWS region for ECS and logs
   region          = var.region
@@ -96,25 +124,49 @@ module "ecs_web_app" {
   ecs_private_subnet_ids = module.subnets.private_subnet_ids
   ecs_cluster_arn        = aws_ecs_cluster.default.arn
   ecs_cluster_name       = aws_ecs_cluster.default.name
+  ecs_security_group_ids = var.ecs_security_group_ids
 
   // ALB
-  alb_arn_suffix     = module.alb.alb_arn_suffix
-  alb_security_group = module.alb.security_group_id
+  alb_arn_suffix                                  = module.alb.alb_arn_suffix
+  alb_security_group                              = module.alb.security_group_id
+  alb_ingress_unauthenticated_listener_arns       = var.alb_ingress_unauthenticated_listener_arns
+  alb_ingress_unauthenticated_listener_arns_count = var.alb_ingress_unauthenticated_listener_arns_count
+  alb_ingress_authenticated_listener_arns         = var.alb_ingress_authenticated_listener_arns
+  alb_ingress_authenticated_listener_arns_count   = var.alb_ingress_authenticated_listener_arns_count
 
   // CodePipeline
+  codepipeline_enabled                 = var.codepipeline_enabled
   github_oauth_token                   = var.github_oauth_token
   github_webhooks_token                = var.github_webhooks_token
+  github_webhook_events                = var.github_webhook_events
   repo_owner                           = var.repo_owner
   repo_name                            = var.repo_name
   branch                               = var.branch
   build_image                          = var.build_image
   build_timeout                        = var.build_timeout
+  buildspec                            = var.buildspec
   poll_source_changes                  = var.poll_source_changes
   webhook_enabled                      = var.webhook_enabled
+  webhook_target_action                = var.webhook_target_action
+  webhook_authentication               = var.webhook_authentication
+  webhook_filter_json_path             = var.webhook_filter_json_path
+  webhook_filter_match_equals          = var.webhook_filter_match_equals
   codepipeline_s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
   environment                          = var.environment
+  secrets                              = var.secrets
+
+  // Autoscaling
+  autoscaling_enabled               = var.autoscaling_enabled
+  autoscaling_dimension             = var.autoscaling_dimension
+  autoscaling_min_capacity          = var.autoscaling_min_capacity
+  autoscaling_max_capacity          = var.autoscaling_max_capacity
+  autoscaling_scale_up_adjustment   = var.autoscaling_scale_up_adjustment
+  autoscaling_scale_up_cooldown     = var.autoscaling_scale_up_cooldown
+  autoscaling_scale_down_adjustment = var.autoscaling_scale_down_adjustment
+  autoscaling_scale_down_cooldown   = var.autoscaling_scale_down_cooldown
 
   // ECS alarms
+  ecs_alarms_enabled                                    = var.ecs_alarms_enabled
   ecs_alarms_cpu_utilization_high_threshold             = var.ecs_alarms_cpu_utilization_high_threshold
   ecs_alarms_cpu_utilization_high_evaluation_periods    = var.ecs_alarms_cpu_utilization_high_evaluation_periods
   ecs_alarms_cpu_utilization_high_period                = var.ecs_alarms_cpu_utilization_high_period
@@ -137,6 +189,7 @@ module "ecs_web_app" {
   ecs_alarms_memory_utilization_low_ok_actions          = [aws_sns_topic.sns_topic.arn]
 
   // ALB and Target Group alarms
+  alb_target_group_alarms_enabled                   = var.alb_target_group_alarms_enabled
   alb_target_group_alarms_evaluation_periods        = var.alb_target_group_alarms_evaluation_periods
   alb_target_group_alarms_period                    = var.alb_target_group_alarms_period
   alb_target_group_alarms_3xx_threshold             = var.alb_target_group_alarms_3xx_threshold

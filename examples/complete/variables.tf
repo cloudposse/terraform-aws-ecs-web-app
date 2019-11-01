@@ -269,11 +269,6 @@ variable "alb_ingress_authenticated_paths" {
   description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "The VPC ID where resources are created"
-}
-
 variable "aws_logs_region" {
   type        = string
   description = "The region for the AWS Cloudwatch Logs group"
