@@ -89,7 +89,6 @@ module "ecs_web_app" {
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   port_mappings                = var.port_mappings
-  protocol                     = var.protocol
   log_driver                   = var.log_driver
   aws_logs_region              = var.region
   healthcheck                  = var.healthcheck

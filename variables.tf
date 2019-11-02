@@ -122,16 +122,17 @@ variable "secrets" {
   default     = null
 }
 
-variable "protocol" {
-  type        = string
-  description = "The protocol used for the port mapping. Options: `tcp` or `udp`"
-  default     = "tcp"
-}
-
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html
 variable "healthcheck" {
-  type        = map(string)
-  description = "A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
-  default     = {}
+  type = object({
+    command     = list(string)
+    retries     = number
+    timeout     = number
+    interval    = number
+    startPeriod = number
+  })
+  description = "A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
+  default     = null
 }
 
 variable "health_check_grace_period_seconds" {
@@ -524,8 +525,6 @@ variable "autoscaling_scale_down_cooldown" {
   default     = 300
 }
 
-# https://www.terraform.io/docs/configuration/variables.html
-# It is recommended you avoid using boolean values and use explicit strings
 variable "poll_source_changes" {
   type        = bool
   default     = false

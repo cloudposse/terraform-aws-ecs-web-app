@@ -132,16 +132,17 @@ variable "secrets" {
   default     = null
 }
 
-variable "protocol" {
-  type        = string
-  description = "The protocol used for the port mapping. Options: `tcp` or `udp`"
-  default     = "tcp"
-}
-
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_HealthCheck.html
 variable "healthcheck" {
-  type        = map(string)
-  description = "A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
-  default     = {}
+  type = object({
+    command     = list(string)
+    retries     = number
+    timeout     = number
+    interval    = number
+    startPeriod = number
+  })
+  description = "A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries)"
+  default     = null
 }
 
 variable "health_check_grace_period_seconds" {
@@ -190,35 +191,6 @@ variable "alb_target_group_alarms_evaluation_periods" {
   type        = number
   description = "The number of periods to analyze for ALB CloudWatch Alarms"
   default     = 1
-}
-
-variable "alb_target_group_alarms_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state"
-  default     = []
-}
-
-variable "alb_target_group_alarms_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state"
-  default     = []
-}
-
-variable "alb_target_group_alarms_insufficient_data_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT_DATA state from any other state"
-  default     = []
-}
-
-variable "alb_arn_suffix" {
-  type        = string
-  description = "ARN suffix of the ALB for the Target Group"
-  default     = ""
-}
-
-variable "alb_security_group" {
-  type        = string
-  description = "Security group of the ALB"
 }
 
 variable "alb_ingress_healthcheck_path" {
@@ -280,16 +252,6 @@ variable "ecs_alarms_enabled" {
   default     = false
 }
 
-variable "ecs_cluster_arn" {
-  type        = string
-  description = "The ECS Cluster ARN where ECS Service will be provisioned"
-}
-
-variable "ecs_cluster_name" {
-  type        = string
-  description = "The ECS Cluster Name to use in ECS Code Pipeline Deployment step"
-}
-
 variable "ecs_alarms_cpu_utilization_high_threshold" {
   type        = number
   description = "The maximum percentage of CPU utilization average"
@@ -306,18 +268,6 @@ variable "ecs_alarms_cpu_utilization_high_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
   default     = 300
-}
-
-variable "ecs_alarms_cpu_utilization_high_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_cpu_utilization_high_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action"
-  default     = []
 }
 
 variable "ecs_alarms_cpu_utilization_low_threshold" {
@@ -338,18 +288,6 @@ variable "ecs_alarms_cpu_utilization_low_period" {
   default     = 300
 }
 
-variable "ecs_alarms_cpu_utilization_low_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_cpu_utilization_low_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low OK action"
-  default     = []
-}
-
 variable "ecs_alarms_memory_utilization_high_threshold" {
   type        = number
   description = "The maximum percentage of Memory utilization average"
@@ -366,18 +304,6 @@ variable "ecs_alarms_memory_utilization_high_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
   default     = 300
-}
-
-variable "ecs_alarms_memory_utilization_high_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_memory_utilization_high_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High OK action"
-  default     = []
 }
 
 variable "ecs_alarms_memory_utilization_low_threshold" {
@@ -398,27 +324,10 @@ variable "ecs_alarms_memory_utilization_low_period" {
   default     = 300
 }
 
-variable "ecs_alarms_memory_utilization_low_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_memory_utilization_low_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action"
-  default     = []
-}
-
 variable "ecs_security_group_ids" {
   type        = list(string)
   description = "Additional Security Group IDs to allow into ECS Service"
   default     = []
-}
-
-variable "ecs_private_subnet_ids" {
-  type        = list(string)
-  description = "List of Private Subnet IDs to provision ECS Service onto"
 }
 
 variable "github_oauth_token" {
@@ -529,8 +438,6 @@ variable "autoscaling_scale_down_cooldown" {
   default     = 300
 }
 
-# https://www.terraform.io/docs/configuration/variables.html
-# It is recommended you avoid using boolean values and use explicit strings
 variable "poll_source_changes" {
   type        = bool
   default     = false
