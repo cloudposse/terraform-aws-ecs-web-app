@@ -108,12 +108,6 @@ variable "desired_count" {
   default     = 1
 }
 
-variable "host_port" {
-  type        = number
-  description = "The port number to bind container_port to on the host"
-  default     = 80
-}
-
 variable "launch_type" {
   type        = string
   description = "The ECS launch type (valid options: FARGATE or EC2)"
@@ -571,30 +565,6 @@ variable "webhook_filter_match_equals" {
   type        = string
   description = "The value to match on (e.g. refs/heads/{Branch})"
   default     = "refs/heads/{Branch}"
-}
-
-variable "alb_ingress_unauthenticated_listener_arns" {
-  type        = list(string)
-  description = "A list of unauthenticated ALB listener ARNs to attach ALB listener rules to"
-  default     = []
-}
-
-variable "alb_ingress_unauthenticated_listener_arns_count" {
-  type        = number
-  description = "The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
-}
-
-variable "alb_ingress_authenticated_listener_arns" {
-  type        = list(string)
-  description = "A list of authenticated ALB listener ARNs to attach ALB listener rules to"
-  default     = []
-}
-
-variable "alb_ingress_authenticated_listener_arns_count" {
-  type        = number
-  description = "The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
 }
 
 variable "authentication_type" {

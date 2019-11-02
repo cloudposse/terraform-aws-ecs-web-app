@@ -98,12 +98,6 @@ variable "desired_count" {
   default     = 1
 }
 
-variable "host_port" {
-  type        = number
-  description = "The port number to bind container_port to on the host"
-  default     = 80
-}
-
 variable "launch_type" {
   type        = string
   description = "The ECS launch type (valid options: FARGATE or EC2)"

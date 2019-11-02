@@ -56,7 +56,7 @@ module "alb" {
   access_logs_region                      = var.region
   cross_zone_load_balancing_enabled       = true
   http2_enabled                           = true
-  deletion_protection_enabled             = true
+  deletion_protection_enabled             = false
   tags                                    = var.tags
 }
 
@@ -80,21 +80,19 @@ module "ecs_web_app" {
   delimiter  = var.delimiter
   tags       = var.tags
 
-  vpc_id                            = module.vpc.vpc_id
-  container_image                   = var.container_image
-  container_cpu                     = var.container_cpu
-  container_memory                  = var.container_memory
-  container_port                    = var.container_port
-  port_mappings                     = var.port_mappings
-  desired_count                     = var.desired_count
-  host_port                         = var.host_port
-  launch_type                       = var.launch_type
-  protocol                          = var.protocol
-  log_driver                        = var.log_driver
-  badge_enabled                     = var.badge_enabled
-  healthcheck                       = var.healthcheck
-  health_check_grace_period_seconds = var.health_check_grace_period_seconds
-  alb_ingress_healthcheck_path      = var.alb_ingress_healthcheck_path
+  region = var.region
+  vpc_id = module.vpc.vpc_id
+
+  // Container
+  container_image              = var.container_image
+  container_cpu                = var.container_cpu
+  container_memory             = var.container_memory
+  container_memory_reservation = var.container_memory_reservation
+  port_mappings                = var.port_mappings
+  protocol                     = var.protocol
+  log_driver                   = var.log_driver
+  aws_logs_region              = var.region
+  healthcheck                  = var.healthcheck
 
   // Authentication
   authentication_type                           = var.authentication_type
@@ -104,8 +102,6 @@ module "ecs_web_app" {
   alb_ingress_authenticated_hosts               = var.alb_ingress_authenticated_hosts
   alb_ingress_unauthenticated_paths             = var.alb_ingress_unauthenticated_paths
   alb_ingress_authenticated_paths               = var.alb_ingress_authenticated_paths
-  unauthenticated_listener_arns                 = [module.alb.http_listener_arn]
-  unauthenticated_listener_arns_count           = 1
   authentication_cognito_user_pool_arn          = var.authentication_cognito_user_pool_arn
   authentication_cognito_user_pool_client_id    = var.authentication_cognito_user_pool_client_id
   authentication_cognito_user_pool_domain       = var.authentication_cognito_user_pool_domain
@@ -116,26 +112,26 @@ module "ecs_web_app" {
   authentication_oidc_token_endpoint            = var.authentication_oidc_token_endpoint
   authentication_oidc_user_info_endpoint        = var.authentication_oidc_user_info_endpoint
 
-  // AWS region for ECS and logs
-  region          = var.region
-  aws_logs_region = var.region
-
   // ECS
-  ecs_private_subnet_ids = module.subnets.private_subnet_ids
-  ecs_cluster_arn        = aws_ecs_cluster.default.arn
-  ecs_cluster_name       = aws_ecs_cluster.default.name
-  ecs_security_group_ids = var.ecs_security_group_ids
+  ecs_private_subnet_ids            = module.subnets.private_subnet_ids
+  ecs_cluster_arn                   = aws_ecs_cluster.default.arn
+  ecs_cluster_name                  = aws_ecs_cluster.default.name
+  ecs_security_group_ids            = var.ecs_security_group_ids
+  health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  desired_count                     = var.desired_count
+  launch_type                       = var.launch_type
+  container_port                    = var.container_port
 
   // ALB
   alb_arn_suffix                                  = module.alb.alb_arn_suffix
   alb_security_group                              = module.alb.security_group_id
-  alb_ingress_unauthenticated_listener_arns       = var.alb_ingress_unauthenticated_listener_arns
-  alb_ingress_unauthenticated_listener_arns_count = var.alb_ingress_unauthenticated_listener_arns_count
-  alb_ingress_authenticated_listener_arns         = var.alb_ingress_authenticated_listener_arns
-  alb_ingress_authenticated_listener_arns_count   = var.alb_ingress_authenticated_listener_arns_count
+  alb_ingress_unauthenticated_listener_arns       = [module.alb.http_listener_arn]
+  alb_ingress_unauthenticated_listener_arns_count = 1
+  alb_ingress_healthcheck_path                    = var.alb_ingress_healthcheck_path
 
   // CodePipeline
   codepipeline_enabled                 = var.codepipeline_enabled
+  badge_enabled                        = var.badge_enabled
   github_oauth_token                   = var.github_oauth_token
   github_webhooks_token                = var.github_webhooks_token
   github_webhook_events                = var.github_webhook_events

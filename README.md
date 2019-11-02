@@ -195,7 +195,6 @@ Available targets:
 | github_webhooks_token | GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable | string | `` | no |
 | health_check_grace_period_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200. Only valid for services configured to use load balancers | number | `0` | no |
 | healthcheck | A map containing command (string), interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy, and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | map(string) | `<map>` | no |
-| host_port | The port number to bind container_port to on the host | number | `80` | no |
 | launch_type | The ECS launch type (valid options: FARGATE or EC2) | string | `FARGATE` | no |
 | log_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | string | `awslogs` | no |
 | name | Name of the application | string | - | yes |
