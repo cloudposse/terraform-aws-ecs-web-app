@@ -115,7 +115,7 @@
 |------|-------------|
 | alb_ingress_target_group_arn | ALB Target Group ARN |
 | alb_ingress_target_group_arn_suffix | ALB Target Group ARN suffix |
-| alb_ingressz_target_group_name | ALB Target Group name |
+| alb_ingress_target_group_name | ALB Target Group name |
 | codebuild_badge_url | The URL of the build badge when badge_enabled is enabled |
 | codebuild_cache_bucket_arn | CodeBuild cache S3 bucket ARN |
 | codebuild_cache_bucket_name | CodeBuild cache S3 bucket name |

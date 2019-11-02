@@ -88,7 +88,7 @@ module "ecs_web_app" {
   container_cpu                = var.container_cpu
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
-  port_mappings                = var.port_mappings
+  port_mappings                = var.container_port_mappings
   log_driver                   = var.log_driver
   aws_logs_region              = var.region
   healthcheck                  = var.healthcheck
@@ -130,16 +130,16 @@ module "ecs_web_app" {
 
   // CodePipeline
   codepipeline_enabled                 = var.codepipeline_enabled
-  badge_enabled                        = var.badge_enabled
-  github_oauth_token                   = var.github_oauth_token
-  github_webhooks_token                = var.github_webhooks_token
-  github_webhook_events                = var.github_webhook_events
-  repo_owner                           = var.repo_owner
-  repo_name                            = var.repo_name
-  branch                               = var.branch
-  build_image                          = var.build_image
-  build_timeout                        = var.build_timeout
-  buildspec                            = var.buildspec
+  badge_enabled                        = var.codepipeline_badge_enabled
+  github_oauth_token                   = var.codepipeline_github_oauth_token
+  github_webhooks_token                = var.codepipeline_github_webhooks_token
+  github_webhook_events                = var.codepipeline_github_webhook_events
+  repo_owner                           = var.codepipeline_repo_owner
+  repo_name                            = var.codepipeline_repo_name
+  branch                               = var.codepipeline_branch
+  build_image                          = var.codepipeline_build_image
+  build_timeout                        = var.codepipeline_build_timeout
+  buildspec                            = var.codepipeline_buildspec
   poll_source_changes                  = var.poll_source_changes
   webhook_enabled                      = var.webhook_enabled
   webhook_target_action                = var.webhook_target_action

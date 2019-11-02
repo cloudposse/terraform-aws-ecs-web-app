@@ -84,7 +84,7 @@ variable "container_port" {
   default     = 80
 }
 
-variable "port_mappings" {
+variable "container_port_mappings" {
   type = list(object({
     containerPort = number
     hostPort      = number
@@ -330,61 +330,61 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
-variable "github_oauth_token" {
+variable "codepipeline_github_oauth_token" {
   type        = string
   description = "GitHub Oauth Token with permissions to access private repositories"
   default     = ""
 }
 
-variable "github_webhooks_token" {
+variable "codepipeline_github_webhooks_token" {
   type        = string
   description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
 }
 
-variable "github_webhook_events" {
+variable "codepipeline_github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
   default     = ["push"]
 }
 
-variable "repo_owner" {
+variable "codepipeline_repo_owner" {
   type        = string
   description = "GitHub Organization or Username"
   default     = ""
 }
 
-variable "repo_name" {
+variable "codepipeline_repo_name" {
   type        = string
   description = "GitHub repository name of the application to be built and deployed to ECS"
   default     = ""
 }
 
-variable "branch" {
+variable "codepipeline_branch" {
   type        = string
   description = "Branch of the GitHub repository, e.g. `master`"
   default     = ""
 }
 
-variable "badge_enabled" {
+variable "codepipeline_badge_enabled" {
   type        = bool
   default     = false
   description = "Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled"
 }
 
-variable "build_image" {
+variable "codepipeline_build_image" {
   type        = string
   default     = "aws/codebuild/docker:17.09.0"
   description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0`"
 }
 
-variable "build_timeout" {
+variable "codepipeline_build_timeout" {
   type        = number
   default     = 60
   description = "How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed"
 }
 
-variable "buildspec" {
+variable "codepipeline_buildspec" {
   type        = string
   description = "Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
   default     = ""

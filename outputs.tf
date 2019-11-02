@@ -13,7 +13,7 @@ output "ecr_repository_name" {
   description = "Registry name"
 }
 
-output "alb_ingressz_target_group_name" {
+output "alb_ingress_target_group_name" {
   description = "ALB Target Group name"
   value       = module.alb_ingress.target_group_name
 }

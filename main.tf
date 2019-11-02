@@ -89,7 +89,6 @@ module "ecs_alb_service_task" {
   attributes                        = var.attributes
   alb_security_group                = var.alb_security_group
   container_definition_json         = module.container_definition.json
-  container_name                    = module.default_label.id
   desired_count                     = var.desired_count
   health_check_grace_period_seconds = var.health_check_grace_period_seconds
   task_cpu                          = var.container_cpu

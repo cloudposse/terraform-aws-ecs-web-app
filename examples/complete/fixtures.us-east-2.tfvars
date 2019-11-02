@@ -10,8 +10,6 @@ name = "ecs-web-app"
 
 vpc_cidr_block = "172.16.0.0/16"
 
-codepipeline_enabled = true
-
 container_image = "cloudposse/default-backend"
 
 container_cpu = 256
@@ -22,7 +20,7 @@ container_memory_reservation = 128
 
 container_port = 80
 
-port_mappings = [
+container_port_mappings = [
   {
     containerPort = 80
     hostPort      = 80
@@ -84,24 +82,6 @@ ecs_alarms_memory_utilization_low_evaluation_periods = 1
 
 ecs_alarms_memory_utilization_low_period = 300
 
-github_oauth_token = "test"
-
-github_webhooks_token = "test"
-
-github_webhook_events = ["push"]
-
-repo_owner = "cloudposse"
-
-repo_name = "geodesic"
-
-branch = "master"
-
-badge_enabled = false
-
-build_image = "aws/codebuild/docker:17.09.0"
-
-build_timeout = 20
-
 autoscaling_enabled = true
 
 autoscaling_dimension = "memory"
@@ -130,4 +110,24 @@ webhook_filter_match_equals = "refs/heads/{Branch}"
 
 authentication_type = ""
 
+codepipeline_enabled = true
+
 codepipeline_s3_bucket_force_destroy = true
+
+codepipeline_github_oauth_token = "test"
+
+codepipeline_github_webhooks_token = "test"
+
+codepipeline_github_webhook_events = ["push"]
+
+codepipeline_repo_owner = "cloudposse"
+
+codepipeline_repo_name = "default-backend"
+
+codepipeline_branch = "master"
+
+codepipeline_badge_enabled = false
+
+codepipeline_build_image = "aws/codebuild/docker:17.09.0"
+
+codepipeline_build_timeout = 20
