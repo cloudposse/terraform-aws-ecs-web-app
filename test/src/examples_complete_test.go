@@ -31,7 +31,7 @@ func TestExamplesComplete(t *testing.T) {
 	terraformOptions.Targets = nil
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
-	terraform.InitAndApply(t, terraformOptions)
+	terraform.Apply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
 	vpcCidr := terraform.Output(t, terraformOptions, "vpc_cidr")
@@ -175,7 +175,7 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	httpcodeTarget5xxCountCloudwatchMetricAlarmId := terraform.Output(t, terraformOptions, "httpcode_target_5xx_count_cloudwatch_metric_alarm_id")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-exec", httpcodeTarget5xxCountCloudwatchMetricAlarmId)
+	assert.Equal(t, "eg-test-ecs-web-app-5xx-count-high", httpcodeTarget5xxCountCloudwatchMetricAlarmId)
 
 	// Run `terraform output` to get the value of an output variable
 	targetResponseTimeAverageCloudwatchMetricAlarmId := terraform.Output(t, terraformOptions, "target_response_time_average_cloudwatch_metric_alarm_id")
