@@ -3,6 +3,16 @@ variable "region" {
   description = "AWS Region for S3 bucket"
 }
 
+variable "availability_zones" {
+  type        = list(string)
+  description = "List of availability zones"
+}
+
+variable "vpc_cidr_block" {
+  type        = string
+  description = "VPC CIDR block"
+}
+
 variable "namespace" {
   type        = string
   description = "Namespace (e.g. `eg` or `cp`)"
@@ -74,7 +84,7 @@ variable "container_port" {
   default     = 80
 }
 
-variable "port_mappings" {
+variable "container_port_mappings" {
   type = list(object({
     containerPort = number
     hostPort      = number
@@ -183,35 +193,6 @@ variable "alb_target_group_alarms_evaluation_periods" {
   default     = 1
 }
 
-variable "alb_target_group_alarms_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state"
-  default     = []
-}
-
-variable "alb_target_group_alarms_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state"
-  default     = []
-}
-
-variable "alb_target_group_alarms_insufficient_data_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT_DATA state from any other state"
-  default     = []
-}
-
-variable "alb_arn_suffix" {
-  type        = string
-  description = "ARN suffix of the ALB for the Target Group"
-  default     = ""
-}
-
-variable "alb_security_group" {
-  type        = string
-  description = "Security group of the ALB"
-}
-
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
@@ -254,11 +235,6 @@ variable "alb_ingress_authenticated_paths" {
   description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "The VPC ID where resources are created"
-}
-
 variable "aws_logs_region" {
   type        = string
   description = "The region for the AWS Cloudwatch Logs group"
@@ -274,16 +250,6 @@ variable "ecs_alarms_enabled" {
   type        = bool
   description = "A boolean to enable/disable CloudWatch Alarms for ECS Service metrics"
   default     = false
-}
-
-variable "ecs_cluster_arn" {
-  type        = string
-  description = "The ECS Cluster ARN where ECS Service will be provisioned"
-}
-
-variable "ecs_cluster_name" {
-  type        = string
-  description = "The ECS Cluster Name to use in ECS Code Pipeline Deployment step"
 }
 
 variable "ecs_alarms_cpu_utilization_high_threshold" {
@@ -304,18 +270,6 @@ variable "ecs_alarms_cpu_utilization_high_period" {
   default     = 300
 }
 
-variable "ecs_alarms_cpu_utilization_high_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_cpu_utilization_high_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action"
-  default     = []
-}
-
 variable "ecs_alarms_cpu_utilization_low_threshold" {
   type        = number
   description = "The minimum percentage of CPU utilization average"
@@ -332,18 +286,6 @@ variable "ecs_alarms_cpu_utilization_low_period" {
   type        = number
   description = "Duration in seconds to evaluate for the alarm"
   default     = 300
-}
-
-variable "ecs_alarms_cpu_utilization_low_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_cpu_utilization_low_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low OK action"
-  default     = []
 }
 
 variable "ecs_alarms_memory_utilization_high_threshold" {
@@ -364,18 +306,6 @@ variable "ecs_alarms_memory_utilization_high_period" {
   default     = 300
 }
 
-variable "ecs_alarms_memory_utilization_high_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_memory_utilization_high_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High OK action"
-  default     = []
-}
-
 variable "ecs_alarms_memory_utilization_low_threshold" {
   type        = number
   description = "The minimum percentage of Memory utilization average"
@@ -394,84 +324,67 @@ variable "ecs_alarms_memory_utilization_low_period" {
   default     = 300
 }
 
-variable "ecs_alarms_memory_utilization_low_alarm_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low Alarm action"
-  default     = []
-}
-
-variable "ecs_alarms_memory_utilization_low_ok_actions" {
-  type        = list(string)
-  description = "A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action"
-  default     = []
-}
-
 variable "ecs_security_group_ids" {
   type        = list(string)
   description = "Additional Security Group IDs to allow into ECS Service"
   default     = []
 }
 
-variable "ecs_private_subnet_ids" {
-  type        = list(string)
-  description = "List of Private Subnet IDs to provision ECS Service onto"
-}
-
-variable "github_oauth_token" {
+variable "codepipeline_github_oauth_token" {
   type        = string
   description = "GitHub Oauth Token with permissions to access private repositories"
   default     = ""
 }
 
-variable "github_webhooks_token" {
+variable "codepipeline_github_webhooks_token" {
   type        = string
   description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
 }
 
-variable "github_webhook_events" {
+variable "codepipeline_github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
   default     = ["push"]
 }
 
-variable "repo_owner" {
+variable "codepipeline_repo_owner" {
   type        = string
   description = "GitHub Organization or Username"
   default     = ""
 }
 
-variable "repo_name" {
+variable "codepipeline_repo_name" {
   type        = string
   description = "GitHub repository name of the application to be built and deployed to ECS"
   default     = ""
 }
 
-variable "branch" {
+variable "codepipeline_branch" {
   type        = string
   description = "Branch of the GitHub repository, e.g. `master`"
   default     = ""
 }
 
-variable "badge_enabled" {
+variable "codepipeline_badge_enabled" {
   type        = bool
   default     = false
   description = "Generates a publicly-accessible URL for the projects build badge. Available as badge_url attribute when enabled"
 }
 
-variable "build_image" {
+variable "codepipeline_build_image" {
   type        = string
   default     = "aws/codebuild/docker:17.09.0"
   description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0`"
 }
 
-variable "build_timeout" {
+variable "codepipeline_build_timeout" {
   type        = number
   default     = 60
   description = "How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed"
 }
 
-variable "buildspec" {
+variable "codepipeline_buildspec" {
   type        = string
   description = "Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
   default     = ""
@@ -559,30 +472,6 @@ variable "webhook_filter_match_equals" {
   type        = string
   description = "The value to match on (e.g. refs/heads/{Branch})"
   default     = "refs/heads/{Branch}"
-}
-
-variable "alb_ingress_unauthenticated_listener_arns" {
-  type        = list(string)
-  description = "A list of unauthenticated ALB listener ARNs to attach ALB listener rules to"
-  default     = []
-}
-
-variable "alb_ingress_unauthenticated_listener_arns_count" {
-  type        = number
-  description = "The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
-}
-
-variable "alb_ingress_authenticated_listener_arns" {
-  type        = list(string)
-  description = "A list of authenticated ALB listener ARNs to attach ALB listener rules to"
-  default     = []
-}
-
-variable "alb_ingress_authenticated_listener_arns_count" {
-  type        = number
-  description = "The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
 }
 
 variable "authentication_type" {

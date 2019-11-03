@@ -18,9 +18,9 @@ github_repo: cloudposse/terraform-aws-ecs-web-app
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-aws-ecs-web-app.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-aws-ecs-web-app"
+  - name: "Codefresh Build Status"
+    image: "https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-ecs-web-app?type=cf-1"
+    url: "https://g.codefresh.io/public/accounts/cloudposse/pipelines/5dbb22a15c2e97b3b73ab484"
   - name: "Latest Release"
     image: "https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg"
     url: "https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"
@@ -70,30 +70,33 @@ description: |-
 
 # How to use this project
 usage: |-
-  Module usage examples:
+  For a complete example, see [examples/complete](examples/complete).
 
-  - [without authentication](examples/without_authentication) - complete example without authentication
-  - [with Google OIDC authentication](examples/with_google_oidc_authentication) - complete example with Google OIDC authentication
-  - [with Cognito authentication](examples/with_cognito_authentication) - complete example with Cognito authentication
+  For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest) (which test and deploy the example on AWS), see [test](test).
 
+  Other examples:
+
+  - [without authentication](examples/without_authentication) - without authentication
+  - [with Google OIDC authentication](examples/with_google_oidc_authentication) - with Google OIDC authentication
+  - [with Cognito authentication](examples/with_cognito_authentication) - with Cognito authentication
 
   ```
-  module "default-backend-web-app" {
+  module "default_backend_web_app" {
     source                                          = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=master"
     namespace                                       = "eg"
     stage                                           = "testing"
     name                                            = "appname"
-    vpc_id                                          = "${module.vpc.vpc_id}"
-    alb_ingress_unauthenticated_listener_arns       = "${module.alb.listener_arns}"
-    alb_ingress_unauthenticated_listener_arns_count = "1"
-    aws_logs_region                                 = "us-west-2"
-    ecs_cluster_arn                                 = "${aws_ecs_cluster.default.arn}"
-    ecs_cluster_name                                = "${aws_ecs_cluster.default.name}"
-    ecs_security_group_ids                          = ["${module.vpc.vpc_default_security_group_id}"]
-    ecs_private_subnet_ids                          = ["${module.subnets.private_subnet_ids}"]
+    vpc_id                                          = module.vpc.vpc_id
+    alb_ingress_unauthenticated_listener_arns       = module.alb.listener_arns
+    alb_ingress_unauthenticated_listener_arns_count = 1
+    aws_logs_region                                 = "us-east-2"
+    ecs_cluster_arn                                 = aws_ecs_cluster.default.arn
+    ecs_cluster_name                                = aws_ecs_cluster.default.name
+    ecs_security_group_ids                          = [module.vpc.vpc_default_security_group_id]
+    ecs_private_subnet_ids                          = module.subnets.private_subnet_ids
     alb_ingress_healthcheck_path                    = "/healthz"
     alb_ingress_unauthenticated_paths               = ["/*"]
-    codepipeline_enabled                            = "false"
+    codepipeline_enabled                            = false
 
     environment = [
       {
