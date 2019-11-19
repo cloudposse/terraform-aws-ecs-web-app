@@ -110,13 +110,12 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = "${var.codepipeline_enabled}"
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.9.0"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=0.11/extract-provider"
   name                  = "${var.name}"
   namespace             = "${var.namespace}"
   stage                 = "${var.stage}"
   attributes            = "${var.attributes}"
   github_oauth_token    = "${var.github_oauth_token}"
-  github_webhooks_token = "${var.github_webhooks_token}"
   github_webhook_events = "${var.github_webhook_events}"
   repo_owner            = "${var.repo_owner}"
   repo_name             = "${var.repo_name}"
