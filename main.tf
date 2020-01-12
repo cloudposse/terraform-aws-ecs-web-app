@@ -81,13 +81,30 @@ module "container_definition" {
   }
 }
 
+locals {
+    alb = {
+      container_name   = module.default_label.id
+      container_port   = var.container_port
+      elb_name         = null
+      target_group_arn = module.alb_ingress.target_group_arn
+    }
+    nlb = {
+      container_name   = module.default_label.id
+      container_port   = var.nlb_container_port
+      elb_name         = null
+      target_group_arn = var.nlb_ingress_target_group_arn
+    }
+    load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
+}
+
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.17.0"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.19.0"
   name                              = var.name
   namespace                         = var.namespace
   stage                             = var.stage
   attributes                        = var.attributes
   alb_security_group                = var.alb_security_group
+  use_alb_security_group            = var.use_alb_security_group
   container_definition_json         = module.container_definition.json
   desired_count                     = var.desired_count
   health_check_grace_period_seconds = var.health_check_grace_period_seconds
@@ -100,14 +117,7 @@ module "ecs_alb_service_task" {
   subnet_ids                        = var.ecs_private_subnet_ids
   container_port                    = var.container_port
   tags                              = var.tags
-
-  ecs_load_balancers = [
-    {
-      container_name   = module.default_label.id
-      container_port   = var.container_port
-      elb_name         = null
-      target_group_arn = module.alb_ingress.target_group_arn
-  }]
+  ecs_load_balancers                = local.load_balancers
 }
 
 module "ecs_codepipeline" {

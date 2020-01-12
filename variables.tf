@@ -212,6 +212,12 @@ variable "alb_security_group" {
   description = "Security group of the ALB"
 }
 
+variable "use_alb_security_group" {
+  type        = bool
+  description = "A boolean to enable adding an ALB security group rule for the service task"
+  default     = false
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
@@ -252,6 +258,12 @@ variable "alb_ingress_authenticated_paths" {
   type        = list(string)
   default     = []
   description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
+}
+
+variable "nlb_ingress_target_group_arn" {
+  type        = string
+  description = "Target group ARN of the NLB ingress"
+  default     = ""
 }
 
 variable "vpc_id" {
