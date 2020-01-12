@@ -94,6 +94,7 @@
 | log_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | string | `awslogs` | no |
 | name | Name of the application | string | - | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | string | `` | no |
+| nlb_ingress_target_group_arn | Target group ARN of the NLB ingress | string | `` | no |
 | poll_source_changes | Periodically check the location of your source content and run the pipeline if changes are detected | bool | `false` | no |
 | port_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | object | `<list>` | no |
 | region | AWS Region for S3 bucket | string | - | yes |
@@ -102,6 +103,7 @@
 | secrets | The secrets to pass to the container. This is a list of maps | object | `null` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | `` | no |
 | tags | Additional tags (_e.g._ { BusinessUnit : ABC }) | map(string) | `<map>` | no |
+| use_alb_security_group | A boolean to enable adding an ALB security group rule for the service task | bool | `false` | no |
 | vpc_id | The VPC ID where resources are created | string | - | yes |
 | webhook_authentication | The type of authentication to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED | string | `GITHUB_HMAC` | no |
 | webhook_enabled | Set to false to prevent the module from creating any webhook resources | bool | `true` | no |
