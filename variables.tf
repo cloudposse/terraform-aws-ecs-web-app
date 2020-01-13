@@ -74,6 +74,12 @@ variable "container_port" {
   default     = 80
 }
 
+variable "nlb_container_port" {
+  type        = number
+  description = "The port number on the container bound to assigned NLB host_port"
+  default     = 80
+}
+
 variable "port_mappings" {
   type = list(object({
     containerPort = number
