@@ -238,6 +238,7 @@ Available targets:
 | log_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | string | `awslogs` | no |
 | name | Name of the application | string | - | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | string | `` | no |
+| nlb_container_port | The port number on the container bound to assigned NLB host_port | number | `80` | no |
 | nlb_ingress_target_group_arn | Target group ARN of the NLB ingress | string | `` | no |
 | poll_source_changes | Periodically check the location of your source content and run the pipeline if changes are detected | bool | `false` | no |
 | port_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | object | `<list>` | no |

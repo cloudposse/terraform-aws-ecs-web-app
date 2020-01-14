@@ -82,19 +82,19 @@ module "container_definition" {
 }
 
 locals {
-    alb = {
-      container_name   = module.default_label.id
-      container_port   = var.container_port
-      elb_name         = null
-      target_group_arn = module.alb_ingress.target_group_arn
-    }
-    nlb = {
-      container_name   = module.default_label.id
-      container_port   = var.nlb_container_port
-      elb_name         = null
-      target_group_arn = var.nlb_ingress_target_group_arn
-    }
-    load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
+  alb = {
+    container_name   = module.default_label.id
+    container_port   = var.container_port
+    elb_name         = null
+    target_group_arn = module.alb_ingress.target_group_arn
+  }
+  nlb = {
+    container_name   = module.default_label.id
+    container_port   = var.nlb_container_port
+    elb_name         = null
+    target_group_arn = var.nlb_ingress_target_group_arn
+  }
+  load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
 }
 
 module "ecs_alb_service_task" {
