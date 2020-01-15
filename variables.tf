@@ -62,6 +62,30 @@ variable "container_memory" {
   default     = 512
 }
 
+variable "task_cpu" {
+  type        = number
+  description = "The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  default     = null
+}
+
+variable "task_memory" {
+  type        = number
+  description = "The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
+  default     = null
+}
+
+variable "ulimits" {
+  type = list(object({
+    name      = string
+    softLimit = number
+    hardLimit = number
+  }))
+
+  description = "The ulimits to configure for the container. This is a list of maps. Each map should contain \"name\", \"softLimit\" and \"hardLimit\""
+
+  default = []
+}
+
 variable "container_memory_reservation" {
   type        = number
   description = "The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than `container_memory` if set"
@@ -110,12 +134,50 @@ variable "launch_type" {
   default     = "FARGATE"
 }
 
+variable "volumes" {
+  type = list(object({
+    host_path = string
+    name      = string
+    docker_volume_configuration = list(object({
+      autoprovision = bool
+      driver        = string
+      driver_opts   = map(string)
+      labels        = map(string)
+      scope         = string
+    }))
+  }))
+  description = "Task volume definitions as list of configuration objects"
+  default     = []
+}
+
+variable "mount_points" {
+  type = list(object({
+    containerPath = string
+    sourceVolume  = string
+  }))
+
+  description = "Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`"
+  default     = null
+}
+
 variable "environment" {
   type = list(object({
     name  = string
     value = string
   }))
   description = "The environment variables to pass to the container. This is a list of maps"
+  default     = null
+}
+
+variable "entrypoint" {
+  type        = list(string)
+  description = "The entry point that is passed to the container"
+  default     = null
+}
+
+variable "command" {
+  type        = list(string)
+  description = "The command that is passed to the container"
   default     = null
 }
 
@@ -667,4 +729,13 @@ variable "codepipeline_s3_bucket_force_destroy" {
   type        = bool
   description = "A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error"
   default     = false
+}
+
+variable "init_containers" {
+  type = list(object({
+    container_definition = any
+    condition            = string
+  }))
+  description = "A list of additional init containers to start. The map contains the container_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY."
+  default     = []
 }
