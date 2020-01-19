@@ -242,6 +242,7 @@ Available targets:
 | mount_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | object | `null` | no |
 | name | Name of the application | string | - | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | string | `` | no |
+| nlb_cidr_blocks | A list of CIDR blocks to add to the ingress rule for the NLB container port | list(string) | `<list>` | no |
 | nlb_container_port | The port number on the container bound to assigned NLB host_port | number | `80` | no |
 | nlb_ingress_target_group_arn | Target group ARN of the NLB ingress | string | `` | no |
 | poll_source_changes | Periodically check the location of your source content and run the pipeline if changes are detected | bool | `false` | no |
@@ -256,6 +257,7 @@ Available targets:
 | task_memory | The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | number | `null` | no |
 | ulimits | The ulimits to configure for the container. This is a list of maps. Each map should contain "name", "softLimit" and "hardLimit" | object | `<list>` | no |
 | use_alb_security_group | A boolean to enable adding an ALB security group rule for the service task | bool | `false` | no |
+| use_nlb_cidr_blocks | A flag to enable/disable adding the NLB ingress rule to the security group | bool | `false` | no |
 | volumes | Task volume definitions as list of configuration objects | object | `<list>` | no |
 | vpc_id | The VPC ID where resources are created | string | - | yes |
 | webhook_authentication | The type of authentication to use. One of IP, GITHUB_HMAC, or UNAUTHENTICATED | string | `GITHUB_HMAC` | no |
