@@ -356,6 +356,12 @@ variable "aws_logs_region" {
   description = "The region for the AWS Cloudwatch Logs group"
 }
 
+variable "log_retention_in_days" {
+  type        = number
+  description = "The number of days to retain logs for the log group"
+  default     = null
+}
+
 variable "log_driver" {
   type        = string
   description = "The log driver to use for the container. If using Fargate launch type, only supported value is awslogs"
