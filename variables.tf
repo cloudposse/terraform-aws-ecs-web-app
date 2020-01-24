@@ -286,6 +286,18 @@ variable "use_alb_security_group" {
   default     = false
 }
 
+variable "use_nlb_cidr_blocks" {
+  type        = bool
+  description = "A flag to enable/disable adding the NLB ingress rule to the security group"
+  default     = false
+}
+
+variable "nlb_cidr_blocks" {
+  type        = list(string)
+  description = "A list of CIDR blocks to add to the ingress rule for the NLB container port"
+  default     = []
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
