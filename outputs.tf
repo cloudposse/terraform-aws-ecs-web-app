@@ -98,6 +98,16 @@ output "ecs_task_definition_revision" {
   value       = module.ecs_alb_service_task.task_definition_revision
 }
 
+output "cloudwatch_log_group_arn" {
+  description = "Cloudwatch log group ARN"
+  value       = aws_cloudwatch_log_group.app.arn
+}
+
+output "cloudwatch_log_group_name" {
+  description = "Cloudwatch log group name"
+  value       = aws_cloudwatch_log_group.app.name
+}
+
 output "codebuild_project_name" {
   description = "CodeBuild project name"
   value       = module.ecs_codepipeline.codebuild_project_name

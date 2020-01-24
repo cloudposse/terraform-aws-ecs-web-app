@@ -18,8 +18,9 @@ module "ecr" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  name = module.default_label.id
-  tags = module.default_label.tags
+  name              = module.default_label.id
+  tags              = module.default_label.tags
+  retention_in_days = var.log_retention_in_days
 }
 
 module "alb_ingress" {

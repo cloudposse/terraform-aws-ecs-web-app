@@ -95,6 +95,7 @@
 | init_containers | A list of additional init containers to start. The map contains the container_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY. | object | `<list>` | no |
 | launch_type | The ECS launch type (valid options: FARGATE or EC2) | string | `FARGATE` | no |
 | log_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | string | `awslogs` | no |
+| log_retention_in_days | The number of days to retain logs for the log group | number | `null` | no |
 | mount_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | object | `null` | no |
 | name | Name of the application | string | - | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | string | `` | no |
@@ -129,6 +130,8 @@
 | alb_ingress_target_group_arn | ALB Target Group ARN |
 | alb_ingress_target_group_arn_suffix | ALB Target Group ARN suffix |
 | alb_ingress_target_group_name | ALB Target Group name |
+| cloudwatch_log_group_arn | Cloudwatch log group ARN |
+| cloudwatch_log_group_name | Cloudwatch log group name |
 | codebuild_badge_url | The URL of the build badge when badge_enabled is enabled |
 | codebuild_cache_bucket_arn | CodeBuild cache S3 bucket ARN |
 | codebuild_cache_bucket_name | CodeBuild cache S3 bucket name |
