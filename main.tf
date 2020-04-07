@@ -129,6 +129,7 @@ module "ecs_alb_service_task" {
   health_check_grace_period_seconds = var.health_check_grace_period_seconds
   task_cpu                          = coalesce(var.task_cpu, var.container_cpu)
   task_memory                       = coalesce(var.task_memory, var.container_memory)
+  ignore_changes_task_definition    = var.ignore_changes_task_definition
   ecs_cluster_arn                   = var.ecs_cluster_arn
   launch_type                       = var.launch_type
   vpc_id                            = var.vpc_id
