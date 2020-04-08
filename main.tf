@@ -152,6 +152,7 @@ module "ecs_codepipeline" {
   attributes            = var.attributes
   region                = var.region
   github_oauth_token    = var.github_oauth_token
+  github_anonymous      = var.github_webhooks_anonymous
   github_webhooks_token = var.github_webhooks_token
   github_webhook_events = var.github_webhook_events
   repo_owner            = var.repo_owner
