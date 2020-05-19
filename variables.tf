@@ -74,6 +74,12 @@ variable "task_memory" {
   default     = null
 }
 
+variable "system_controls" {
+  type        = list(map(string))
+  description = "A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = \"\", value = \"\"}"
+  default     = null
+}
+
 variable "ulimits" {
   type = list(object({
     name      = string
@@ -187,6 +193,12 @@ variable "secrets" {
     valueFrom = string
   }))
   description = "The secrets to pass to the container. This is a list of maps"
+  default     = null
+}
+
+variable "privileged" {
+  type        = string
+  description = "When this variable is `true`, the container is given elevated privileges on the host container instance (similar to the root user). This parameter is not supported for Windows containers or tasks using the Fargate launch type. Due to how Terraform type casts booleans in json it is required to double quote this value"
   default     = null
 }
 
