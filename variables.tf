@@ -368,6 +368,12 @@ variable "log_driver" {
   default     = "awslogs"
 }
 
+variable "ignore_changes_task_definition" {
+  type        = bool
+  description = "Whether to ignore changes in container definition and task definition in the ECS service"
+  default     = true
+}
+
 variable "ecs_alarms_enabled" {
   type        = bool
   description = "A boolean to enable/disable CloudWatch Alarms for ECS Service metrics"

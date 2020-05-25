@@ -131,6 +131,7 @@ module "ecs_alb_service_task" {
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ecs_cluster_arn                   = var.ecs_cluster_arn
   launch_type                       = var.launch_type
+  ignore_changes_task_definition    = var.ignore_changes_task_definition
   vpc_id                            = var.vpc_id
   security_group_ids                = var.ecs_security_group_ids
   subnet_ids                        = var.ecs_private_subnet_ids
