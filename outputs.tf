@@ -4,8 +4,13 @@ output "ecr_registry_id" {
 }
 
 output "ecr_registry_url" {
-  value       = module.ecr.registry_url
-  description = "Registry URL"
+  value       = module.ecr.repository_url
+  description = "Repository URL"
+}
+
+output "ecr_repository_url" {
+  value       = module.ecr.repository_url
+  description = "Repository URL"
 }
 
 output "ecr_repository_name" {
