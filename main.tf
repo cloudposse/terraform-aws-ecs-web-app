@@ -62,7 +62,7 @@ module "alb_ingress" {
 module "container_definition" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.22.0"
   container_name               = module.default_label.id
-  container_image              = var.container_image
+  container_image              = var.container_image == "" ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
@@ -272,7 +272,7 @@ module "ecs_cloudwatch_sns_alarms" {
 }
 
 module "alb_target_group_cloudwatch_sns_alarms" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.7.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.8.0"
   enabled                        = var.alb_target_group_alarms_enabled
   name                           = var.name
   namespace                      = var.namespace
