@@ -62,7 +62,7 @@ module "alb_ingress" {
 module "container_definition" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.22.0"
   container_name               = module.default_label.id
-  container_image              = var.container_image == "" ? module.ecr.repository_url : var.container_image
+  container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
@@ -132,6 +132,7 @@ module "ecs_alb_service_task" {
   ecs_cluster_arn                   = var.ecs_cluster_arn
   capacity_provider_strategies      = var.capacity_provider_strategies
   launch_type                       = var.launch_type
+  platform_version                  = var.platform_version
   ignore_changes_task_definition    = var.ignore_changes_task_definition
   vpc_id                            = var.vpc_id
   security_group_ids                = var.ecs_security_group_ids
