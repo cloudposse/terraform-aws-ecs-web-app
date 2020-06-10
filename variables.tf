@@ -44,6 +44,12 @@ variable "codepipeline_enabled" {
   default     = true
 }
 
+variable "use_ecr_image" {
+  type        = bool
+  description = "If true, use ECR repo URL for image, otherwise use value in container_image"
+  default     = false
+}
+
 variable "container_image" {
   type        = string
   description = "The default container image to use in container definition"
