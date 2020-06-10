@@ -130,6 +130,7 @@ module "ecs_alb_service_task" {
   task_cpu                          = coalesce(var.task_cpu, var.container_cpu)
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ecs_cluster_arn                   = var.ecs_cluster_arn
+  capacity_provider_strategies      = var.capacity_provider_strategies
   launch_type                       = var.launch_type
   ignore_changes_task_definition    = var.ignore_changes_task_definition
   vpc_id                            = var.vpc_id
