@@ -134,7 +134,13 @@ variable "launch_type" {
   default     = "FARGATE"
 }
 
-variable "ecs_capacity_provider_strategies" {
+variable "platform_version" {
+  type        = string
+  description = "The platform version on which to run your service. Only applicable for launch_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide."
+  default     = "LATEST"
+}
+
+variable "capacity_provider_strategies" {
   type = list(object({
     capacity_provider = string
     weight            = number
