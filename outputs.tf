@@ -18,6 +18,11 @@ output "ecr_repository_name" {
   description = "Registry name"
 }
 
+output "ecr_repository_arn" {
+  value       = module.ecr.repository_arn
+  description = "ARN of ECR repository"
+}
+
 output "alb_ingress_target_group_name" {
   description = "ALB Target Group name"
   value       = module.alb_ingress.target_group_name
