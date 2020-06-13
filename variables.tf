@@ -408,6 +408,12 @@ variable "ignore_changes_task_definition" {
   default     = true
 }
 
+variable "assign_public_ip" {
+  type        = bool
+  description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false`"
+  default     = false
+}
+
 variable "ecs_alarms_enabled" {
   type        = bool
   description = "A boolean to enable/disable CloudWatch Alarms for ECS Service metrics"
