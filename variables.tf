@@ -68,6 +68,18 @@ variable "container_memory" {
   default     = 512
 }
 
+variable "container_start_timeout" {
+  type        = number
+  description = "Time duration (in seconds) to wait before giving up on resolving dependencies for a container"
+  default     = 30
+}
+
+variable "container_stop_timeout" {
+  type        = number
+  description = "Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own"
+  default     = 30
+}
+
 variable "task_cpu" {
   type        = number
   description = "The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"

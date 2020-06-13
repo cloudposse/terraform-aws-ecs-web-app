@@ -60,12 +60,14 @@ module "alb_ingress" {
 }
 
 module "container_definition" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.22.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.25.0"
   container_name               = module.default_label.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
+  start_timeout                = var.container_start_timeout
+  stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
   environment                  = var.environment
   port_mappings                = var.port_mappings
@@ -115,7 +117,7 @@ locals {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.24.0"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.26.0"
   name                              = var.name
   namespace                         = var.namespace
   stage                             = var.stage
