@@ -609,6 +609,17 @@ variable "build_image" {
   description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0`"
 }
 
+variable "build_environment_variables" {
+  type = list(object(
+    {
+      name  = string
+      value = string
+  }))
+
+  default     = []
+  description = "A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build"
+}
+
 variable "build_timeout" {
   type        = number
   default     = 60

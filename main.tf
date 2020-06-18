@@ -179,12 +179,15 @@ module "ecs_codepipeline" {
 
   s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
 
-  environment_variables = [
-    {
-      name  = "CONTAINER_NAME"
-      value = module.default_label.id
-    }
-  ]
+  environment_variables = concat(
+    var.build_environment_variables,
+    [
+      {
+        name  = "CONTAINER_NAME"
+        value = module.default_label.id
+      }
+    ]
+  )
 }
 
 module "ecs_cloudwatch_autoscaling" {
