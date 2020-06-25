@@ -133,6 +133,7 @@ module "ecs_alb_service_task" {
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ecs_cluster_arn                   = var.ecs_cluster_arn
   capacity_provider_strategies      = var.capacity_provider_strategies
+  service_registries                = var.service_registries
   launch_type                       = var.launch_type
   platform_version                  = var.platform_version
   ignore_changes_task_definition    = var.ignore_changes_task_definition
