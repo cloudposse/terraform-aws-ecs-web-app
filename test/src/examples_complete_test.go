@@ -6,11 +6,19 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"math/rand"
+	"strconv"
+	"testing"
+	"time"
 )
 
 // Test the Terraform module in examples/complete using Terratest.
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
+
+	rand.Seed(time.Now().UnixNano())
+
+	attributes := []string{strconv.Itoa(rand.Intn(100000))}
 
 	// We need to create the ALB first because terraform does not wwait for it to be in the ready state before creating ECS target group
 	terraformOptions := &terraform.Options{
@@ -19,6 +27,9 @@ func TestExamplesComplete(t *testing.T) {
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"fixtures.us-east-2.tfvars"},
+		Vars: map[string]interface{}{
+			"attributes": attributes,
+		},
 		Targets:  []string{"module.label", "module.vpc", "module.subnets", "module.alb"},
 	}
 
@@ -61,12 +72,14 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	albIngressTargetGroupName := terraform.Output(t, terraformOptions, "alb_ingress_target_group_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app", albIngressTargetGroupName)
+	expectedAlbIngressTargetGroupName := "eg-test-ecs-web-app-" + attributes[0]
+	assert.Equal(t, expectedAlbIngressTargetGroupName, albIngressTargetGroupName)
 
 	// Run `terraform output` to get the value of an output variable
 	albAccessLogsBucketId := terraform.Output(t, terraformOptions, "alb_access_logs_bucket_id")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-alb-access-logs", albAccessLogsBucketId)
+	expectedAlbAccessLogsBucketId := "eg-test-ecs-web-app-alb-access-logs" + attributes[0]
+	assert.Equal(t, expectedAlbAccessLogsBucketId, albAccessLogsBucketId)
 
 	// Run `terraform output` to get the value of an output variable
 	containerDefinitionJsonMap := terraform.OutputRequired(t, terraformOptions, "container_definition_json_map")
