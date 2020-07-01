@@ -17,7 +17,7 @@ func TestExamplesComplete(t *testing.T) {
 
 	rand.Seed(time.Now().UnixNano())
 
-	attributes := []string{strconv.Itoa(rand.Intn(100000))}
+	attributes := []string{strconv.Itoa(rand.Intn(1000))}
 
 	// We need to create the ALB first because terraform does not wwait for it to be in the ready state before creating ECS target group
 	terraformOptions := &terraform.Options{
