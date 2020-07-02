@@ -116,8 +116,6 @@ codepipeline_s3_bucket_force_destroy = true
 
 codepipeline_github_oauth_token = "test"
 
-codepipeline_github_webhooks_token = "test"
-
 codepipeline_github_webhook_events = ["push"]
 
 codepipeline_repo_owner = "cloudposse"
