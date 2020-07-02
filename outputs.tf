@@ -3,7 +3,7 @@ output "ecr_registry_id" {
   description = "Registry ID"
 }
 
-output "ecr_repository_url" {
+output "ecr_registry_url" {
   value       = module.ecr.registry_url
   description = "Registry URL"
 }
