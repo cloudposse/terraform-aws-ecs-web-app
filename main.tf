@@ -9,12 +9,13 @@ module "default_label" {
 }
 
 module "ecr" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.16.0"
-  enabled    = var.codepipeline_enabled
-  name       = var.name
-  namespace  = var.namespace
-  stage      = var.stage
-  attributes = compact(concat(var.attributes, ["ecr"]))
+  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.16.0"
+  enabled             = var.codepipeline_enabled
+  name                = var.name
+  namespace           = var.namespace
+  stage               = var.stage
+  attributes          = compact(concat(var.attributes, ["ecr"]))
+  scan_images_on_push = var.ecr_scan_images_on_push
 }
 
 resource "aws_cloudwatch_log_group" "app" {
