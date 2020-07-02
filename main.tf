@@ -9,7 +9,7 @@ module "default_label" {
 }
 
 module "ecr" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.16.0"
+  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.15.0"
   enabled    = var.codepipeline_enabled
   name       = var.name
   namespace  = var.namespace
