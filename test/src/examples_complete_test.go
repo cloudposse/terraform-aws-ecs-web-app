@@ -61,7 +61,8 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	albName := terraform.Output(t, terraformOptions, "alb_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app", albName)
+	expectedalbName := "eg-test-ecs-web-app-" + attributes[0]
+	assert.Equal(t, expectedalbName, albName)
 
 	// Run `terraform output` to get the value of an output variable
 	albHttpListenerArn := terraform.Output(t, terraformOptions, "alb_http_listener_arn")
@@ -77,7 +78,7 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	albAccessLogsBucketId := terraform.Output(t, terraformOptions, "alb_access_logs_bucket_id")
 	// Verify we're getting back the outputs we expect
-	expectedAlbAccessLogsBucketId := "eg-test-ecs-web-app-alb-access-logs" + attributes[0]
+	expectedAlbAccessLogsBucketId := "eg-test-ecs-web-app-alb-access-logs-" + attributes[0]
 	assert.Equal(t, expectedAlbAccessLogsBucketId, albAccessLogsBucketId)
 
 	// Run `terraform output` to get the value of an output variable
@@ -86,7 +87,8 @@ func TestExamplesComplete(t *testing.T) {
 	var jsonObject map[string]interface{}
 	err := json.Unmarshal([]byte(containerDefinitionJsonMap), &jsonObject)
 	assert.NoError(t, err)
-	assert.Equal(t, "eg-test-ecs-web-app", jsonObject["name"])
+	expectedContainerDefinitionName := "eg-test-ecs-web-app-" + attributes[0]
+	assert.Equal(t, expectedContainerDefinitionName, jsonObject["name"])
 	assert.Equal(t, "cloudposse/default-backend", jsonObject["image"])
 	assert.Equal(t, 512, int((jsonObject["memory"]).(float64)))
 	assert.Equal(t, 128, int((jsonObject["memoryReservation"]).(float64)))
@@ -97,32 +99,38 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	codebuildCacheBucketName := terraform.Output(t, terraformOptions, "codebuild_cache_bucket_name")
 	// Verify we're getting back the outputs we expect
-	assert.Contains(t, codebuildCacheBucketName, "eg-test-ecs-web-app-build")
+	expectedCodebuildCacheBucketName := "eg-test-ecs-web-app-build-" + attributes[0]
+	assert.Contains(t, codebuildCacheBucketName, expectedCodebuildCacheBucketName)
 
 	// Run `terraform output` to get the value of an output variable
 	codebuildProjectName := terraform.Output(t, terraformOptions, "codebuild_project_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-build", codebuildProjectName)
+	expectedCodebuildProjectName := "eg-test-ecs-web-app-build-" + attributes[0]
+	assert.Equal(t, expectedCodebuildProjectName, codebuildProjectName)
 
 	// Run `terraform output` to get the value of an output variable
 	codebuildRoleId := terraform.Output(t, terraformOptions, "codebuild_role_id")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-build", codebuildRoleId)
+	expectedCodebuildRoleId := "eg-test-ecs-web-app-build-" + attributes[0]
+	assert.Equal(t, expectedCodebuildRoleId, codebuildRoleId)
 
 	// Run `terraform output` to get the value of an output variable
 	codepipelineId := terraform.Output(t, terraformOptions, "codepipeline_id")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-codepipeline", codepipelineId)
+	expectedCodepipelineId := "eg-test-ecs-web-app-codepipeline-" + attributes[0]
+	assert.Equal(t, expectedCodepipelineId, codepipelineId)
 
 	// Run `terraform output` to get the value of an output variable
 	ecrRepositoryName := terraform.Output(t, terraformOptions, "ecr_repository_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-ecr", ecrRepositoryName)
+	expectedEcrRepositoryName := "eg-test-ecs-web-app-ecr-" + attributes[0]
+	assert.Equal(t, expectedEcrRepositoryName, ecrRepositoryName)
 
 	// Run `terraform output` to get the value of an output variable
 	ecsTaskRoleName := terraform.Output(t, terraformOptions, "ecs_task_role_name")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-ecs-web-app-task", ecsTaskRoleName)
+	expectedEcsTaskRoleName := "eg-test-ecs-web-app-task-" + attributes[0]
+	assert.Equal(t, expectedEcsTaskRoleName, ecsTaskRoleName)
 
 	// Run `terraform output` to get the value of an output variable
 	ecsTaskExecRoleName := terraform.Output(t, terraformOptions, "ecs_task_exec_role_name")
