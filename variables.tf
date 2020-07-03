@@ -163,7 +163,7 @@ variable "mount_points" {
   }))
 
   description = "Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`"
-  default     = null
+  default     = []
 }
 
 variable "environment" {
