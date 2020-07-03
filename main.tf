@@ -69,7 +69,9 @@ module "container_definition" {
   healthcheck                  = var.healthcheck
   environment                  = var.environment
   port_mappings                = var.port_mappings
+  privileged                   = var.privileged
   secrets                      = var.secrets
+  system_controls              = var.system_controls
   ulimits                      = var.ulimits
   entrypoint                   = var.entrypoint
   command                      = var.command
