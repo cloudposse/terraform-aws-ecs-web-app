@@ -13,7 +13,7 @@ module "label" {
 }
 
 module "vpc" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.8.1"
+  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.14.0"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
@@ -24,7 +24,7 @@ module "vpc" {
 }
 
 module "subnets" {
-  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.16.1"
+  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.19.0"
   availability_zones   = var.availability_zones
   namespace            = var.namespace
   stage                = var.stage
@@ -40,7 +40,7 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.7.0"
+  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.11.0"
   namespace                               = var.namespace
   stage                                   = var.stage
   name                                    = var.name
@@ -51,7 +51,7 @@ module "alb" {
   subnet_ids                              = module.subnets.public_subnet_ids
   internal                                = false
   http_enabled                            = true
-  access_logs_enabled                     = false
+  access_logs_enabled                     = true
   alb_access_logs_s3_bucket_force_destroy = true
   access_logs_region                      = var.region
   cross_zone_load_balancing_enabled       = true
@@ -132,6 +132,7 @@ module "ecs_web_app" {
   codepipeline_enabled                 = var.codepipeline_enabled
   badge_enabled                        = var.codepipeline_badge_enabled
   github_oauth_token                   = var.codepipeline_github_oauth_token
+  github_webhooks_anonymous            = var.codepipeline_github_webhooks_anonymous
   github_webhooks_token                = var.codepipeline_github_webhooks_token
   github_webhook_events                = var.codepipeline_github_webhook_events
   repo_owner                           = var.codepipeline_repo_owner
