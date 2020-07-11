@@ -168,6 +168,7 @@ module "ecs_codepipeline" {
   branch                = var.branch
   badge_enabled         = var.badge_enabled
   build_image           = var.build_image
+  build_compute_type    = var.codepipeline_build_compute_type
   build_timeout         = var.build_timeout
   buildspec             = var.buildspec
   image_repo_name       = module.ecr.repository_name

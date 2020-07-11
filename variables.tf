@@ -835,6 +835,12 @@ variable "authentication_oidc_user_info_endpoint" {
   default     = ""
 }
 
+variable "codepipeline_build_compute_type" {
+  type        = string
+  default     = "BUILD_GENERAL1_SMALL"
+  description = "`CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE`"
+}
+
 variable "codepipeline_s3_bucket_force_destroy" {
   type        = bool
   description = "A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error"
