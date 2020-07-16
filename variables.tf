@@ -361,10 +361,22 @@ variable "nlb_cidr_blocks" {
   default     = []
 }
 
+variable "alb_ingress_enable_default_target_group" {
+  type        = bool
+  description = "If true, create a default target group for the ALB ingress"
+  default     = true
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
   default     = "/"
+}
+
+variable "alb_ingress_healthcheck_protocol" {
+  type        = string
+  default     = "HTTP"
+  description = "The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda`"
 }
 
 variable "alb_ingress_listener_unauthenticated_priority" {

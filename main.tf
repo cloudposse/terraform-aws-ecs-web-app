@@ -33,7 +33,8 @@ module "alb_ingress" {
   vpc_id                       = var.vpc_id
   port                         = var.container_port
   health_check_path            = var.alb_ingress_healthcheck_path
-  default_target_group_enabled = true
+  health_check_protocol        = var.alb_ingress_healthcheck_protocol
+  default_target_group_enabled = var.alb_ingress_enable_default_target_group
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
