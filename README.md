@@ -249,15 +249,10 @@ Available targets:
 | environment | The environment variables to pass to the container. This is a list of maps | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `null` | no |
 | github\_oauth\_token | GitHub Oauth Token with permissions to access private repositories | `string` | `""` | no |
 | github\_webhook\_events | A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/) | `list(string)` | <pre>[<br>  "push"<br>]</pre> | no |
-| github\_webhooks\_token | GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable | `string` | `""` | no |
-| health\_check\_grace\_period\_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200. Only valid for services configured to use load balancers | `number` | `0` | no |
-| healthcheck | A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | <pre>object({<br>    command     = list(string)<br>    retries     = number<br>    timeout     = number<br>    interval    = number<br>    startPeriod = number<br>  })</pre> | `null` | no |
-| ignore\_changes\_task\_definition | Ignore changes (like environment variables) to the ECS task definition | `bool` | `true` | no |
 | init\_containers | A list of additional init containers to start. The map contains the container\_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY. | <pre>list(object({<br>    container_definition = any<br>    condition            = string<br>  }))</pre> | `[]` | no |
 | launch\_type | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
 | log\_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
 | log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `null` | no |
-| mount\_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `null` | no |
 | name | Name of the application | `string` | n/a | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | `string` | `""` | no |
 | nlb\_cidr\_blocks | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
@@ -307,8 +302,6 @@ Available targets:
 | container\_definition\_json | JSON encoded list of container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
 | container\_definition\_json\_map | JSON encoded container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
 | ecr\_registry\_id | Registry ID |
-| ecr\_registry\_url | Registry URL |
-| ecr\_repository\_name | Registry name |
 | ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization high CloudWatch metric alarm ARN |
 | ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id | ECS CPU utilization high CloudWatch metric alarm ID |
 | ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization low CloudWatch metric alarm ARN |
@@ -341,6 +334,7 @@ Available targets:
 | httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 5xx count CloudWatch metric alarm ID |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn | ALB Target Group response time average CloudWatch metric alarm ARN |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id | ALB Target Group response time average CloudWatch metric alarm ID |
+
 
 
 
