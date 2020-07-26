@@ -141,7 +141,6 @@ module "ecs_alb_service_task" {
   service_registries                = var.service_registries
   launch_type                       = var.launch_type
   platform_version                  = var.platform_version
-  ignore_changes_task_definition    = var.ignore_changes_task_definition
   vpc_id                            = var.vpc_id
   assign_public_ip                  = var.assign_public_ip
   security_group_ids                = var.ecs_security_group_ids
