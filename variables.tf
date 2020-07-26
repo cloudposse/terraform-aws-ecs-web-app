@@ -202,6 +202,16 @@ variable "volumes" {
       labels        = map(string)
       scope         = string
     }))
+    efs_volume_configuration = list(object({
+      file_system_id          = string
+      root_directory          = string
+      transit_encryption      = string
+      transit_encryption_port = string
+      authorization_config = list(object({
+        access_point_id = string
+        iam             = string
+      }))
+    }))
   }))
   description = "Task volume definitions as list of configuration objects"
   default     = []
