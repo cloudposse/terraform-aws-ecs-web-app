@@ -98,6 +98,12 @@ variable "task_memory" {
   default     = null
 }
 
+variable "ignore_changes_task_definition" {
+  type        = bool
+  description = "Ignore changes (like environment variables) to the ECS task definition"
+  default     = true
+}
+
 variable "system_controls" {
   type        = list(map(string))
   description = "A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = \"\", value = \"\"}"
