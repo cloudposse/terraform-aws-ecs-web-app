@@ -19,7 +19,6 @@ $(GOEXE):
 	apk add --update go
 endif
 
-#ifeq ($(shell uname -s),$(filter $(shell uname -s),Linux Darwin)
 ifeq ($(shell uname -s),Linux)
 ## Install all `dep`, if not installed
 $(GOBIN)/dep:
