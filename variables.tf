@@ -881,5 +881,5 @@ variable "init_containers" {
 variable "container_definition" {
   type        = string
   description = "Override the main container_definition"
-  default     = []
+  default     = ""
 }
