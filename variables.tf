@@ -881,5 +881,5 @@ variable "init_containers" {
 variable "cloudwatch_log_group_enabled" {
   type        = boolean
   description = "A boolean to disable cloudwatch log group creation"
-  default     = false
+  default     = true
 }
