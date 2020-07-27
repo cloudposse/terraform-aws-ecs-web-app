@@ -84,15 +84,15 @@ module "container_definition" {
   mount_points                 = var.mount_points
   container_depends_on         = local.container_depends_on
 
-  log_configuration = {
+  log_configuration = var.cloudwatch_log_group_enabled ? {
     logDriver = var.log_driver
     options = {
       "awslogs-region"        = var.aws_logs_region
-      "awslogs-group"         = aws_cloudwatch_log_group.app.name
+      "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
       "awslogs-stream-prefix" = var.name
     }
     secretOptions = null
-  }
+  } : null
 }
 
 locals {
