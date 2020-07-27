@@ -3,6 +3,11 @@ output "ecr_registry_id" {
   description = "Registry ID"
 }
 
+output "ecr_registry_url" {
+  value       = module.ecr.repository_url
+  description = "Repository URL"
+}
+
 output "ecr_repository_url" {
   value       = module.ecr.repository_url
   description = "Repository URL"
@@ -11,6 +16,11 @@ output "ecr_repository_url" {
 output "ecr_repository_name" {
   value       = module.ecr.repository_name
   description = "Registry name"
+}
+
+output "ecr_repository_arn" {
+  value       = module.ecr.repository_arn
+  description = "ARN of ECR repository"
 }
 
 output "alb_ingress_target_group_name" {

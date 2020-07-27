@@ -44,10 +44,22 @@ variable "codepipeline_enabled" {
   default     = true
 }
 
+variable "use_ecr_image" {
+  type        = bool
+  description = "If true, use ECR repo URL for image, otherwise use value in container_image"
+  default     = false
+}
+
 variable "container_image" {
   type        = string
   description = "The default container image to use in container definition"
   default     = "cloudposse/default-backend"
+}
+
+variable "ecr_scan_images_on_push" {
+  type        = bool
+  description = "Indicates whether images are scanned after being pushed to the repository (true) or not (false)"
+  default     = false
 }
 
 variable "container_cpu" {
@@ -60,6 +72,18 @@ variable "container_memory" {
   type        = number
   description = "The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html)"
   default     = 512
+}
+
+variable "container_start_timeout" {
+  type        = number
+  description = "Time duration (in seconds) to wait before giving up on resolving dependencies for a container"
+  default     = 30
+}
+
+variable "container_stop_timeout" {
+  type        = number
+  description = "Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own"
+  default     = 30
 }
 
 variable "task_cpu" {
@@ -146,6 +170,33 @@ variable "launch_type" {
   default     = "FARGATE"
 }
 
+variable "platform_version" {
+  type        = string
+  description = "The platform version on which to run your service. Only applicable for launch_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide."
+  default     = "LATEST"
+}
+
+variable "capacity_provider_strategies" {
+  type = list(object({
+    capacity_provider = string
+    weight            = number
+    base              = number
+  }))
+  description = "The capacity provider strategies to use for the service. See `capacity_provider_strategy` configuration block: https://www.terraform.io/docs/providers/aws/r/ecs_service.html#capacity_provider_strategy"
+  default     = []
+}
+
+variable "service_registries" {
+  type = list(object({
+    registry_arn   = string
+    port           = number
+    container_name = string
+    container_port = number
+  }))
+  description = "The service discovery registries for the service. The maximum number of service_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1"
+  default     = []
+}
+
 variable "volumes" {
   type = list(object({
     host_path = string
@@ -156,6 +207,16 @@ variable "volumes" {
       driver_opts   = map(string)
       labels        = map(string)
       scope         = string
+    }))
+    efs_volume_configuration = list(object({
+      file_system_id          = string
+      root_directory          = string
+      transit_encryption      = string
+      transit_encryption_port = string
+      authorization_config = list(object({
+        access_point_id = string
+        iam             = string
+      }))
     }))
   }))
   description = "Task volume definitions as list of configuration objects"
@@ -316,10 +377,22 @@ variable "nlb_cidr_blocks" {
   default     = []
 }
 
+variable "alb_ingress_enable_default_target_group" {
+  type        = bool
+  description = "If true, create a default target group for the ALB ingress"
+  default     = true
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
   default     = "/"
+}
+
+variable "alb_ingress_healthcheck_protocol" {
+  type        = string
+  default     = "HTTP"
+  description = "The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda`"
 }
 
 variable "alb_ingress_listener_unauthenticated_priority" {
@@ -384,6 +457,12 @@ variable "log_driver" {
   type        = string
   description = "The log driver to use for the container. If using Fargate launch type, only supported value is awslogs"
   default     = "awslogs"
+}
+
+variable "assign_public_ip" {
+  type        = bool
+  description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false`"
+  default     = false
 }
 
 variable "ecs_alarms_enabled" {
@@ -587,6 +666,17 @@ variable "build_image" {
   description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0`"
 }
 
+variable "build_environment_variables" {
+  type = list(object(
+    {
+      name  = string
+      value = string
+  }))
+
+  default     = []
+  description = "A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build"
+}
+
 variable "build_timeout" {
   type        = number
   default     = 60
@@ -765,6 +855,12 @@ variable "authentication_oidc_user_info_endpoint" {
   type        = string
   description = "OIDC User Info Endpoint"
   default     = ""
+}
+
+variable "codepipeline_build_compute_type" {
+  type        = string
+  default     = "BUILD_GENERAL1_SMALL"
+  description = "`CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE`"
 }
 
 variable "codepipeline_s3_bucket_force_destroy" {

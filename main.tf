@@ -9,12 +9,13 @@ module "default_label" {
 }
 
 module "ecr" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.18.0"
-  enabled    = var.codepipeline_enabled
-  name       = var.name
-  namespace  = var.namespace
-  stage      = var.stage
-  attributes = compact(concat(var.attributes, ["ecr"]))
+  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.18.0"
+  enabled             = var.codepipeline_enabled
+  name                = var.name
+  namespace           = var.namespace
+  stage               = var.stage
+  attributes          = compact(concat(var.attributes, ["ecr"]))
+  scan_images_on_push = var.ecr_scan_images_on_push
 }
 
 resource "aws_cloudwatch_log_group" "app" {
@@ -32,7 +33,8 @@ module "alb_ingress" {
   vpc_id                       = var.vpc_id
   port                         = var.container_port
   health_check_path            = var.alb_ingress_healthcheck_path
-  default_target_group_enabled = true
+  health_check_protocol        = var.alb_ingress_healthcheck_protocol
+  default_target_group_enabled = var.alb_ingress_enable_default_target_group
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
@@ -62,10 +64,12 @@ module "alb_ingress" {
 module "container_definition" {
   source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.37.0"
   container_name               = module.default_label.id
-  container_image              = var.container_image
+  container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
+  start_timeout                = var.container_start_timeout
+  stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
   environment                  = var.environment
   port_mappings                = var.port_mappings
@@ -117,7 +121,7 @@ locals {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.31.0"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.35.0"
   name                              = var.name
   namespace                         = var.namespace
   stage                             = var.stage
@@ -133,8 +137,12 @@ module "ecs_alb_service_task" {
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ignore_changes_task_definition    = var.ignore_changes_task_definition
   ecs_cluster_arn                   = var.ecs_cluster_arn
+  capacity_provider_strategies      = var.capacity_provider_strategies
+  service_registries                = var.service_registries
   launch_type                       = var.launch_type
+  platform_version                  = var.platform_version
   vpc_id                            = var.vpc_id
+  assign_public_ip                  = var.assign_public_ip
   security_group_ids                = var.ecs_security_group_ids
   subnet_ids                        = var.ecs_private_subnet_ids
   container_port                    = var.container_port
@@ -161,6 +169,7 @@ module "ecs_codepipeline" {
   branch                = var.branch
   badge_enabled         = var.badge_enabled
   build_image           = var.build_image
+  build_compute_type    = var.codepipeline_build_compute_type
   build_timeout         = var.build_timeout
   buildspec             = var.buildspec
   image_repo_name       = module.ecr.repository_name
@@ -177,12 +186,15 @@ module "ecs_codepipeline" {
 
   s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
 
-  environment_variables = [
-    {
-      name  = "CONTAINER_NAME"
-      value = module.default_label.id
-    }
-  ]
+  environment_variables = concat(
+    var.build_environment_variables,
+    [
+      {
+        name  = "CONTAINER_NAME"
+        value = module.default_label.id
+      }
+    ]
+  )
 }
 
 module "ecs_cloudwatch_autoscaling" {
