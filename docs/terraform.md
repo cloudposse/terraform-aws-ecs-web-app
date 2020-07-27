@@ -76,7 +76,7 @@
 | codepipeline\_s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
 | command | The command that is passed to the container | `list(string)` | `null` | no |
 | container\_cpu | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `256` | no |
-| container\_definition | Override the main container\_definition | `string` | `[]` | no |
+| container\_definition | Override the main container\_definition | `string` | `""` | no |
 | container\_image | The default container image to use in container definition | `string` | `"cloudposse/default-backend"` | no |
 | container\_memory | The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `512` | no |
 | container\_memory\_reservation | The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than `container_memory` if set | `number` | `128` | no |
