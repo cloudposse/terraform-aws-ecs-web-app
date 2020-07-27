@@ -877,3 +877,9 @@ variable "init_containers" {
   description = "A list of additional init containers to start. The map contains the container_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY."
   default     = []
 }
+
+variable "cloudwatch_log_group_enabled" {
+  type        = boolean
+  description = "A boolean to disable cloudwatch log group creation"
+  default     = false
+}
