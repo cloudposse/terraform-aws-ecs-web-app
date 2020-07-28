@@ -242,6 +242,12 @@ variable "environment" {
   default     = null
 }
 
+variable "map_environment" {
+  type        = map(string)
+  description = "The environment variables to pass to the container. This is a map of string: {key: value}, environment override map_environment"
+  default     = null
+}
+
 variable "entrypoint" {
   type        = list(string)
   description = "The entry point that is passed to the container"
