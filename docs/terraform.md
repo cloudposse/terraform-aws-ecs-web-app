@@ -125,6 +125,7 @@
 | launch\_type | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
 | log\_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
 | log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `null` | no |
+| map\_environment | The environment variables to pass to the container. This is a map of string: {key: value}, environment override map\_environment | `map(string)` | `null` | no |
 | mount\_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `[]` | no |
 | name | Name of the application | `string` | n/a | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | `string` | `""` | no |
