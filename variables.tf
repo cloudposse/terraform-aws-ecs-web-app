@@ -883,3 +883,9 @@ variable "container_definition" {
   description = "Override the main container_definition"
   default     = ""
 }
+
+variable "cloudwatch_log_group_enabled" {
+  type        = bool
+  description = "A boolean to disable cloudwatch log group creation"
+  default     = true
+}

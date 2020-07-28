@@ -110,12 +110,12 @@ output "ecs_task_definition_revision" {
 
 output "cloudwatch_log_group_arn" {
   description = "Cloudwatch log group ARN"
-  value       = aws_cloudwatch_log_group.app.arn
+  value       = join("", aws_cloudwatch_log_group.app.*.arn)
 }
 
 output "cloudwatch_log_group_name" {
   description = "Cloudwatch log group name"
-  value       = aws_cloudwatch_log_group.app.name
+  value       = join("", aws_cloudwatch_log_group.app.*.name)
 }
 
 output "codebuild_project_name" {
