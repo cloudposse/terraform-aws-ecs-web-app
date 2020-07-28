@@ -244,7 +244,7 @@ variable "environment" {
 
 variable "map_environment" {
   type        = map(string)
-  description = "The environment variables to pass to the container. This is a map of string: {key: value}, environment override map_environment"
+  description = "The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment`"
   default     = null
 }
 
