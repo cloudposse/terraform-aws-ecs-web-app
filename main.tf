@@ -120,6 +120,11 @@ locals {
       condition     = init_container.condition
     }
   ]
+
+  # override container_definition if var.container_definition is supplied
+  main_container_definition = coalesce(var.container_definition, module.container_definition.json_map)
+  # combine all container definitions
+  all_container_definitions = "[${join(",", concat(local.init_container_definitions, [local.main_container_definition]))}]"
 }
 
 module "ecs_alb_service_task" {
@@ -132,7 +137,7 @@ module "ecs_alb_service_task" {
   use_alb_security_group            = var.use_alb_security_group
   nlb_cidr_blocks                   = var.nlb_cidr_blocks
   use_nlb_cidr_blocks               = var.use_nlb_cidr_blocks
-  container_definition_json         = "[${join(",", concat(local.init_container_definitions, [module.container_definition.json_map]))}]"
+  container_definition_json         = local.all_container_definitions
   desired_count                     = var.desired_count
   health_check_grace_period_seconds = var.health_check_grace_period_seconds
   task_cpu                          = coalesce(var.task_cpu, var.container_cpu)
