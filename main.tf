@@ -74,6 +74,7 @@ module "container_definition" {
   stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
   environment                  = var.environment
+  map_environment              = var.map_environment
   port_mappings                = var.port_mappings
   privileged                   = var.privileged
   secrets                      = var.secrets
