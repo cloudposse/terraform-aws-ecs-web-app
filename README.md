@@ -288,11 +288,15 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
+| alb\_ingress | All outputs from `module.alb_ingress` |
 | alb\_ingress\_target\_group\_arn | ALB Target Group ARN |
 | alb\_ingress\_target\_group\_arn\_suffix | ALB Target Group ARN suffix |
 | alb\_ingress\_target\_group\_name | ALB Target Group name |
+| alb\_target\_group\_cloudwatch\_sns\_alarms | All outputs from `module.alb_target_group_cloudwatch_sns_alarms` |
+| cloudwatch\_log\_group | All outputs from `aws_cloudwatch_log_group.app` |
 | cloudwatch\_log\_group\_arn | Cloudwatch log group ARN |
 | cloudwatch\_log\_group\_name | Cloudwatch log group name |
+| codebuild | All outputs from `module.ecs_codepipeline` |
 | codebuild\_badge\_url | The URL of the build badge when badge\_enabled is enabled |
 | codebuild\_cache\_bucket\_arn | CodeBuild cache S3 bucket ARN |
 | codebuild\_cache\_bucket\_name | CodeBuild cache S3 bucket name |
@@ -304,13 +308,16 @@ Available targets:
 | codepipeline\_id | CodePipeline ID |
 | codepipeline\_webhook\_id | The CodePipeline webhook's ID |
 | codepipeline\_webhook\_url | The CodePipeline webhook's URL. POST events to this endpoint to trigger the target |
+| container\_definition | All outputs from `module.container_definition` |
 | container\_definition\_json | JSON encoded list of container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
 | container\_definition\_json\_map | JSON encoded container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
+| ecr | All outputs from `module.ecr` |
 | ecr\_registry\_id | Registry ID |
 | ecr\_registry\_url | Repository URL |
 | ecr\_repository\_arn | ARN of ECR repository |
 | ecr\_repository\_name | Registry name |
 | ecr\_repository\_url | Repository URL |
+| ecs\_alarms | All outputs from `module.ecs_cloudwatch_sns_alarms` |
 | ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization high CloudWatch metric alarm ARN |
 | ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id | ECS CPU utilization high CloudWatch metric alarm ID |
 | ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization low CloudWatch metric alarm ARN |
@@ -319,6 +326,8 @@ Available targets:
 | ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id | ECS Memory utilization high CloudWatch metric alarm ID |
 | ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn | ECS Memory utilization low CloudWatch metric alarm ARN |
 | ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_id | ECS Memory utilization low CloudWatch metric alarm ID |
+| ecs\_alb\_service\_task | All outputs from `module.ecs_alb_service_task` |
+| ecs\_cloudwatch\_autoscaling | All outputs from `module.ecs_cloudwatch_autoscaling` |
 | ecs\_cloudwatch\_autoscaling\_scale\_down\_policy\_arn | ARN of the scale down policy |
 | ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn | ARN of the scale up policy |
 | ecs\_exec\_role\_policy\_id | The ECS service role policy ID, in the form of `role_name:role_policy_name` |
@@ -453,22 +462,24 @@ Copyright © 2017-2020 [Cloud Posse, LLC](https://cpco.io/copyright)
 
 See [LICENSE](LICENSE) for full details.
 
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+```text
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
-      https://www.apache.org/licenses/LICENSE-2.0
+  https://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+```
 
 
 
