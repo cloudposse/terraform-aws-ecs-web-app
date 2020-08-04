@@ -1,3 +1,8 @@
+output "ecr" {
+  value       = module.ecr
+  description = "All outputs from `module.ecr`"
+}
+
 output "ecr_registry_id" {
   value       = module.ecr.registry_id
   description = "Registry ID"
@@ -23,6 +28,11 @@ output "ecr_repository_arn" {
   description = "ARN of ECR repository"
 }
 
+output "alb_ingress" {
+  description = "All outputs from `module.alb_ingress`"
+  value       = module.alb_ingress
+}
+
 output "alb_ingress_target_group_name" {
   description = "ALB Target Group name"
   value       = module.alb_ingress.target_group_name
@@ -38,6 +48,11 @@ output "alb_ingress_target_group_arn_suffix" {
   value       = module.alb_ingress.target_group_arn_suffix
 }
 
+output "container_definition" {
+  description = "All outputs from `module.container_definition`"
+  value       = module.container_definition
+}
+
 output "container_definition_json" {
   description = "JSON encoded list of container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.container_definition.json
@@ -46,6 +61,11 @@ output "container_definition_json" {
 output "container_definition_json_map" {
   description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.container_definition.json_map
+}
+
+output "ecs_alb_service_task" {
+  description = "All outputs from `module.ecs_alb_service_task`"
+  value       = module.ecs_alb_service_task
 }
 
 output "ecs_exec_role_policy_id" {
@@ -108,6 +128,11 @@ output "ecs_task_definition_revision" {
   value       = module.ecs_alb_service_task.task_definition_revision
 }
 
+output "cloudwatch_log_group" {
+  description = "All outputs from `aws_cloudwatch_log_group.app`"
+  value       = aws_cloudwatch_log_group.app
+}
+
 output "cloudwatch_log_group_arn" {
   description = "Cloudwatch log group ARN"
   value       = join("", aws_cloudwatch_log_group.app.*.arn)
@@ -116,6 +141,11 @@ output "cloudwatch_log_group_arn" {
 output "cloudwatch_log_group_name" {
   description = "Cloudwatch log group name"
   value       = join("", aws_cloudwatch_log_group.app.*.name)
+}
+
+output "codebuild" {
+  description = "All outputs from `module.ecs_codepipeline`"
+  value       = module.ecs_codepipeline
 }
 
 output "codebuild_project_name" {
@@ -174,6 +204,11 @@ output "codepipeline_webhook_url" {
   sensitive   = true
 }
 
+output "ecs_cloudwatch_autoscaling" {
+  description = "All outputs from `module.ecs_cloudwatch_autoscaling`"
+  value       = module.ecs_cloudwatch_autoscaling
+}
+
 output "ecs_cloudwatch_autoscaling_scale_up_policy_arn" {
   description = "ARN of the scale up policy"
   value       = module.ecs_cloudwatch_autoscaling.scale_up_policy_arn
@@ -182,6 +217,11 @@ output "ecs_cloudwatch_autoscaling_scale_up_policy_arn" {
 output "ecs_cloudwatch_autoscaling_scale_down_policy_arn" {
   description = "ARN of the scale down policy"
   value       = module.ecs_cloudwatch_autoscaling.scale_down_policy_arn
+}
+
+output "ecs_alarms" {
+  description = "All outputs from `module.ecs_cloudwatch_sns_alarms`"
+  value       = module.ecs_cloudwatch_sns_alarms
 }
 
 output "ecs_alarms_cpu_utilization_high_cloudwatch_metric_alarm_id" {
@@ -222,6 +262,11 @@ output "ecs_alarms_memory_utilization_low_cloudwatch_metric_alarm_id" {
 output "ecs_alarms_memory_utilization_low_cloudwatch_metric_alarm_arn" {
   value       = module.ecs_cloudwatch_sns_alarms.memory_utilization_low_cloudwatch_metric_alarm_arn
   description = "ECS Memory utilization low CloudWatch metric alarm ARN"
+}
+
+output "alb_target_group_cloudwatch_sns_alarms" {
+  description = "All outputs from `module.alb_target_group_cloudwatch_sns_alarms`"
+  value       = module.alb_target_group_cloudwatch_sns_alarms
 }
 
 output "httpcode_target_3xx_count_cloudwatch_metric_alarm_id" {
