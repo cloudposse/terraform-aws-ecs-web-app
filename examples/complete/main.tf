@@ -13,7 +13,7 @@ module "label" {
 }
 
 module "vpc" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.14.0"
+  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.16.1"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
@@ -24,7 +24,7 @@ module "vpc" {
 }
 
 module "subnets" {
-  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.19.0"
+  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.26.0"
   availability_zones   = var.availability_zones
   namespace            = var.namespace
   stage                = var.stage
@@ -40,7 +40,7 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.11.0"
+  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.17.0"
   namespace                               = var.namespace
   stage                                   = var.stage
   name                                    = var.name
