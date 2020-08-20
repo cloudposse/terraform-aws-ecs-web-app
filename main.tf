@@ -123,7 +123,7 @@ locals {
   ]
 
   # override container_definition if var.container_definition is supplied
-  main_container_definition = coalesce(var.container_definition, module.container_definition.json_map)
+  main_container_definition = coalesce(var.container_definition, module.container_definition.json_map_encoded)
   # combine all container definitions
   all_container_definitions = "[${join(",", concat(local.init_container_definitions, [local.main_container_definition]))}]"
 }
