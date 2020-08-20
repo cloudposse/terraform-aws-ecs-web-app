@@ -23,7 +23,6 @@ module "subnets" {
   namespace            = var.namespace
   stage                = var.stage
   name                 = var.name
-  region               = var.region
   vpc_id               = module.vpc.vpc_id
   igw_id               = module.vpc.igw_id
   cidr_block           = module.vpc.vpc_cidr_block
@@ -98,15 +97,8 @@ module "web_app" {
   container_port   = 80
   build_timeout    = 5
 
-  log_configuration = {
-    logDriver = "awslogs"
-    options = {
-      "awslogs-region"        = var.region
-      "awslogs-group"         = aws_cloudwatch_log_group.app.name
-      "awslogs-stream-prefix" = var.name
-    }
-    secretOptions = null
-  }
+  cloudwatch_log_group_enabled = true
+  log_driver                   = "awslogs"
 
   codepipeline_enabled = false
   webhook_enabled      = false

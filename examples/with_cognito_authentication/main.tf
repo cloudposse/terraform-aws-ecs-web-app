@@ -23,7 +23,6 @@ module "subnets" {
   namespace            = var.namespace
   stage                = var.stage
   name                 = var.name
-  region               = var.region
   vpc_id               = module.vpc.vpc_id
   igw_id               = module.vpc.igw_id
   cidr_block           = module.vpc.vpc_cidr_block
@@ -32,21 +31,24 @@ module "subnets" {
 }
 
 module "alb" {
-  source                    = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.17.0"
-  name                      = var.name
-  namespace                 = var.namespace
-  stage                     = var.stage
-  attributes                = [compact(concat(var.attributes, ["alb"]))]
-  vpc_id                    = module.vpc.vpc_id
-  ip_address_type           = "ipv4"
-  subnet_ids                = [module.subnets.public_subnet_ids]
-  security_group_ids        = [module.vpc.vpc_default_security_group_id]
-  access_logs_region        = var.region
-  https_enabled             = true
-  http_ingress_cidr_blocks  = ["0.0.0.0/0"]
-  https_ingress_cidr_blocks = ["0.0.0.0/0"]
-  certificate_arn           = var.certificate_arn
-  health_check_interval     = 60
+  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.17.0"
+  namespace                               = var.namespace
+  stage                                   = var.stage
+  name                                    = var.name
+  attributes                              = var.attributes
+  delimiter                               = var.delimiter
+  vpc_id                                  = module.vpc.vpc_id
+  security_group_ids                      = [module.vpc.vpc_default_security_group_id]
+  subnet_ids                              = module.subnets.public_subnet_ids
+  internal                                = false
+  http_enabled                            = true
+  access_logs_enabled                     = true
+  alb_access_logs_s3_bucket_force_destroy = true
+  access_logs_region                      = var.region
+  cross_zone_load_balancing_enabled       = true
+  http2_enabled                           = true
+  deletion_protection_enabled             = false
+  tags                                    = var.tags
 }
 
 module "label" {
@@ -98,15 +100,8 @@ module "web_app" {
   container_port   = 80
   build_timeout    = 10
 
-  log_configuration = {
-    logDriver = "awslogs"
-    options = {
-      "awslogs-region"        = var.region
-      "awslogs-group"         = aws_cloudwatch_log_group.app.name
-      "awslogs-stream-prefix" = var.name
-    }
-    secretOptions = null
-  }
+  cloudwatch_log_group_enabled = true
+  log_driver                   = "awslogs"
 
   codepipeline_enabled = false
   webhook_enabled      = false
