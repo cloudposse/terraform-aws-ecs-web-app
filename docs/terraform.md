@@ -19,6 +19,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | alb\_arn\_suffix | ARN suffix of the ALB for the Target Group | `string` | `""` | no |
+| alb\_container\_name | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
 | alb\_ingress\_authenticated\_hosts | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | alb\_ingress\_authenticated\_listener\_arns | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
 | alb\_ingress\_authenticated\_listener\_arns\_count | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
@@ -130,6 +131,7 @@
 | name | Name of the application | `string` | n/a | yes |
 | namespace | Namespace (e.g. `eg` or `cp`) | `string` | `""` | no |
 | nlb\_cidr\_blocks | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
+| nlb\_container\_name | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
 | nlb\_container\_port | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
 | nlb\_ingress\_target\_group\_arn | Target group ARN of the NLB ingress | `string` | `""` | no |
 | platform\_version | The platform version on which to run your service. Only applicable for launch\_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide. | `string` | `"LATEST"` | no |
