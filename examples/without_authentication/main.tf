@@ -18,16 +18,19 @@ locals {
 }
 
 module "subnets" {
-  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.26.0"
-  availability_zones   = local.availability_zones
-  namespace            = var.namespace
-  stage                = var.stage
-  name                 = var.name
-  vpc_id               = module.vpc.vpc_id
-  igw_id               = module.vpc.igw_id
-  cidr_block           = module.vpc.vpc_cidr_block
-  nat_gateway_enabled  = true
-  nat_instance_enabled = false
+  source                   = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.27.0"
+  availability_zones       = local.availability_zones
+  namespace                = var.namespace
+  stage                    = var.stage
+  name                     = var.name
+  region                   = var.region
+  vpc_id                   = module.vpc.vpc_id
+  igw_id                   = module.vpc.igw_id
+  cidr_block               = module.vpc.vpc_cidr_block
+  nat_gateway_enabled      = true
+  nat_instance_enabled     = false
+  aws_route_create_timeout = "5m"
+  aws_route_delete_timeout = "10m"
 }
 
 module "alb" {
@@ -97,8 +100,15 @@ module "web_app" {
   container_port   = 80
   build_timeout    = 5
 
-  cloudwatch_log_group_enabled = true
-  log_driver                   = "awslogs"
+  log_configuration = {
+    logDriver = "awslogs"
+    options = {
+      "awslogs-region"        = var.region
+      "awslogs-group"         = aws_cloudwatch_log_group.app.name
+      "awslogs-stream-prefix" = var.name
+    }
+    secretOptions = null
+  }
 
   codepipeline_enabled = false
   webhook_enabled      = false

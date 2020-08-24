@@ -24,23 +24,25 @@ module "vpc" {
 }
 
 module "subnets" {
-  source               = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.26.0"
-  availability_zones   = var.availability_zones
-  namespace            = var.namespace
-  stage                = var.stage
-  name                 = var.name
-  attributes           = var.attributes
-  delimiter            = var.delimiter
-  vpc_id               = module.vpc.vpc_id
-  igw_id               = module.vpc.igw_id
-  cidr_block           = module.vpc.vpc_cidr_block
-  nat_gateway_enabled  = true
-  nat_instance_enabled = false
-  tags                 = var.tags
+  source                   = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.27.0"
+  availability_zones       = var.availability_zones
+  namespace                = var.namespace
+  stage                    = var.stage
+  name                     = var.name
+  attributes               = var.attributes
+  delimiter                = var.delimiter
+  vpc_id                   = module.vpc.vpc_id
+  igw_id                   = module.vpc.igw_id
+  cidr_block               = module.vpc.vpc_cidr_block
+  nat_gateway_enabled      = true
+  nat_instance_enabled     = false
+  aws_route_create_timeout = "5m"
+  aws_route_delete_timeout = "10m"
+  tags                     = var.tags
 }
 
 module "alb" {
-  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.17.0"
+  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.11.0"
   namespace                               = var.namespace
   stage                                   = var.stage
   name                                    = var.name

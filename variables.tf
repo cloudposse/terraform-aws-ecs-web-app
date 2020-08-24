@@ -895,3 +895,15 @@ variable "cloudwatch_log_group_enabled" {
   description = "A boolean to disable cloudwatch log group creation"
   default     = true
 }
+
+variable "alb_container_name" {
+  type        = string
+  description = "The name of the container to associate with the ALB. If not provided, the generated container will be used"
+  default     = null
+}
+
+variable "nlb_container_name" {
+  type        = string
+  description = "The name of the container to associate with the NLB. If not provided, the generated container will be used"
+  default     = null
+}
