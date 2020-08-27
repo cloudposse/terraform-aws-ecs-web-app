@@ -27,7 +27,9 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.12.0"
+  #source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.12.0"
+  #source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.12.0"
+  source                       = "/home/jhosteny/src/github/crl/terraform-aws-alb-ingress?ref=feat/add-oidc-scope"
   name                         = var.name
   namespace                    = var.namespace
   stage                        = var.stage
