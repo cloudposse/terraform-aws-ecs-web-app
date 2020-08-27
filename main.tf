@@ -27,7 +27,7 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.12.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.14.0"
   name                         = var.name
   namespace                    = var.namespace
   stage                        = var.stage
@@ -55,12 +55,14 @@ module "alb_ingress" {
   authentication_cognito_user_pool_arn       = var.authentication_cognito_user_pool_arn
   authentication_cognito_user_pool_client_id = var.authentication_cognito_user_pool_client_id
   authentication_cognito_user_pool_domain    = var.authentication_cognito_user_pool_domain
+  authentication_cognito_scope               = var.authentication_cognito_scope
   authentication_oidc_client_id              = var.authentication_oidc_client_id
   authentication_oidc_client_secret          = var.authentication_oidc_client_secret
   authentication_oidc_issuer                 = var.authentication_oidc_issuer
   authentication_oidc_authorization_endpoint = var.authentication_oidc_authorization_endpoint
   authentication_oidc_token_endpoint         = var.authentication_oidc_token_endpoint
   authentication_oidc_user_info_endpoint     = var.authentication_oidc_user_info_endpoint
+  authentication_oidc_scope                  = var.authentication_oidc_scope
 }
 
 module "container_definition" {
