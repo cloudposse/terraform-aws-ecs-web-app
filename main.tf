@@ -158,6 +158,7 @@ module "ecs_alb_service_task" {
   tags                              = var.tags
   volumes                           = var.volumes
   ecs_load_balancers                = local.load_balancers
+  deployment_controller_type        = var.deployment_controller_type
 }
 
 module "ecs_codepipeline" {
