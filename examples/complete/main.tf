@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.17.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.18.0"
   namespace  = var.namespace
   name       = var.name
   stage      = var.stage
@@ -13,7 +13,7 @@ module "label" {
 }
 
 module "vpc" {
-  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.14.0"
+  source     = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.16.2"
   namespace  = var.namespace
   stage      = var.stage
   name       = var.name
@@ -42,7 +42,7 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.11.0"
+  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.17.0"
   namespace                               = var.namespace
   stage                                   = var.stage
   name                                    = var.name
