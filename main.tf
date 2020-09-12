@@ -37,6 +37,7 @@ module "alb_ingress" {
   health_check_path            = var.alb_ingress_healthcheck_path
   health_check_protocol        = var.alb_ingress_healthcheck_protocol
   default_target_group_enabled = var.alb_ingress_enable_default_target_group
+  target_group_arn             = var.alb_ingress_target_group_arn
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
