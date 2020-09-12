@@ -913,3 +913,9 @@ variable "nlb_container_name" {
   description = "The name of the container to associate with the NLB. If not provided, the generated container will be used"
   default     = null
 }
+
+variable "deployment_controller_type" {
+  type        = string
+  description = "Type of deployment controller. Valid values are CODE_DEPLOY and ECS"
+  default     = "ECS"
+}
