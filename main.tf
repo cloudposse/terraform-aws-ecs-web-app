@@ -1,5 +1,5 @@
 module "default_label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.18.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
   name       = var.name
   namespace  = var.namespace
   stage      = var.stage
@@ -9,7 +9,7 @@ module "default_label" {
 }
 
 module "ecr" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.25.0"
+  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.27.0"
   enabled             = var.codepipeline_enabled
   name                = var.name
   namespace           = var.namespace
@@ -164,7 +164,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = var.codepipeline_enabled
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.16.0"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.17.0"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
