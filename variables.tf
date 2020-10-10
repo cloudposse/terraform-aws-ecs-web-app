@@ -833,6 +833,12 @@ variable "authentication_cognito_user_pool_domain" {
   default     = ""
 }
 
+variable "authentication_cognito_scope" {
+  type        = list(string)
+  description = "Cognito scope"
+  default     = []
+}
+
 variable "authentication_oidc_client_id" {
   type        = string
   description = "OIDC Client ID"
@@ -867,6 +873,12 @@ variable "authentication_oidc_user_info_endpoint" {
   type        = string
   description = "OIDC User Info Endpoint"
   default     = ""
+}
+
+variable "authentication_oidc_scope" {
+  type        = list(string)
+  description = "OIDC scope"
+  default     = []
 }
 
 variable "codepipeline_build_compute_type" {
