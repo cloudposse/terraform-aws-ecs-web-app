@@ -174,6 +174,7 @@ Available targets:
 | alb\_target\_group\_alarms\_response\_time\_threshold | The maximum ALB Target Group response time | `number` | `0.5` | no |
 | assign\_public\_ip | Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false` | `bool` | `false` | no |
 | attributes | Additional attributes (\_e.g.\_ "1") | `list(string)` | `[]` | no |
+| authentication\_cognito\_scope | Cognito scope | `list(string)` | `[]` | no |
 | authentication\_cognito\_user\_pool\_arn | Cognito User Pool ARN | `string` | `""` | no |
 | authentication\_cognito\_user\_pool\_client\_id | Cognito User Pool Client ID | `string` | `""` | no |
 | authentication\_cognito\_user\_pool\_domain | Cognito User Pool Domain. The User Pool Domain should be set to the domain prefix (`xxx`) instead of full domain (https://xxx.auth.us-west-2.amazoncognito.com) | `string` | `""` | no |
@@ -181,6 +182,7 @@ Available targets:
 | authentication\_oidc\_client\_id | OIDC Client ID | `string` | `""` | no |
 | authentication\_oidc\_client\_secret | OIDC Client Secret | `string` | `""` | no |
 | authentication\_oidc\_issuer | OIDC Issuer | `string` | `""` | no |
+| authentication\_oidc\_scope | OIDC scope | `list(string)` | `[]` | no |
 | authentication\_oidc\_token\_endpoint | OIDC Token Endpoint | `string` | `""` | no |
 | authentication\_oidc\_user\_info\_endpoint | OIDC User Info Endpoint | `string` | `""` | no |
 | authentication\_type | Authentication type. Supported values are `COGNITO` and `OIDC` | `string` | `""` | no |
