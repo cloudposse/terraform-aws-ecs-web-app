@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -233,3 +234,4 @@
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn | ALB Target Group response time average CloudWatch metric alarm ARN |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id | ALB Target Group response time average CloudWatch metric alarm ID |
 
+<!-- markdownlint-restore -->
