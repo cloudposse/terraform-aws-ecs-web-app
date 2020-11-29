@@ -1,5 +1,5 @@
 module "default_label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.18.0"
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.21.0"
   name       = var.name
   namespace  = var.namespace
   stage      = var.stage
@@ -9,7 +9,7 @@ module "default_label" {
 }
 
 module "ecr" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.25.0"
+  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.29.0"
   enabled             = var.codepipeline_enabled
   name                = var.name
   namespace           = var.namespace
@@ -27,7 +27,7 @@ resource "aws_cloudwatch_log_group" "app" {
 }
 
 module "alb_ingress" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.14.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.15.0"
   name                         = var.name
   namespace                    = var.namespace
   stage                        = var.stage
@@ -67,7 +67,7 @@ module "alb_ingress" {
 }
 
 module "container_definition" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.41.0"
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.45.2"
   container_name               = module.default_label.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -132,7 +132,7 @@ locals {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.39.0"
+  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.41.0"
   name                              = var.name
   namespace                         = var.namespace
   stage                             = var.stage
@@ -166,7 +166,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled               = var.codepipeline_enabled
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.16.0"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.18.0"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
@@ -211,7 +211,7 @@ module "ecs_codepipeline" {
 
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.4.1"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.4.2"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
@@ -234,7 +234,7 @@ locals {
 }
 
 module "ecs_cloudwatch_sns_alarms" {
-  source  = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.7.1"
+  source  = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.8.1"
   enabled = var.ecs_alarms_enabled
 
   name       = var.name
@@ -300,7 +300,7 @@ module "ecs_cloudwatch_sns_alarms" {
 }
 
 module "alb_target_group_cloudwatch_sns_alarms" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.11.2"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.12.1"
   enabled                        = var.alb_target_group_alarms_enabled
   name                           = var.name
   namespace                      = var.namespace
