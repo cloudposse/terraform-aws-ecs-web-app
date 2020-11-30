@@ -47,7 +47,6 @@ module "alb" {
   http_enabled                            = true
   access_logs_enabled                     = true
   alb_access_logs_s3_bucket_force_destroy = true
-  access_logs_region                      = var.region
   cross_zone_load_balancing_enabled       = true
   http2_enabled                           = true
   deletion_protection_enabled             = false

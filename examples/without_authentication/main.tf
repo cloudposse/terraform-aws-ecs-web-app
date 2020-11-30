@@ -43,7 +43,6 @@ module "alb" {
   ip_address_type           = "ipv4"
   subnet_ids                = module.subnets.public_subnet_ids
   security_group_ids        = [module.vpc.vpc_default_security_group_id]
-  access_logs_region        = var.region
   https_enabled             = true
   http_ingress_cidr_blocks  = ["0.0.0.0/0"]
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
