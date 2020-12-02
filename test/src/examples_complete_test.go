@@ -30,7 +30,7 @@ func TestExamplesComplete(t *testing.T) {
 		Vars: map[string]interface{}{
 			"attributes": attributes,
 		},
-		Targets: []string{"module.label", "module.vpc", "module.subnets", "module.alb"},
+		Targets: []string{"module.this", "module.vpc", "module.subnets", "module.alb"},
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
