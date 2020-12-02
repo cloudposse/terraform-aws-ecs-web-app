@@ -132,4 +132,4 @@ codepipeline_build_timeout = 20
 
 codepipeline_github_webhooks_anonymous = true
 
-environment = []
+list_environment = []

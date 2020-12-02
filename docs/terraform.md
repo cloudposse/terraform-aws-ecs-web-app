@@ -19,6 +19,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| additional\_tag\_map | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
 | alb\_arn\_suffix | ARN suffix of the ALB for the Target Group | `string` | `""` | no |
 | alb\_container\_name | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
 | alb\_ingress\_authenticated\_hosts | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
@@ -47,7 +48,7 @@
 | alb\_target\_group\_alarms\_period | The period (in seconds) to analyze for ALB CloudWatch Alarms | `number` | `300` | no |
 | alb\_target\_group\_alarms\_response\_time\_threshold | The maximum ALB Target Group response time | `number` | `0.5` | no |
 | assign\_public\_ip | Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false` | `bool` | `false` | no |
-| attributes | Additional attributes (\_e.g.\_ "1") | `list(string)` | `[]` | no |
+| attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
 | authentication\_cognito\_scope | Cognito scope | `list(string)` | `[]` | no |
 | authentication\_cognito\_user\_pool\_arn | Cognito User Pool ARN | `string` | `""` | no |
 | authentication\_cognito\_user\_pool\_client\_id | Cognito User Pool Client ID | `string` | `""` | no |
@@ -89,7 +90,8 @@
 | container\_port | The port number on the container bound to assigned host\_port | `number` | `80` | no |
 | container\_start\_timeout | Time duration (in seconds) to wait before giving up on resolving dependencies for a container | `number` | `30` | no |
 | container\_stop\_timeout | Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own | `number` | `30` | no |
-| delimiter | Delimiter between `namespace`, `stage`, `name` and `attributes` | `string` | `"-"` | no |
+| context | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | <pre>object({<br>    enabled             = bool<br>    namespace           = string<br>    environment         = string<br>    stage               = string<br>    name                = string<br>    delimiter           = string<br>    attributes          = list(string)<br>    tags                = map(string)<br>    additional_tag_map  = map(string)<br>    regex_replace_chars = string<br>    label_order         = list(string)<br>    id_length_limit     = number<br>  })</pre> | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_order": [],<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |
+| delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | deployment\_controller\_type | Type of deployment controller. Valid values are CODE\_DEPLOY and ECS | `string` | `"ECS"` | no |
 | desired\_count | The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type) | `number` | `1` | no |
 | ecr\_scan\_images\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not (false) | `bool` | `false` | no |
@@ -118,23 +120,27 @@
 | ecs\_cluster\_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | n/a | yes |
 | ecs\_private\_subnet\_ids | List of Private Subnet IDs to provision ECS Service onto | `list(string)` | n/a | yes |
 | ecs\_security\_group\_ids | Additional Security Group IDs to allow into ECS Service | `list(string)` | `[]` | no |
+| enabled | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | entrypoint | The entry point that is passed to the container | `list(string)` | `null` | no |
-| environment | The environment variables to pass to the container. This is a list of maps | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `null` | no |
+| environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | github\_oauth\_token | GitHub Oauth Token with permissions to access private repositories | `string` | `""` | no |
 | github\_webhook\_events | A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/) | `list(string)` | <pre>[<br>  "push"<br>]</pre> | no |
 | github\_webhooks\_anonymous | Github Anonymous API (if `true`, token must not be set as GITHUB\_TOKEN or `github_webhooks_token`) | `bool` | `false` | no |
 | github\_webhooks\_token | GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable | `string` | `""` | no |
 | health\_check\_grace\_period\_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200. Only valid for services configured to use load balancers | `number` | `0` | no |
 | healthcheck | A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | <pre>object({<br>    command     = list(string)<br>    retries     = number<br>    timeout     = number<br>    interval    = number<br>    startPeriod = number<br>  })</pre> | `null` | no |
+| id\_length\_limit | Limit `id` to this many characters.<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
 | ignore\_changes\_task\_definition | Ignore changes (like environment variables) to the ECS task definition | `bool` | `true` | no |
 | init\_containers | A list of additional init containers to start. The map contains the container\_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY. | <pre>list(object({<br>    container_definition = any<br>    condition            = string<br>  }))</pre> | `[]` | no |
+| label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
 | launch\_type | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
+| list\_environment | The environment variables to pass to the container. This is a list of maps | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `null` | no |
 | log\_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
 | log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `null` | no |
 | map\_environment | The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment` | `map(string)` | `null` | no |
 | mount\_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `[]` | no |
-| name | Name of the application | `string` | n/a | yes |
-| namespace | Namespace (e.g. `eg` or `cp`) | `string` | `""` | no |
+| name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
+| namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | nlb\_cidr\_blocks | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
 | nlb\_container\_name | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
 | nlb\_container\_port | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
@@ -143,14 +149,15 @@
 | poll\_source\_changes | Periodically check the location of your source content and run the pipeline if changes are detected | `bool` | `false` | no |
 | port\_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | <pre>list(object({<br>    containerPort = number<br>    hostPort      = number<br>    protocol      = string<br>  }))</pre> | <pre>[<br>  {<br>    "containerPort": 80,<br>    "hostPort": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
 | privileged | When this variable is `true`, the container is given elevated privileges on the host container instance (similar to the root user). This parameter is not supported for Windows containers or tasks using the Fargate launch type. Due to how Terraform type casts booleans in json it is required to double quote this value | `string` | `null` | no |
+| regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | region | AWS Region for S3 bucket | `string` | n/a | yes |
 | repo\_name | GitHub repository name of the application to be built and deployed to ECS | `string` | `""` | no |
 | repo\_owner | GitHub Organization or Username | `string` | `""` | no |
 | secrets | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
 | service\_registries | The service discovery registries for the service. The maximum number of service\_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1 | <pre>list(object({<br>    registry_arn   = string<br>    port           = number<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
-| stage | Stage (e.g. `prod`, `dev`, `staging`) | `string` | `""` | no |
+| stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | system\_controls | A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = "", value = ""} | `list(map(string))` | `null` | no |
-| tags | Additional tags (\_e.g.\_ { BusinessUnit : ABC }) | `map(string)` | `{}` | no |
+| tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
 | task\_cpu | The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
 | task\_memory | The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
 | ulimits | The ulimits to configure for the container. This is a list of maps. Each map should contain "name", "softLimit" and "hardLimit" | <pre>list(object({<br>    name      = string<br>    softLimit = number<br>    hardLimit = number<br>  }))</pre> | `[]` | no |
