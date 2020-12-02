@@ -424,6 +424,12 @@ variable "aws_logs_region" {
   description = "The region for the AWS Cloudwatch Logs group"
 }
 
+variable "aws_logs_prefix" {
+  type        = string
+  description = "Custom AWS Logs prefix. If empty name from label module will be used"
+  default     = ""
+}
+
 variable "log_retention_in_days" {
   type        = number
   description = "The number of days to retain logs for the log group"

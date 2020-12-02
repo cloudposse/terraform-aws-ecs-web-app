@@ -197,6 +197,7 @@ Available targets:
 | autoscaling\_scale\_down\_cooldown | Period (in seconds) to wait between scale down events | `number` | `300` | no |
 | autoscaling\_scale\_up\_adjustment | Scaling adjustment to make during scale up event | `number` | `1` | no |
 | autoscaling\_scale\_up\_cooldown | Period (in seconds) to wait between scale up events | `number` | `60` | no |
+| aws\_logs\_prefix | Custom AWS Logs prefix. If empty name from label module will be used | `string` | `""` | no |
 | aws\_logs\_region | The region for the AWS Cloudwatch Logs group | `string` | n/a | yes |
 | badge\_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge\_url attribute when enabled | `bool` | `false` | no |
 | branch | Branch of the GitHub repository, e.g. `master` | `string` | `""` | no |
