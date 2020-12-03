@@ -82,7 +82,7 @@ module "container_definition" {
     options = {
       "awslogs-region"        = var.aws_logs_region
       "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
-      "awslogs-stream-prefix" = var.name
+      "awslogs-stream-prefix" = module.this.name
     }
     secretOptions = null
   } : null
