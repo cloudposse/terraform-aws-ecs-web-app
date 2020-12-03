@@ -79,7 +79,7 @@ variable "launch_type" {
   default     = "FARGATE"
 }
 
-variable "list_environment" {
+variable "container_environment" {
   type = list(object({
     name  = string
     value = string

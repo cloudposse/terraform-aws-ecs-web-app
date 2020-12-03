@@ -122,7 +122,7 @@ module "ecs_web_app" {
   webhook_filter_json_path             = var.webhook_filter_json_path
   webhook_filter_match_equals          = var.webhook_filter_match_equals
   codepipeline_s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
-  list_environment                     = var.list_environment
+  container_environment                = var.container_environment
   secrets                              = var.secrets
 
   // Autoscaling

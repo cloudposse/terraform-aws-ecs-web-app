@@ -63,7 +63,7 @@ module "web_app" {
   launch_type = "FARGATE"
   vpc_id      = module.vpc.vpc_id
 
-  list_environment = [
+  container_environment = [
     {
       name  = "LAUNCH_TYPE"
       value = "FARGATE"
