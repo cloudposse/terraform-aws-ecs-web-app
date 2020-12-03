@@ -154,13 +154,13 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	ecsCloudwatchAutoscalingScaleDownPolicyArn := terraform.Output(t, terraformOptions, "ecs_cloudwatch_autoscaling_scale_down_policy_arn")
 	// Verify we're getting back the outputs we expect
-	expectedEcsCloudwatchAutoscalingScaleDownPolicyArn := "policyName/eg-test-ecs-web-app-" + attributes[0] + "-down"
+	expectedEcsCloudwatchAutoscalingScaleDownPolicyArn := "policyName/down"
 	assert.Contains(t, ecsCloudwatchAutoscalingScaleDownPolicyArn, expectedEcsCloudwatchAutoscalingScaleDownPolicyArn)
 
 	// Run `terraform output` to get the value of an output variable
 	ecsCloudwatchAutoscalingScaleUpPolicyArn := terraform.Output(t, terraformOptions, "ecs_cloudwatch_autoscaling_scale_up_policy_arn")
 	// Verify we're getting back the outputs we expect
-	expectedEcsCloudwatchAutoscalingScaleUpPolicyArn := "policyName/eg-test-ecs-web-app-" + attributes[0] + "-up"
+	expectedEcsCloudwatchAutoscalingScaleUpPolicyArn := "policyName/up"
 	assert.Contains(t, ecsCloudwatchAutoscalingScaleUpPolicyArn, expectedEcsCloudwatchAutoscalingScaleUpPolicyArn)
 
 	// Run `terraform output` to get the value of an output variable

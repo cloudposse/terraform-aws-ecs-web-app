@@ -1,5 +1,5 @@
 module "ecr" {
-  source  = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.29.0"
+  source  = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.29.1"
   enabled = var.codepipeline_enabled
 
   attributes          = ["ecr"]
