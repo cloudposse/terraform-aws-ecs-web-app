@@ -1,37 +1,24 @@
-module "default_label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.18.0"
-  name       = var.name
-  namespace  = var.namespace
-  stage      = var.stage
-  delimiter  = var.delimiter
-  attributes = var.attributes
-  tags       = var.tags
-}
-
 module "ecr" {
-  source              = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.25.0"
-  enabled             = var.codepipeline_enabled
-  name                = var.name
-  namespace           = var.namespace
-  stage               = var.stage
-  attributes          = compact(concat(var.attributes, ["ecr"]))
+  source  = "git::https://github.com/cloudposse/terraform-aws-ecr.git?ref=tags/0.29.1"
+  enabled = var.codepipeline_enabled
+
+  attributes          = ["ecr"]
   scan_images_on_push = var.ecr_scan_images_on_push
+
+  context = module.this.context
 }
 
 resource "aws_cloudwatch_log_group" "app" {
   count = var.cloudwatch_log_group_enabled ? 1 : 0
 
-  name              = module.default_label.id
-  tags              = module.default_label.tags
+  name              = module.this.id
+  tags              = module.this.tags
   retention_in_days = var.log_retention_in_days
 }
 
 module "alb_ingress" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.14.0"
-  name                         = var.name
-  namespace                    = var.namespace
-  stage                        = var.stage
-  attributes                   = var.attributes
+  source = "git::https://github.com/cloudposse/terraform-aws-alb-ingress.git?ref=tags/0.15.0"
+
   vpc_id                       = var.vpc_id
   port                         = var.container_port
   health_check_path            = var.alb_ingress_healthcheck_path
@@ -64,11 +51,13 @@ module "alb_ingress" {
   authentication_oidc_token_endpoint         = var.authentication_oidc_token_endpoint
   authentication_oidc_user_info_endpoint     = var.authentication_oidc_user_info_endpoint
   authentication_oidc_scope                  = var.authentication_oidc_scope
+
+  context = module.this.context
 }
 
 module "container_definition" {
-  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.41.0"
-  container_name               = module.default_label.id
+  source                       = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.45.2"
+  container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
@@ -76,8 +65,8 @@ module "container_definition" {
   start_timeout                = var.container_start_timeout
   stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
-  environment                  = var.environment
-  map_environment              = var.map_environment
+  environment                  = var.container_environment
+  map_environment              = var.map_container_environment
   port_mappings                = var.port_mappings
   privileged                   = var.privileged
   secrets                      = var.secrets
@@ -93,7 +82,7 @@ module "container_definition" {
     options = {
       "awslogs-region"        = var.aws_logs_region
       "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
-      "awslogs-stream-prefix" = var.name
+      "awslogs-stream-prefix" = module.this.name
     }
     secretOptions = null
   } : null
@@ -101,13 +90,13 @@ module "container_definition" {
 
 locals {
   alb = {
-    container_name   = coalesce(var.alb_container_name, module.default_label.id)
+    container_name   = coalesce(var.alb_container_name, module.this.id)
     container_port   = var.container_port
     elb_name         = null
     target_group_arn = module.alb_ingress.target_group_arn
   }
   nlb = {
-    container_name   = coalesce(var.nlb_container_name, module.default_label.id)
+    container_name   = coalesce(var.nlb_container_name, module.this.id)
     container_port   = var.nlb_container_port
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
@@ -132,11 +121,8 @@ locals {
 }
 
 module "ecs_alb_service_task" {
-  source                            = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.39.0"
-  name                              = var.name
-  namespace                         = var.namespace
-  stage                             = var.stage
-  attributes                        = var.attributes
+  source = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.42.0"
+
   alb_security_group                = var.alb_security_group
   use_alb_security_group            = var.use_alb_security_group
   nlb_cidr_blocks                   = var.nlb_cidr_blocks
@@ -158,19 +144,17 @@ module "ecs_alb_service_task" {
   subnet_ids                        = var.ecs_private_subnet_ids
   container_port                    = var.container_port
   nlb_container_port                = var.nlb_container_port
-  tags                              = var.tags
   volumes                           = var.volumes
   ecs_load_balancers                = local.load_balancers
   deployment_controller_type        = var.deployment_controller_type
+
+  context = module.this.context
 }
 
 module "ecs_codepipeline" {
-  enabled               = var.codepipeline_enabled
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.16.0"
-  name                  = var.name
-  namespace             = var.namespace
-  stage                 = var.stage
-  attributes            = var.attributes
+  enabled = var.codepipeline_enabled
+  source  = "git::https://github.com/cloudposse/terraform-aws-ecs-codepipeline.git?ref=tags/0.18.0"
+
   region                = var.region
   github_oauth_token    = var.github_oauth_token
   github_anonymous      = var.github_webhooks_anonymous
@@ -203,15 +187,17 @@ module "ecs_codepipeline" {
     [
       {
         name  = "CONTAINER_NAME"
-        value = module.default_label.id
+        value = module.this.id
       }
     ]
   )
+
+  context = module.this.context
 }
 
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
-  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.4.1"
+  source                = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-autoscaling.git?ref=tags/0.4.2"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
@@ -234,14 +220,8 @@ locals {
 }
 
 module "ecs_cloudwatch_sns_alarms" {
-  source  = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.7.1"
+  source  = "git::https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms.git?ref=tags/0.8.1"
   enabled = var.ecs_alarms_enabled
-
-  name       = var.name
-  namespace  = var.namespace
-  stage      = var.stage
-  attributes = var.attributes
-  tags       = var.tags
 
   cluster_name = var.ecs_cluster_name
   service_name = module.ecs_alb_service_task.service_name
@@ -297,15 +277,14 @@ module "ecs_cloudwatch_sns_alarms" {
   )
 
   memory_utilization_low_ok_actions = var.ecs_alarms_memory_utilization_low_ok_actions
+
+  context = module.this.context
 }
 
 module "alb_target_group_cloudwatch_sns_alarms" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.11.2"
-  enabled                        = var.alb_target_group_alarms_enabled
-  name                           = var.name
-  namespace                      = var.namespace
-  stage                          = var.stage
-  attributes                     = var.attributes
+  source  = "git::https://github.com/cloudposse/terraform-aws-alb-target-group-cloudwatch-sns-alarms.git?ref=tags/0.12.1"
+  enabled = var.alb_target_group_alarms_enabled
+
   alarm_actions                  = var.alb_target_group_alarms_alarm_actions
   ok_actions                     = var.alb_target_group_alarms_ok_actions
   insufficient_data_actions      = var.alb_target_group_alarms_insufficient_data_actions
@@ -317,4 +296,6 @@ module "alb_target_group_cloudwatch_sns_alarms" {
   target_response_time_threshold = var.alb_target_group_alarms_response_time_threshold
   period                         = var.alb_target_group_alarms_period
   evaluation_periods             = var.alb_target_group_alarms_evaluation_periods
+
+  context = module.this.context
 }

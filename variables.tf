@@ -3,41 +3,6 @@ variable "region" {
   description = "AWS Region for S3 bucket"
 }
 
-variable "namespace" {
-  type        = string
-  description = "Namespace (e.g. `eg` or `cp`)"
-  default     = ""
-}
-
-variable "stage" {
-  type        = string
-  description = "Stage (e.g. `prod`, `dev`, `staging`)"
-  default     = ""
-}
-
-variable "name" {
-  type        = string
-  description = "Name of the application"
-}
-
-variable "delimiter" {
-  type        = string
-  default     = "-"
-  description = "Delimiter between `namespace`, `stage`, `name` and `attributes`"
-}
-
-variable "attributes" {
-  type        = list(string)
-  description = "Additional attributes (_e.g._ \"1\")"
-  default     = []
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "Additional tags (_e.g._ { BusinessUnit : ABC })"
-  default     = {}
-}
-
 variable "codepipeline_enabled" {
   type        = bool
   description = "A boolean to enable/disable AWS Codepipeline and ECR"
@@ -233,7 +198,7 @@ variable "mount_points" {
   default     = []
 }
 
-variable "environment" {
+variable "container_environment" {
   type = list(object({
     name  = string
     value = string
@@ -242,7 +207,7 @@ variable "environment" {
   default     = null
 }
 
-variable "map_environment" {
+variable "map_container_environment" {
   type        = map(string)
   description = "The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment`"
   default     = null
