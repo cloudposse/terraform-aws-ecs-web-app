@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "cloudposse/vpc/aws"
-  version     = "0.18.0"
+  source  = "cloudposse/vpc/aws"
+  version = "0.18.0"
 
   cidr_block = "172.16.0.0/16"
 
@@ -19,8 +19,8 @@ locals {
 }
 
 module "subnets" {
-  source = "cloudposse/dynamic-subnets/aws"
-  version     = "0.32.0"
+  source                   = "cloudposse/dynamic-subnets/aws"
+  version                  = "0.32.0"
   availability_zones       = local.availability_zones
   vpc_id                   = module.vpc.vpc_id
   igw_id                   = module.vpc.igw_id
@@ -34,8 +34,8 @@ module "subnets" {
 }
 
 module "alb" {
-  source = "cloudposse/alb/aws"
-  version     = "0.23.0"
+  source                                  = "cloudposse/alb/aws"
+  version                                 = "0.23.0"
   vpc_id                                  = module.vpc.vpc_id
   security_group_ids                      = [module.vpc.vpc_default_security_group_id]
   subnet_ids                              = module.subnets.public_subnet_ids
