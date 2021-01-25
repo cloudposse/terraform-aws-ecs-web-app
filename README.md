@@ -87,7 +87,9 @@ Other examples:
 
 ```
 module "default_backend_web_app" {
-  source                                          = "git::https://github.com/cloudposse/terraform-aws-ecs-web-app.git?ref=master"
+  source = "cloudposse/ecs-web-app/aws"
+  # Cloud Posse recommends pinning every module to a specific version
+  # version     = "x.x.x"
   namespace                                       = "eg"
   stage                                           = "testing"
   name                                            = "appname"
@@ -138,7 +140,7 @@ Available targets:
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.0 |
+| terraform | >= 0.12.26 |
 | aws | >= 2.0 |
 | local | >= 1.3 |
 | null | >= 2.0 |
