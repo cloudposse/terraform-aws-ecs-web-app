@@ -100,25 +100,25 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	codebuildCacheBucketName := terraform.Output(t, terraformOptions, "codebuild_cache_bucket_name")
 	// Verify we're getting back the outputs we expect
-	expectedCodebuildCacheBucketName := "eg-test-ecs-web-app-" + attributes[0] + "-build"
+	expectedCodebuildCacheBucketName := "eg-test-ecs-web-app-build-" + attributes[0]
 	assert.Contains(t, codebuildCacheBucketName, expectedCodebuildCacheBucketName)
 
 	// Run `terraform output` to get the value of an output variable
 	codebuildProjectName := terraform.Output(t, terraformOptions, "codebuild_project_name")
 	// Verify we're getting back the outputs we expect
-	expectedCodebuildProjectName := "eg-test-ecs-web-app-" + attributes[0] + "-build"
+	expectedCodebuildProjectName := "eg-test-ecs-web-app-build-" + attributes[0]
 	assert.Equal(t, expectedCodebuildProjectName, codebuildProjectName)
 
 	// Run `terraform output` to get the value of an output variable
 	codebuildRoleId := terraform.Output(t, terraformOptions, "codebuild_role_id")
 	// Verify we're getting back the outputs we expect
-	expectedCodebuildRoleId := "eg-test-ecs-web-app-" + attributes[0] + "-build"
+	expectedCodebuildRoleId := "eg-test-ecs-web-app-build-" + attributes[0]
 	assert.Equal(t, expectedCodebuildRoleId, codebuildRoleId)
 
 	// Run `terraform output` to get the value of an output variable
 	codepipelineId := terraform.Output(t, terraformOptions, "codepipeline_id")
 	// Verify we're getting back the outputs we expect
-	expectedCodepipelineId := "eg-test-ecs-web-app-codepipeline-" + attributes[0]
+	expectedCodepipelineId := "eg-test-ecs-web-app-" + attributes[0] + "-codepipeline"
 	assert.Equal(t, expectedCodepipelineId, codepipelineId)
 
 	// Run `terraform output` to get the value of an output variable
@@ -130,13 +130,13 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	ecsTaskRoleName := terraform.Output(t, terraformOptions, "ecs_task_role_name")
 	// Verify we're getting back the outputs we expect
-	expectedEcsTaskRoleName := "eg-test-ecs-web-app-task-" + attributes[0]
+	expectedEcsTaskRoleName := "eg-test-ecs-web-app-" + attributes[0] + "-task"
 	assert.Equal(t, expectedEcsTaskRoleName, ecsTaskRoleName)
 
 	// Run `terraform output` to get the value of an output variable
 	ecsTaskExecRoleName := terraform.Output(t, terraformOptions, "ecs_task_exec_role_name")
 	// Verify we're getting back the outputs we expect
-	expectedEcsTaskExecRoleName := "eg-test-ecs-web-app-exec-" + attributes[0]
+	expectedEcsTaskExecRoleName := "eg-test-ecs-web-app-" + attributes[0] + "-exec"
 	assert.Equal(t, expectedEcsTaskExecRoleName, ecsTaskExecRoleName)
 
 	// Run `terraform output` to get the value of an output variable
@@ -148,7 +148,7 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	ecsExecRolePolicyName := terraform.Output(t, terraformOptions, "ecs_exec_role_policy_name")
 	// Verify we're getting back the outputs we expect
-	expectedEcsExecRolePolicyName := "eg-test-ecs-web-app-exec-" + attributes[0]
+	expectedEcsExecRolePolicyName := "eg-test-ecs-web-app-" + attributes[0] + "-exec"
 	assert.Equal(t, expectedEcsExecRolePolicyName, ecsExecRolePolicyName)
 
 	// Run `terraform output` to get the value of an output variable
