@@ -52,6 +52,7 @@ module "alb" {
 # ECS Cluster (needed even if using FARGATE launch type)
 resource "aws_ecs_cluster" "default" {
   name = module.this.id
+  tags = module.this.tags
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -59,6 +60,7 @@ resource "aws_ecs_cluster" "default" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
+  #bridgecrew:skip=BC_AWS_LOGGING_21:Skipping `Ensure CloudWatch logs are encrypted at rest using KMS CMKs` in example/test modules
   name              = module.this.id
   tags              = module.this.tags
   retention_in_days = 90
