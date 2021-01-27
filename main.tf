@@ -161,7 +161,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.23.0"
+  version = "0.24.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
@@ -181,6 +181,10 @@ module "ecs_codepipeline" {
   ecs_cluster_name            = var.ecs_cluster_name
   privileged_mode             = true
   poll_source_changes         = var.poll_source_changes
+
+  secondary_artifact_bucket_id          = var.codepipeline_cdn_bucket_id
+  secondary_artifact_encryption_enabled = var.codepipeline_cdn_bucket_encryption_enabled
+  secondary_artifact_identifier         = var.codepipeline_cdn_bucket_buildspec_identifier
 
   webhook_enabled             = var.webhook_enabled
   webhook_target_action       = var.webhook_target_action

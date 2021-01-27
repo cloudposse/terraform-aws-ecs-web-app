@@ -179,7 +179,7 @@ Available targets:
 | ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
 | ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
 | ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
-| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.23.0 |
+| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.24.0 |
 | this | cloudposse/label/null | 0.24.1 |
 
 ## Resources
@@ -255,6 +255,9 @@ Available targets:
 | cloudwatch\_log\_group\_enabled | A boolean to disable cloudwatch log group creation | `bool` | `true` | no |
 | codepipeline\_build\_cache\_bucket\_suffix\_enabled | The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache\_type is 'S3' | `bool` | `true` | no |
 | codepipeline\_build\_compute\_type | `CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE` | `string` | `"BUILD_GENERAL1_SMALL"` | no |
+| codepipeline\_cdn\_bucket\_buildspec\_identifier | Identifier for buildspec section controlling the optional CDN asset deployment. | `string` | `null` | no |
+| codepipeline\_cdn\_bucket\_encryption\_enabled | If set to true, enable encryption on the optional CDN asset deployment bucket | `bool` | `false` | no |
+| codepipeline\_cdn\_bucket\_id | Optional bucket for static asset deployment. If specified, the buildspec must include a secondary artifacts section which controls the files deployed to the bucket [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | `string` | `null` | no |
 | codepipeline\_enabled | A boolean to enable/disable AWS Codepipeline and ECR | `bool` | `true` | no |
 | codepipeline\_s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
 | command | The command that is passed to the container | `list(string)` | `null` | no |
