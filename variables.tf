@@ -433,7 +433,7 @@ variable "aws_logs_prefix" {
 variable "log_retention_in_days" {
   type        = number
   description = "The number of days to retain logs for the log group"
-  default     = null
+  default     = 90
 }
 
 variable "log_driver" {

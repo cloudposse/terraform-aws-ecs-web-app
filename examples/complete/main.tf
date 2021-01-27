@@ -46,12 +46,17 @@ module "alb" {
 resource "aws_ecs_cluster" "default" {
   name = module.this.id
   tags = module.this.tags
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_sns_topic" "sns_topic" {
-  name         = module.this.id
-  display_name = "Test terraform-aws-ecs-web-app"
-  tags         = module.this.tags
+  name              = module.this.id
+  display_name      = "Test terraform-aws-ecs-web-app"
+  tags              = module.this.tags
+  kms_master_key_id = "alias/aws/sns"
 }
 
 module "ecs_web_app" {
