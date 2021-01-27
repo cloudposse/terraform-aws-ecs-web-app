@@ -756,22 +756,10 @@ variable "alb_ingress_unauthenticated_listener_arns" {
   default     = []
 }
 
-variable "alb_ingress_unauthenticated_listener_arns_count" {
-  type        = number
-  description = "The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
-}
-
 variable "alb_ingress_authenticated_listener_arns" {
   type        = list(string)
   description = "A list of authenticated ALB listener ARNs to attach ALB listener rules to"
   default     = []
-}
-
-variable "alb_ingress_authenticated_listener_arns_count" {
-  type        = number
-  description = "The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed"
-  default     = 0
 }
 
 variable "authentication_type" {
@@ -799,9 +787,9 @@ variable "authentication_cognito_user_pool_domain" {
 }
 
 variable "authentication_cognito_scope" {
-  type        = list(string)
+  type        = string
   description = "Cognito scope"
-  default     = []
+  default     = null
 }
 
 variable "authentication_oidc_client_id" {
@@ -841,9 +829,9 @@ variable "authentication_oidc_user_info_endpoint" {
 }
 
 variable "authentication_oidc_scope" {
-  type        = list(string)
+  type        = string
   description = "OIDC scope"
-  default     = []
+  default     = null
 }
 
 variable "codepipeline_build_cache_bucket_suffix_enabled" {

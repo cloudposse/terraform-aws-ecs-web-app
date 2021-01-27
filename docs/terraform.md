@@ -16,7 +16,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| alb_ingress | cloudposse/alb-ingress/aws | 0.20.0 |
+| alb_ingress | cloudposse/alb-ingress/aws | 0.22.1 |
 | alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
 | container_definition | cloudposse/ecs-container-definition/aws | 0.49.2 |
 | ecr | cloudposse/ecr/aws | 0.32.2 |
@@ -30,7 +30,7 @@
 
 | Name |
 |------|
-| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/cloudwatch_log_group) |
+| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) |
 
 ## Inputs
 
@@ -41,7 +41,6 @@
 | alb\_container\_name | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
 | alb\_ingress\_authenticated\_hosts | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | alb\_ingress\_authenticated\_listener\_arns | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| alb\_ingress\_authenticated\_listener\_arns\_count | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
 | alb\_ingress\_authenticated\_paths | Authenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | alb\_ingress\_enable\_default\_target\_group | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
 | alb\_ingress\_healthcheck\_path | The path of the healthcheck which the ALB checks | `string` | `"/"` | no |
@@ -51,7 +50,6 @@
 | alb\_ingress\_target\_group\_arn | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
 | alb\_ingress\_unauthenticated\_hosts | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | alb\_ingress\_unauthenticated\_listener\_arns | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| alb\_ingress\_unauthenticated\_listener\_arns\_count | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
 | alb\_ingress\_unauthenticated\_paths | Unauthenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | alb\_security\_group | Security group of the ALB | `string` | n/a | yes |
 | alb\_target\_group\_alarms\_3xx\_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
@@ -66,7 +64,7 @@
 | alb\_target\_group\_alarms\_response\_time\_threshold | The maximum ALB Target Group response time | `number` | `0.5` | no |
 | assign\_public\_ip | Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false` | `bool` | `false` | no |
 | attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
-| authentication\_cognito\_scope | Cognito scope | `list(string)` | `[]` | no |
+| authentication\_cognito\_scope | Cognito scope | `string` | `null` | no |
 | authentication\_cognito\_user\_pool\_arn | Cognito User Pool ARN | `string` | `""` | no |
 | authentication\_cognito\_user\_pool\_client\_id | Cognito User Pool Client ID | `string` | `""` | no |
 | authentication\_cognito\_user\_pool\_domain | Cognito User Pool Domain. The User Pool Domain should be set to the domain prefix (`xxx`) instead of full domain (https://xxx.auth.us-west-2.amazoncognito.com) | `string` | `""` | no |
@@ -74,7 +72,7 @@
 | authentication\_oidc\_client\_id | OIDC Client ID | `string` | `""` | no |
 | authentication\_oidc\_client\_secret | OIDC Client Secret | `string` | `""` | no |
 | authentication\_oidc\_issuer | OIDC Issuer | `string` | `""` | no |
-| authentication\_oidc\_scope | OIDC scope | `list(string)` | `[]` | no |
+| authentication\_oidc\_scope | OIDC scope | `string` | `null` | no |
 | authentication\_oidc\_token\_endpoint | OIDC Token Endpoint | `string` | `""` | no |
 | authentication\_oidc\_user\_info\_endpoint | OIDC User Info Endpoint | `string` | `""` | no |
 | authentication\_type | Authentication type. Supported values are `COGNITO` and `OIDC` | `string` | `""` | no |
