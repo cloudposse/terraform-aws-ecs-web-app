@@ -19,7 +19,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.17.0"
+  version = "0.18.0"
 
   vpc_id                       = var.vpc_id
   port                         = var.container_port
