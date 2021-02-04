@@ -146,6 +146,7 @@ output "cloudwatch_log_group_name" {
 output "codebuild" {
   description = "All outputs from `module.ecs_codepipeline`"
   value       = module.ecs_codepipeline
+  sensitive   = true
 }
 
 output "codebuild_project_name" {
