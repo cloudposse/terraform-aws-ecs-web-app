@@ -158,7 +158,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.19.0"
+  version = "0.21.0"
 
   region                = var.region
   github_oauth_token    = var.github_oauth_token
