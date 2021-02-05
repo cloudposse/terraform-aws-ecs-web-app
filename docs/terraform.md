@@ -5,9 +5,6 @@
 |------|---------|
 | terraform | >= 0.12.26 |
 | aws | >= 2.0 |
-| local | >= 1.3 |
-| null | >= 2.0 |
-| template | >= 2.0 |
 
 ## Providers
 
@@ -136,7 +133,7 @@
 | label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
 | launch\_type | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
 | log\_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
-| log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `null` | no |
+| log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `90` | no |
 | map\_container\_environment | The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment` | `map(string)` | `null` | no |
 | mount\_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `[]` | no |
 | name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
