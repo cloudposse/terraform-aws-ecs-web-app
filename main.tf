@@ -289,7 +289,7 @@ module "ecs_cloudwatch_sns_alarms" {
 
 module "alb_target_group_cloudwatch_sns_alarms" {
   source  = "cloudposse/alb-target-group-cloudwatch-sns-alarms/aws"
-  version = "0.13.0"
+  version = "0.15.0"
   enabled = var.alb_target_group_alarms_enabled
 
   alarm_actions                  = var.alb_target_group_alarms_alarm_actions
