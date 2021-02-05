@@ -1,6 +1,6 @@
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.29.2"
+  version = "0.32.1"
   enabled = var.codepipeline_enabled
 
   attributes          = ["ecr"]
