@@ -109,7 +109,6 @@ module "ecs_web_app" {
   codepipeline_enabled                 = var.codepipeline_enabled
   badge_enabled                        = var.codepipeline_badge_enabled
   github_oauth_token                   = var.codepipeline_github_oauth_token
-  github_webhooks_anonymous            = var.codepipeline_github_webhooks_anonymous
   github_webhooks_token                = var.codepipeline_github_webhooks_token
   github_webhook_events                = var.codepipeline_github_webhook_events
   repo_owner                           = var.codepipeline_repo_owner

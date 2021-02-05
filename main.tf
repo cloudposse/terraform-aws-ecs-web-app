@@ -19,7 +19,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.19.1"
+  version = "0.18.0"
 
   vpc_id                       = var.vpc_id
   port                         = var.container_port
@@ -59,7 +59,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.49.0"
+  version                      = "0.47.0"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -125,7 +125,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.46.1"
+  version = "0.44.1"
 
   alb_security_group                = var.alb_security_group
   use_alb_security_group            = var.use_alb_security_group
@@ -158,11 +158,10 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.19.0"
+  version = "0.21.0"
 
   region                = var.region
   github_oauth_token    = var.github_oauth_token
-  github_anonymous      = var.github_webhooks_anonymous
   github_webhooks_token = var.github_webhooks_token
   github_webhook_events = var.github_webhook_events
   repo_owner            = var.repo_owner
@@ -203,7 +202,7 @@ module "ecs_codepipeline" {
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
   source                = "cloudposse/ecs-cloudwatch-autoscaling/aws"
-  version               = "0.6.3"
+  version               = "0.5.1"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
