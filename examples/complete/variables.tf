@@ -307,12 +307,6 @@ variable "codepipeline_github_webhooks_token" {
   default     = ""
 }
 
-variable "codepipeline_github_webhooks_anonymous" {
-  type        = bool
-  default     = false
-  description = "Github Anonymous API (if `true`, token must not be set as GITHUB_TOKEN or `github_webhooks_token`)"
-}
-
 variable "codepipeline_github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"

@@ -130,6 +130,4 @@ codepipeline_build_image = "aws/codebuild/docker:17.09.0"
 
 codepipeline_build_timeout = 20
 
-codepipeline_github_webhooks_anonymous = true
-
 container_environment = []
