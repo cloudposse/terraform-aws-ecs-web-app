@@ -896,3 +896,9 @@ variable "deployment_controller_type" {
   description = "Type of deployment controller. Valid values are CODE_DEPLOY and ECS"
   default     = "ECS"
 }
+
+variable "ecr_image_tag_mutability" {
+  type        = string
+  default     = "IMMUTABLE"
+  description = "The tag mutability setting for the ecr repository. Must be one of: `MUTABLE` or `IMMUTABLE`"
+}
