@@ -3,7 +3,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "git::https://github.com/cloudposse/terraform-aws-vpc.git?ref=tags/0.18.0"
+  source  = "cloudposse/vpc/aws"
+  version = "0.18.0"
 
   cidr_block = "172.16.0.0/16"
 
@@ -18,7 +19,8 @@ locals {
 }
 
 module "subnets" {
-  source                   = "git::https://github.com/cloudposse/terraform-aws-dynamic-subnets.git?ref=tags/0.32.0"
+  source                   = "cloudposse/dynamic-subnets/aws"
+  version                  = "0.32.0"
   availability_zones       = local.availability_zones
   vpc_id                   = module.vpc.vpc_id
   igw_id                   = module.vpc.igw_id
@@ -32,7 +34,8 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "git::https://github.com/cloudposse/terraform-aws-alb.git?ref=tags/0.23.0"
+  source                                  = "cloudposse/alb/aws"
+  version                                 = "0.23.0"
   vpc_id                                  = module.vpc.vpc_id
   security_group_ids                      = [module.vpc.vpc_default_security_group_id]
   subnet_ids                              = module.subnets.public_subnet_ids
@@ -50,11 +53,18 @@ module "alb" {
 # ECS Cluster (needed even if using FARGATE launch type)
 resource "aws_ecs_cluster" "default" {
   name = module.this.id
+  tags = module.this.tags
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  name = module.this.id
-  tags = module.this.tags
+  #bridgecrew:skip=BC_AWS_LOGGING_21:Skipping `Ensure CloudWatch logs are encrypted at rest using KMS CMKs` in example/test modules
+  name              = module.this.id
+  tags              = module.this.tags
+  retention_in_days = 90
 }
 
 module "web_app" {

@@ -433,7 +433,7 @@ variable "aws_logs_prefix" {
 variable "log_retention_in_days" {
   type        = number
   description = "The number of days to retain logs for the log group"
-  default     = null
+  default     = 90
 }
 
 variable "log_driver" {
@@ -605,12 +605,6 @@ variable "github_webhooks_token" {
   type        = string
   description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
-}
-
-variable "github_webhooks_anonymous" {
-  type        = bool
-  default     = false
-  description = "Github Anonymous API (if `true`, token must not be set as GITHUB_TOKEN or `github_webhooks_token`)"
 }
 
 variable "github_webhook_events" {

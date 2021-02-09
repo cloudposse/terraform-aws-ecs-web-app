@@ -51,16 +51,19 @@ output "alb_ingress_target_group_arn_suffix" {
 output "container_definition" {
   description = "All outputs from `module.container_definition`"
   value       = module.container_definition
+  sensitive   = true
 }
 
 output "container_definition_json" {
   description = "JSON encoded list of container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.container_definition.json_map_encoded_list
+  sensitive   = true
 }
 
 output "container_definition_json_map" {
   description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.container_definition.json_map_encoded
+  sensitive   = true
 }
 
 output "ecs_alb_service_task" {
@@ -146,6 +149,7 @@ output "cloudwatch_log_group_name" {
 output "codebuild" {
   description = "All outputs from `module.ecs_codepipeline`"
   value       = module.ecs_codepipeline
+  sensitive   = true
 }
 
 output "codebuild_project_name" {
