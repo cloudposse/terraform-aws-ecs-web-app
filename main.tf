@@ -3,8 +3,9 @@ module "ecr" {
   version = "0.32.2"
   enabled = var.codepipeline_enabled
 
-  attributes          = ["ecr"]
-  scan_images_on_push = var.ecr_scan_images_on_push
+  attributes           = ["ecr"]
+  scan_images_on_push  = var.ecr_scan_images_on_push
+  image_tag_mutability = var.ecr_image_tag_mutability
 
   context = module.this.context
 }
