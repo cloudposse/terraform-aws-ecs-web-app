@@ -19,7 +19,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.18.0"
+  version = "0.20.0"
 
   vpc_id                       = var.vpc_id
   port                         = var.container_port
@@ -59,7 +59,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.47.0"
+  version                      = "0.49.2"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -125,7 +125,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.44.1"
+  version = "0.47.0"
 
   alb_security_group                = var.alb_security_group
   use_alb_security_group            = var.use_alb_security_group
@@ -226,7 +226,7 @@ locals {
 
 module "ecs_cloudwatch_sns_alarms" {
   source  = "cloudposse/ecs-cloudwatch-sns-alarms/aws"
-  version = "0.11.1"
+  version = "0.12.0"
   enabled = var.ecs_alarms_enabled
 
   cluster_name = var.ecs_cluster_name
