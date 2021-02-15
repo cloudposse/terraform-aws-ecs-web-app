@@ -168,6 +168,26 @@ Available targets:
 |------|---------|
 | aws | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| alb_ingress | cloudposse/alb-ingress/aws | 0.20.0 |
+| alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
+| container_definition | cloudposse/ecs-container-definition/aws | 0.49.2 |
+| ecr | cloudposse/ecr/aws | 0.32.2 |
+| ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
+| ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
+| ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
+| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.23.0 |
+| this | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name |
+|------|
+| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/cloudwatch_log_group) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -396,7 +416,6 @@ Available targets:
 | httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 5xx count CloudWatch metric alarm ID |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn | ALB Target Group response time average CloudWatch metric alarm ARN |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id | ALB Target Group response time average CloudWatch metric alarm ID |
-
 <!-- markdownlint-restore -->
 
 
