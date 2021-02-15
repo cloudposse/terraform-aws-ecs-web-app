@@ -846,6 +846,12 @@ variable "authentication_oidc_scope" {
   default     = []
 }
 
+variable "codepipeline_build_cache_bucket_suffix_enabled" {
+  type        = bool
+  description = "The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache_type is 'S3'"
+  default     = true
+}
+
 variable "codepipeline_build_compute_type" {
   type        = string
   default     = "BUILD_GENERAL1_SMALL"
