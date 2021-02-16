@@ -12,6 +12,26 @@
 |------|---------|
 | aws | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| alb_ingress | cloudposse/alb-ingress/aws | 0.20.0 |
+| alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
+| container_definition | cloudposse/ecs-container-definition/aws | 0.49.2 |
+| ecr | cloudposse/ecr/aws | 0.32.2 |
+| ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
+| ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
+| ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
+| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.23.0 |
+| this | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name |
+|------|
+| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/cloudwatch_log_group) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -76,6 +96,7 @@
 | buildspec | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | `string` | `""` | no |
 | capacity\_provider\_strategies | The capacity provider strategies to use for the service. See `capacity_provider_strategy` configuration block: https://www.terraform.io/docs/providers/aws/r/ecs_service.html#capacity_provider_strategy | <pre>list(object({<br>    capacity_provider = string<br>    weight            = number<br>    base              = number<br>  }))</pre> | `[]` | no |
 | cloudwatch\_log\_group\_enabled | A boolean to disable cloudwatch log group creation | `bool` | `true` | no |
+| codepipeline\_build\_cache\_bucket\_suffix\_enabled | The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache\_type is 'S3' | `bool` | `true` | no |
 | codepipeline\_build\_compute\_type | `CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE` | `string` | `"BUILD_GENERAL1_SMALL"` | no |
 | codepipeline\_enabled | A boolean to enable/disable AWS Codepipeline and ECR | `bool` | `true` | no |
 | codepipeline\_s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
@@ -240,5 +261,4 @@
 | httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 5xx count CloudWatch metric alarm ID |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn | ALB Target Group response time average CloudWatch metric alarm ARN |
 | target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id | ALB Target Group response time average CloudWatch metric alarm ID |
-
 <!-- markdownlint-restore -->
