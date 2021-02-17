@@ -16,7 +16,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| alb_ingress | cloudposse/alb-ingress/aws | 0.20.0 |
+| alb_ingress | cloudposse/alb-ingress/aws | 0.20.1 |
 | alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
 | container_definition | cloudposse/ecs-container-definition/aws | 0.49.2 |
 | ecr | cloudposse/ecr/aws | 0.32.2 |
