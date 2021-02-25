@@ -125,8 +125,7 @@ module "web_app" {
   alb_ingress_healthcheck_path = "/"
 
   # NOTE: Cognito and OIDC authentication only supported on HTTPS endpoints; here we provide `https_listener_arn` from ALB
-  alb_ingress_authenticated_listener_arns       = module.alb.https_listener_arn
-  alb_ingress_authenticated_listener_arns_count = 1
+  alb_ingress_authenticated_listener_arns = module.alb.https_listener_arn
 
   # Unauthenticated paths (with higher priority than the authenticated paths)
   alb_ingress_unauthenticated_paths             = ["/events"]
