@@ -462,6 +462,7 @@ variable "ecs_cluster_arn" {
 variable "ecs_cluster_name" {
   type        = string
   description = "The ECS Cluster Name to use in ECS Code Pipeline Deployment step"
+  default     = null
 }
 
 variable "ecs_alarms_cpu_utilization_high_threshold" {
