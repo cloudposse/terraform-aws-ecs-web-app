@@ -424,6 +424,7 @@ variable "aws_logs_region" {
   type        = string
   description = "The region for the AWS Cloudwatch Logs group"
   default     = null
+}
 
 variable "aws_logs_prefix" {
   type        = string
