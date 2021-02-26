@@ -1,6 +1,7 @@
 variable "region" {
   type        = string
   description = "AWS Region for S3 bucket"
+  default     = null
 }
 
 variable "codepipeline_enabled" {
@@ -422,7 +423,7 @@ variable "vpc_id" {
 variable "aws_logs_region" {
   type        = string
   description = "The region for the AWS Cloudwatch Logs group"
-}
+  default     = null
 
 variable "aws_logs_prefix" {
   type        = string
