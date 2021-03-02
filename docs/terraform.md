@@ -20,7 +20,7 @@
 | alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
 | container_definition | cloudposse/ecs-container-definition/aws | 0.49.2 |
 | ecr | cloudposse/ecr/aws | 0.32.2 |
-| ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
+| ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.54.1 |
 | ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
 | ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
 | ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.23.0 |
