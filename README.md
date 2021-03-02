@@ -186,7 +186,8 @@ Available targets:
 
 | Name |
 |------|
-| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/cloudwatch_log_group) |
+| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) |
+| [aws_region](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) |
 
 ## Inputs
 
@@ -243,7 +244,7 @@ Available targets:
 | autoscaling\_scale\_up\_adjustment | Scaling adjustment to make during scale up event | `number` | `1` | no |
 | autoscaling\_scale\_up\_cooldown | Period (in seconds) to wait between scale up events | `number` | `60` | no |
 | aws\_logs\_prefix | Custom AWS Logs prefix. If empty name from label module will be used | `string` | `""` | no |
-| aws\_logs\_region | The region for the AWS Cloudwatch Logs group | `string` | n/a | yes |
+| aws\_logs\_region | The region for the AWS Cloudwatch Logs group | `string` | `null` | no |
 | badge\_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge\_url attribute when enabled | `bool` | `false` | no |
 | branch | Branch of the GitHub repository, e.g. `master` | `string` | `""` | no |
 | build\_environment\_variables | A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build | <pre>list(object(<br>    {<br>      name  = string<br>      value = string<br>  }))</pre> | `[]` | no |
@@ -294,7 +295,7 @@ Available targets:
 | ecs\_alarms\_memory\_utilization\_low\_period | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
 | ecs\_alarms\_memory\_utilization\_low\_threshold | The minimum percentage of Memory utilization average | `number` | `20` | no |
 | ecs\_cluster\_arn | The ECS Cluster ARN where ECS Service will be provisioned | `string` | n/a | yes |
-| ecs\_cluster\_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | n/a | yes |
+| ecs\_cluster\_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | `null` | no |
 | ecs\_private\_subnet\_ids | List of Private Subnet IDs to provision ECS Service onto | `list(string)` | n/a | yes |
 | ecs\_security\_group\_ids | Additional Security Group IDs to allow into ECS Service | `list(string)` | `[]` | no |
 | enabled | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
@@ -327,7 +328,7 @@ Available targets:
 | port\_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | <pre>list(object({<br>    containerPort = number<br>    hostPort      = number<br>    protocol      = string<br>  }))</pre> | <pre>[<br>  {<br>    "containerPort": 80,<br>    "hostPort": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
 | privileged | When this variable is `true`, the container is given elevated privileges on the host container instance (similar to the root user). This parameter is not supported for Windows containers or tasks using the Fargate launch type. Due to how Terraform type casts booleans in json it is required to double quote this value | `string` | `null` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
-| region | AWS Region for S3 bucket | `string` | n/a | yes |
+| region | AWS Region for S3 bucket | `string` | `null` | no |
 | repo\_name | GitHub repository name of the application to be built and deployed to ECS | `string` | `""` | no |
 | repo\_owner | GitHub Organization or Username | `string` | `""` | no |
 | secrets | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
