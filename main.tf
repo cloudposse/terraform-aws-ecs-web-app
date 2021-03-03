@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.32.2"
@@ -82,7 +84,7 @@ module "container_definition" {
   log_configuration = var.cloudwatch_log_group_enabled ? {
     logDriver = var.log_driver
     options = {
-      "awslogs-region"        = var.aws_logs_region
+      "awslogs-region"        = coalesce(var.aws_logs_region, data.aws_region.current.name)
       "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
       "awslogs-stream-prefix" = var.aws_logs_prefix == "" ? module.this.name : var.aws_logs_prefix
     }
@@ -159,7 +161,7 @@ module "ecs_codepipeline" {
   source  = "cloudposse/ecs-codepipeline/aws"
   version = "0.23.0"
 
-  region                      = var.region
+  region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
   github_webhooks_token       = var.github_webhooks_token
   github_webhook_events       = var.github_webhook_events
