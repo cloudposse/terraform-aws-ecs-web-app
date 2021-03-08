@@ -124,7 +124,7 @@ module "default_backend_web_app" {
   alb_ingress_unauthenticated_paths               = ["/*"]
   codepipeline_enabled                            = false
 
-  container_environment = [
+  environment = [
     {
       name = "COOKIE"
       value = "cookiemonster"
