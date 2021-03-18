@@ -23,7 +23,7 @@
 | ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
 | ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
 | ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
-| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.23.0 |
+| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.24.0 |
 | this | cloudposse/label/null | 0.24.1 |
 
 ## Resources
