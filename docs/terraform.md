@@ -3,263 +3,263 @@
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13.0 |
-| aws | >= 2.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| alb_ingress | cloudposse/alb-ingress/aws | 0.20.0 |
-| alb_target_group_cloudwatch_sns_alarms | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
-| container_definition | cloudposse/ecs-container-definition/aws | 0.55.0 |
-| ecr | cloudposse/ecr/aws | 0.32.2 |
-| ecs_alb_service_task | cloudposse/ecs-alb-service-task/aws | 0.47.0 |
-| ecs_cloudwatch_autoscaling | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
-| ecs_cloudwatch_sns_alarms | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
-| ecs_codepipeline | cloudposse/ecs-codepipeline/aws | 0.24.0 |
-| this | cloudposse/label/null | 0.24.1 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.20.0 |
+| <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.15.0 |
+| <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.55.0 |
+| <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.32.2 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.54.2 |
+| <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
+| <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
+| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.24.0 |
+| <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.24.1 |
 
 ## Resources
 
-| Name |
-|------|
-| [aws_cloudwatch_log_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) |
-| [aws_region](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) |
+| Name | Type |
+|------|------|
+| [aws_cloudwatch_log_group.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
+| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| additional\_tag\_map | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
-| alb\_arn\_suffix | ARN suffix of the ALB for the Target Group | `string` | `""` | no |
-| alb\_container\_name | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
-| alb\_ingress\_authenticated\_hosts | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
-| alb\_ingress\_authenticated\_listener\_arns | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| alb\_ingress\_authenticated\_listener\_arns\_count | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
-| alb\_ingress\_authenticated\_paths | Authenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
-| alb\_ingress\_enable\_default\_target\_group | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
-| alb\_ingress\_healthcheck\_path | The path of the healthcheck which the ALB checks | `string` | `"/"` | no |
-| alb\_ingress\_healthcheck\_protocol | The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda` | `string` | `"HTTP"` | no |
-| alb\_ingress\_listener\_authenticated\_priority | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `300` | no |
-| alb\_ingress\_listener\_unauthenticated\_priority | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `1000` | no |
-| alb\_ingress\_target\_group\_arn | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
-| alb\_ingress\_unauthenticated\_hosts | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
-| alb\_ingress\_unauthenticated\_listener\_arns | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| alb\_ingress\_unauthenticated\_listener\_arns\_count | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
-| alb\_ingress\_unauthenticated\_paths | Unauthenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
-| alb\_security\_group | Security group of the ALB | `string` | n/a | yes |
-| alb\_target\_group\_alarms\_3xx\_threshold | The maximum number of 3XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
-| alb\_target\_group\_alarms\_4xx\_threshold | The maximum number of 4XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
-| alb\_target\_group\_alarms\_5xx\_threshold | The maximum number of 5XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
-| alb\_target\_group\_alarms\_alarm\_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state | `list(string)` | `[]` | no |
-| alb\_target\_group\_alarms\_enabled | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics | `bool` | `false` | no |
-| alb\_target\_group\_alarms\_evaluation\_periods | The number of periods to analyze for ALB CloudWatch Alarms | `number` | `1` | no |
-| alb\_target\_group\_alarms\_insufficient\_data\_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT\_DATA state from any other state | `list(string)` | `[]` | no |
-| alb\_target\_group\_alarms\_ok\_actions | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state | `list(string)` | `[]` | no |
-| alb\_target\_group\_alarms\_period | The period (in seconds) to analyze for ALB CloudWatch Alarms | `number` | `300` | no |
-| alb\_target\_group\_alarms\_response\_time\_threshold | The maximum ALB Target Group response time | `number` | `0.5` | no |
-| assign\_public\_ip | Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false` | `bool` | `false` | no |
-| attributes | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
-| authentication\_cognito\_scope | Cognito scope | `list(string)` | `[]` | no |
-| authentication\_cognito\_user\_pool\_arn | Cognito User Pool ARN | `string` | `""` | no |
-| authentication\_cognito\_user\_pool\_client\_id | Cognito User Pool Client ID | `string` | `""` | no |
-| authentication\_cognito\_user\_pool\_domain | Cognito User Pool Domain. The User Pool Domain should be set to the domain prefix (`xxx`) instead of full domain (https://xxx.auth.us-west-2.amazoncognito.com) | `string` | `""` | no |
-| authentication\_oidc\_authorization\_endpoint | OIDC Authorization Endpoint | `string` | `""` | no |
-| authentication\_oidc\_client\_id | OIDC Client ID | `string` | `""` | no |
-| authentication\_oidc\_client\_secret | OIDC Client Secret | `string` | `""` | no |
-| authentication\_oidc\_issuer | OIDC Issuer | `string` | `""` | no |
-| authentication\_oidc\_scope | OIDC scope | `list(string)` | `[]` | no |
-| authentication\_oidc\_token\_endpoint | OIDC Token Endpoint | `string` | `""` | no |
-| authentication\_oidc\_user\_info\_endpoint | OIDC User Info Endpoint | `string` | `""` | no |
-| authentication\_type | Authentication type. Supported values are `COGNITO` and `OIDC` | `string` | `""` | no |
-| autoscaling\_dimension | Dimension to autoscale on (valid options: cpu, memory) | `string` | `"memory"` | no |
-| autoscaling\_enabled | A boolean to enable/disable Autoscaling policy for ECS Service | `bool` | `false` | no |
-| autoscaling\_max\_capacity | Maximum number of running instances of a Service | `number` | `2` | no |
-| autoscaling\_min\_capacity | Minimum number of running instances of a Service | `number` | `1` | no |
-| autoscaling\_scale\_down\_adjustment | Scaling adjustment to make during scale down event | `number` | `-1` | no |
-| autoscaling\_scale\_down\_cooldown | Period (in seconds) to wait between scale down events | `number` | `300` | no |
-| autoscaling\_scale\_up\_adjustment | Scaling adjustment to make during scale up event | `number` | `1` | no |
-| autoscaling\_scale\_up\_cooldown | Period (in seconds) to wait between scale up events | `number` | `60` | no |
-| aws\_logs\_prefix | Custom AWS Logs prefix. If empty name from label module will be used | `string` | `""` | no |
-| aws\_logs\_region | The region for the AWS Cloudwatch Logs group | `string` | `null` | no |
-| badge\_enabled | Generates a publicly-accessible URL for the projects build badge. Available as badge\_url attribute when enabled | `bool` | `false` | no |
-| branch | Branch of the GitHub repository, e.g. `master` | `string` | `""` | no |
-| build\_environment\_variables | A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build | <pre>list(object(<br>    {<br>      name  = string<br>      value = string<br>  }))</pre> | `[]` | no |
-| build\_image | Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0` | `string` | `"aws/codebuild/docker:17.09.0"` | no |
-| build\_timeout | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed | `number` | `60` | no |
-| buildspec | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | `string` | `""` | no |
-| capacity\_provider\_strategies | The capacity provider strategies to use for the service. See `capacity_provider_strategy` configuration block: https://www.terraform.io/docs/providers/aws/r/ecs_service.html#capacity_provider_strategy | <pre>list(object({<br>    capacity_provider = string<br>    weight            = number<br>    base              = number<br>  }))</pre> | `[]` | no |
-| cloudwatch\_log\_group\_enabled | A boolean to disable cloudwatch log group creation | `bool` | `true` | no |
-| codepipeline\_build\_cache\_bucket\_suffix\_enabled | The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache\_type is 'S3' | `bool` | `true` | no |
-| codepipeline\_build\_compute\_type | `CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE` | `string` | `"BUILD_GENERAL1_SMALL"` | no |
-| codepipeline\_enabled | A boolean to enable/disable AWS Codepipeline and ECR | `bool` | `true` | no |
-| codepipeline\_s3\_bucket\_force\_destroy | A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
-| command | The command that is passed to the container | `list(string)` | `null` | no |
-| container\_cpu | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `256` | no |
-| container\_definition | Override the main container\_definition | `string` | `""` | no |
-| container\_environment | The environment variables to pass to the container. This is a list of maps | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `null` | no |
-| container\_image | The default container image to use in container definition | `string` | `"cloudposse/default-backend"` | no |
-| container\_memory | The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `512` | no |
-| container\_memory\_reservation | The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than `container_memory` if set | `number` | `128` | no |
-| container\_port | The port number on the container bound to assigned host\_port | `number` | `80` | no |
-| container\_start\_timeout | Time duration (in seconds) to wait before giving up on resolving dependencies for a container | `number` | `30` | no |
-| container\_stop\_timeout | Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own | `number` | `30` | no |
-| context | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |
-| delimiter | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
-| deployment\_controller\_type | Type of deployment controller. Valid values are CODE\_DEPLOY and ECS | `string` | `"ECS"` | no |
-| desired\_count | The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type) | `number` | `1` | no |
-| ecr\_image\_tag\_mutability | The tag mutability setting for the ecr repository. Must be one of: `MUTABLE` or `IMMUTABLE` | `string` | `"IMMUTABLE"` | no |
-| ecr\_scan\_images\_on\_push | Indicates whether images are scanned after being pushed to the repository (true) or not (false) | `bool` | `false` | no |
-| ecs\_alarms\_cpu\_utilization\_high\_alarm\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action | `list(string)` | `[]` | no |
-| ecs\_alarms\_cpu\_utilization\_high\_evaluation\_periods | Number of periods to evaluate for the alarm | `number` | `1` | no |
-| ecs\_alarms\_cpu\_utilization\_high\_ok\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action | `list(string)` | `[]` | no |
-| ecs\_alarms\_cpu\_utilization\_high\_period | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
-| ecs\_alarms\_cpu\_utilization\_high\_threshold | The maximum percentage of CPU utilization average | `number` | `80` | no |
-| ecs\_alarms\_cpu\_utilization\_low\_alarm\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low Alarm action | `list(string)` | `[]` | no |
-| ecs\_alarms\_cpu\_utilization\_low\_evaluation\_periods | Number of periods to evaluate for the alarm | `number` | `1` | no |
-| ecs\_alarms\_cpu\_utilization\_low\_ok\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low OK action | `list(string)` | `[]` | no |
-| ecs\_alarms\_cpu\_utilization\_low\_period | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
-| ecs\_alarms\_cpu\_utilization\_low\_threshold | The minimum percentage of CPU utilization average | `number` | `20` | no |
-| ecs\_alarms\_enabled | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics | `bool` | `false` | no |
-| ecs\_alarms\_memory\_utilization\_high\_alarm\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High Alarm action | `list(string)` | `[]` | no |
-| ecs\_alarms\_memory\_utilization\_high\_evaluation\_periods | Number of periods to evaluate for the alarm | `number` | `1` | no |
-| ecs\_alarms\_memory\_utilization\_high\_ok\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High OK action | `list(string)` | `[]` | no |
-| ecs\_alarms\_memory\_utilization\_high\_period | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
-| ecs\_alarms\_memory\_utilization\_high\_threshold | The maximum percentage of Memory utilization average | `number` | `80` | no |
-| ecs\_alarms\_memory\_utilization\_low\_alarm\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low Alarm action | `list(string)` | `[]` | no |
-| ecs\_alarms\_memory\_utilization\_low\_evaluation\_periods | Number of periods to evaluate for the alarm | `number` | `1` | no |
-| ecs\_alarms\_memory\_utilization\_low\_ok\_actions | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action | `list(string)` | `[]` | no |
-| ecs\_alarms\_memory\_utilization\_low\_period | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
-| ecs\_alarms\_memory\_utilization\_low\_threshold | The minimum percentage of Memory utilization average | `number` | `20` | no |
-| ecs\_cluster\_arn | The ECS Cluster ARN where ECS Service will be provisioned | `string` | n/a | yes |
-| ecs\_cluster\_name | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | `null` | no |
-| ecs\_private\_subnet\_ids | List of Private Subnet IDs to provision ECS Service onto | `list(string)` | n/a | yes |
-| ecs\_security\_group\_ids | Additional Security Group IDs to allow into ECS Service | `list(string)` | `[]` | no |
-| enabled | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
-| entrypoint | The entry point that is passed to the container | `list(string)` | `null` | no |
-| environment | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
-| github\_oauth\_token | GitHub Oauth Token with permissions to access private repositories | `string` | `""` | no |
-| github\_webhook\_events | A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/) | `list(string)` | <pre>[<br>  "push"<br>]</pre> | no |
-| github\_webhooks\_token | GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable | `string` | `""` | no |
-| health\_check\_grace\_period\_seconds | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200. Only valid for services configured to use load balancers | `number` | `0` | no |
-| healthcheck | A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | <pre>object({<br>    command     = list(string)<br>    retries     = number<br>    timeout     = number<br>    interval    = number<br>    startPeriod = number<br>  })</pre> | `null` | no |
-| id\_length\_limit | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
-| ignore\_changes\_task\_definition | Ignore changes (like environment variables) to the ECS task definition | `bool` | `true` | no |
-| init\_containers | A list of additional init containers to start. The map contains the container\_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY. | <pre>list(object({<br>    container_definition = any<br>    condition            = string<br>  }))</pre> | `[]` | no |
-| label\_key\_case | The letter case of label keys (`tag` names) (i.e. `name`, `namespace`, `environment`, `stage`, `attributes`) to use in `tags`.<br>Possible values: `lower`, `title`, `upper`.<br>Default value: `title`. | `string` | `null` | no |
-| label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
-| label\_value\_case | The letter case of output label values (also used in `tags` and `id`).<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Default value: `lower`. | `string` | `null` | no |
-| launch\_type | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
-| log\_driver | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
-| log\_retention\_in\_days | The number of days to retain logs for the log group | `number` | `90` | no |
-| map\_container\_environment | The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment` | `map(string)` | `null` | no |
-| mount\_points | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `[]` | no |
-| name | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
-| namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
-| nlb\_cidr\_blocks | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
-| nlb\_container\_name | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
-| nlb\_container\_port | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
-| nlb\_ingress\_target\_group\_arn | Target group ARN of the NLB ingress | `string` | `""` | no |
-| platform\_version | The platform version on which to run your service. Only applicable for launch\_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide. | `string` | `"LATEST"` | no |
-| poll\_source\_changes | Periodically check the location of your source content and run the pipeline if changes are detected | `bool` | `false` | no |
-| port\_mappings | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | <pre>list(object({<br>    containerPort = number<br>    hostPort      = number<br>    protocol      = string<br>  }))</pre> | <pre>[<br>  {<br>    "containerPort": 80,<br>    "hostPort": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
-| privileged | When this variable is `true`, the container is given elevated privileges on the host container instance (similar to the root user). This parameter is not supported for Windows containers or tasks using the Fargate launch type. Due to how Terraform type casts booleans in json it is required to double quote this value | `string` | `null` | no |
-| regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
-| region | AWS Region for S3 bucket | `string` | `null` | no |
-| repo\_name | GitHub repository name of the application to be built and deployed to ECS | `string` | `""` | no |
-| repo\_owner | GitHub Organization or Username | `string` | `""` | no |
-| secrets | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
-| service\_registries | The service discovery registries for the service. The maximum number of service\_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1 | <pre>list(object({<br>    registry_arn   = string<br>    port           = number<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
-| stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
-| system\_controls | A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = "", value = ""} | `list(map(string))` | `null` | no |
-| tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
-| task\_cpu | The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
-| task\_memory | The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
-| ulimits | The ulimits to configure for the container. This is a list of maps. Each map should contain "name", "softLimit" and "hardLimit" | <pre>list(object({<br>    name      = string<br>    softLimit = number<br>    hardLimit = number<br>  }))</pre> | `[]` | no |
-| use\_alb\_security\_group | A boolean to enable adding an ALB security group rule for the service task | `bool` | `false` | no |
-| use\_ecr\_image | If true, use ECR repo URL for image, otherwise use value in container\_image | `bool` | `false` | no |
-| use\_nlb\_cidr\_blocks | A flag to enable/disable adding the NLB ingress rule to the security group | `bool` | `false` | no |
-| volumes | Task volume definitions as list of configuration objects | <pre>list(object({<br>    host_path = string<br>    name      = string<br>    docker_volume_configuration = list(object({<br>      autoprovision = bool<br>      driver        = string<br>      driver_opts   = map(string)<br>      labels        = map(string)<br>      scope         = string<br>    }))<br>    efs_volume_configuration = list(object({<br>      file_system_id          = string<br>      root_directory          = string<br>      transit_encryption      = string<br>      transit_encryption_port = string<br>      authorization_config = list(object({<br>        access_point_id = string<br>        iam             = string<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
-| vpc\_id | The VPC ID where resources are created | `string` | n/a | yes |
-| webhook\_authentication | The type of authentication to use. One of IP, GITHUB\_HMAC, or UNAUTHENTICATED | `string` | `"GITHUB_HMAC"` | no |
-| webhook\_enabled | Set to false to prevent the module from creating any webhook resources | `bool` | `true` | no |
-| webhook\_filter\_json\_path | The JSON path to filter on | `string` | `"$.ref"` | no |
-| webhook\_filter\_match\_equals | The value to match on (e.g. refs/heads/{Branch}) | `string` | `"refs/heads/{Branch}"` | no |
-| webhook\_target\_action | The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline | `string` | `"Source"` | no |
+| <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional tags for appending to tags\_as\_list\_of\_maps. Not added to `tags`. | `map(string)` | `{}` | no |
+| <a name="input_alb_arn_suffix"></a> [alb\_arn\_suffix](#input\_alb\_arn\_suffix) | ARN suffix of the ALB for the Target Group | `string` | `""` | no |
+| <a name="input_alb_container_name"></a> [alb\_container\_name](#input\_alb\_container\_name) | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
+| <a name="input_alb_ingress_authenticated_hosts"></a> [alb\_ingress\_authenticated\_hosts](#input\_alb\_ingress\_authenticated\_hosts) | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
+| <a name="input_alb_ingress_authenticated_listener_arns"></a> [alb\_ingress\_authenticated\_listener\_arns](#input\_alb\_ingress\_authenticated\_listener\_arns) | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
+| <a name="input_alb_ingress_authenticated_listener_arns_count"></a> [alb\_ingress\_authenticated\_listener\_arns\_count](#input\_alb\_ingress\_authenticated\_listener\_arns\_count) | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
+| <a name="input_alb_ingress_authenticated_paths"></a> [alb\_ingress\_authenticated\_paths](#input\_alb\_ingress\_authenticated\_paths) | Authenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
+| <a name="input_alb_ingress_enable_default_target_group"></a> [alb\_ingress\_enable\_default\_target\_group](#input\_alb\_ingress\_enable\_default\_target\_group) | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
+| <a name="input_alb_ingress_healthcheck_path"></a> [alb\_ingress\_healthcheck\_path](#input\_alb\_ingress\_healthcheck\_path) | The path of the healthcheck which the ALB checks | `string` | `"/"` | no |
+| <a name="input_alb_ingress_healthcheck_protocol"></a> [alb\_ingress\_healthcheck\_protocol](#input\_alb\_ingress\_healthcheck\_protocol) | The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda` | `string` | `"HTTP"` | no |
+| <a name="input_alb_ingress_listener_authenticated_priority"></a> [alb\_ingress\_listener\_authenticated\_priority](#input\_alb\_ingress\_listener\_authenticated\_priority) | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `300` | no |
+| <a name="input_alb_ingress_listener_unauthenticated_priority"></a> [alb\_ingress\_listener\_unauthenticated\_priority](#input\_alb\_ingress\_listener\_unauthenticated\_priority) | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `1000` | no |
+| <a name="input_alb_ingress_target_group_arn"></a> [alb\_ingress\_target\_group\_arn](#input\_alb\_ingress\_target\_group\_arn) | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
+| <a name="input_alb_ingress_unauthenticated_hosts"></a> [alb\_ingress\_unauthenticated\_hosts](#input\_alb\_ingress\_unauthenticated\_hosts) | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
+| <a name="input_alb_ingress_unauthenticated_listener_arns"></a> [alb\_ingress\_unauthenticated\_listener\_arns](#input\_alb\_ingress\_unauthenticated\_listener\_arns) | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
+| <a name="input_alb_ingress_unauthenticated_listener_arns_count"></a> [alb\_ingress\_unauthenticated\_listener\_arns\_count](#input\_alb\_ingress\_unauthenticated\_listener\_arns\_count) | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
+| <a name="input_alb_ingress_unauthenticated_paths"></a> [alb\_ingress\_unauthenticated\_paths](#input\_alb\_ingress\_unauthenticated\_paths) | Unauthenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
+| <a name="input_alb_security_group"></a> [alb\_security\_group](#input\_alb\_security\_group) | Security group of the ALB | `string` | n/a | yes |
+| <a name="input_alb_target_group_alarms_3xx_threshold"></a> [alb\_target\_group\_alarms\_3xx\_threshold](#input\_alb\_target\_group\_alarms\_3xx\_threshold) | The maximum number of 3XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
+| <a name="input_alb_target_group_alarms_4xx_threshold"></a> [alb\_target\_group\_alarms\_4xx\_threshold](#input\_alb\_target\_group\_alarms\_4xx\_threshold) | The maximum number of 4XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
+| <a name="input_alb_target_group_alarms_5xx_threshold"></a> [alb\_target\_group\_alarms\_5xx\_threshold](#input\_alb\_target\_group\_alarms\_5xx\_threshold) | The maximum number of 5XX HTTPCodes in a given period for ECS Service | `number` | `25` | no |
+| <a name="input_alb_target_group_alarms_alarm_actions"></a> [alb\_target\_group\_alarms\_alarm\_actions](#input\_alb\_target\_group\_alarms\_alarm\_actions) | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an ALARM state from any other state | `list(string)` | `[]` | no |
+| <a name="input_alb_target_group_alarms_enabled"></a> [alb\_target\_group\_alarms\_enabled](#input\_alb\_target\_group\_alarms\_enabled) | A boolean to enable/disable CloudWatch Alarms for ALB Target metrics | `bool` | `false` | no |
+| <a name="input_alb_target_group_alarms_evaluation_periods"></a> [alb\_target\_group\_alarms\_evaluation\_periods](#input\_alb\_target\_group\_alarms\_evaluation\_periods) | The number of periods to analyze for ALB CloudWatch Alarms | `number` | `1` | no |
+| <a name="input_alb_target_group_alarms_insufficient_data_actions"></a> [alb\_target\_group\_alarms\_insufficient\_data\_actions](#input\_alb\_target\_group\_alarms\_insufficient\_data\_actions) | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an INSUFFICIENT\_DATA state from any other state | `list(string)` | `[]` | no |
+| <a name="input_alb_target_group_alarms_ok_actions"></a> [alb\_target\_group\_alarms\_ok\_actions](#input\_alb\_target\_group\_alarms\_ok\_actions) | A list of ARNs (i.e. SNS Topic ARN) to execute when ALB Target Group alarms transition into an OK state from any other state | `list(string)` | `[]` | no |
+| <a name="input_alb_target_group_alarms_period"></a> [alb\_target\_group\_alarms\_period](#input\_alb\_target\_group\_alarms\_period) | The period (in seconds) to analyze for ALB CloudWatch Alarms | `number` | `300` | no |
+| <a name="input_alb_target_group_alarms_response_time_threshold"></a> [alb\_target\_group\_alarms\_response\_time\_threshold](#input\_alb\_target\_group\_alarms\_response\_time\_threshold) | The maximum ALB Target Group response time | `number` | `0.5` | no |
+| <a name="input_assign_public_ip"></a> [assign\_public\_ip](#input\_assign\_public\_ip) | Assign a public IP address to the ENI (Fargate launch type only). Valid values are `true` or `false`. Default `false` | `bool` | `false` | no |
+| <a name="input_attributes"></a> [attributes](#input\_attributes) | Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
+| <a name="input_authentication_cognito_scope"></a> [authentication\_cognito\_scope](#input\_authentication\_cognito\_scope) | Cognito scope | `list(string)` | `[]` | no |
+| <a name="input_authentication_cognito_user_pool_arn"></a> [authentication\_cognito\_user\_pool\_arn](#input\_authentication\_cognito\_user\_pool\_arn) | Cognito User Pool ARN | `string` | `""` | no |
+| <a name="input_authentication_cognito_user_pool_client_id"></a> [authentication\_cognito\_user\_pool\_client\_id](#input\_authentication\_cognito\_user\_pool\_client\_id) | Cognito User Pool Client ID | `string` | `""` | no |
+| <a name="input_authentication_cognito_user_pool_domain"></a> [authentication\_cognito\_user\_pool\_domain](#input\_authentication\_cognito\_user\_pool\_domain) | Cognito User Pool Domain. The User Pool Domain should be set to the domain prefix (`xxx`) instead of full domain (https://xxx.auth.us-west-2.amazoncognito.com) | `string` | `""` | no |
+| <a name="input_authentication_oidc_authorization_endpoint"></a> [authentication\_oidc\_authorization\_endpoint](#input\_authentication\_oidc\_authorization\_endpoint) | OIDC Authorization Endpoint | `string` | `""` | no |
+| <a name="input_authentication_oidc_client_id"></a> [authentication\_oidc\_client\_id](#input\_authentication\_oidc\_client\_id) | OIDC Client ID | `string` | `""` | no |
+| <a name="input_authentication_oidc_client_secret"></a> [authentication\_oidc\_client\_secret](#input\_authentication\_oidc\_client\_secret) | OIDC Client Secret | `string` | `""` | no |
+| <a name="input_authentication_oidc_issuer"></a> [authentication\_oidc\_issuer](#input\_authentication\_oidc\_issuer) | OIDC Issuer | `string` | `""` | no |
+| <a name="input_authentication_oidc_scope"></a> [authentication\_oidc\_scope](#input\_authentication\_oidc\_scope) | OIDC scope | `list(string)` | `[]` | no |
+| <a name="input_authentication_oidc_token_endpoint"></a> [authentication\_oidc\_token\_endpoint](#input\_authentication\_oidc\_token\_endpoint) | OIDC Token Endpoint | `string` | `""` | no |
+| <a name="input_authentication_oidc_user_info_endpoint"></a> [authentication\_oidc\_user\_info\_endpoint](#input\_authentication\_oidc\_user\_info\_endpoint) | OIDC User Info Endpoint | `string` | `""` | no |
+| <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | Authentication type. Supported values are `COGNITO` and `OIDC` | `string` | `""` | no |
+| <a name="input_autoscaling_dimension"></a> [autoscaling\_dimension](#input\_autoscaling\_dimension) | Dimension to autoscale on (valid options: cpu, memory) | `string` | `"memory"` | no |
+| <a name="input_autoscaling_enabled"></a> [autoscaling\_enabled](#input\_autoscaling\_enabled) | A boolean to enable/disable Autoscaling policy for ECS Service | `bool` | `false` | no |
+| <a name="input_autoscaling_max_capacity"></a> [autoscaling\_max\_capacity](#input\_autoscaling\_max\_capacity) | Maximum number of running instances of a Service | `number` | `2` | no |
+| <a name="input_autoscaling_min_capacity"></a> [autoscaling\_min\_capacity](#input\_autoscaling\_min\_capacity) | Minimum number of running instances of a Service | `number` | `1` | no |
+| <a name="input_autoscaling_scale_down_adjustment"></a> [autoscaling\_scale\_down\_adjustment](#input\_autoscaling\_scale\_down\_adjustment) | Scaling adjustment to make during scale down event | `number` | `-1` | no |
+| <a name="input_autoscaling_scale_down_cooldown"></a> [autoscaling\_scale\_down\_cooldown](#input\_autoscaling\_scale\_down\_cooldown) | Period (in seconds) to wait between scale down events | `number` | `300` | no |
+| <a name="input_autoscaling_scale_up_adjustment"></a> [autoscaling\_scale\_up\_adjustment](#input\_autoscaling\_scale\_up\_adjustment) | Scaling adjustment to make during scale up event | `number` | `1` | no |
+| <a name="input_autoscaling_scale_up_cooldown"></a> [autoscaling\_scale\_up\_cooldown](#input\_autoscaling\_scale\_up\_cooldown) | Period (in seconds) to wait between scale up events | `number` | `60` | no |
+| <a name="input_aws_logs_prefix"></a> [aws\_logs\_prefix](#input\_aws\_logs\_prefix) | Custom AWS Logs prefix. If empty name from label module will be used | `string` | `""` | no |
+| <a name="input_aws_logs_region"></a> [aws\_logs\_region](#input\_aws\_logs\_region) | The region for the AWS Cloudwatch Logs group | `string` | `null` | no |
+| <a name="input_badge_enabled"></a> [badge\_enabled](#input\_badge\_enabled) | Generates a publicly-accessible URL for the projects build badge. Available as badge\_url attribute when enabled | `bool` | `false` | no |
+| <a name="input_branch"></a> [branch](#input\_branch) | Branch of the GitHub repository, e.g. `master` | `string` | `""` | no |
+| <a name="input_build_environment_variables"></a> [build\_environment\_variables](#input\_build\_environment\_variables) | A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build | <pre>list(object(<br>    {<br>      name  = string<br>      value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_build_image"></a> [build\_image](#input\_build\_image) | Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0` | `string` | `"aws/codebuild/docker:17.09.0"` | no |
+| <a name="input_build_timeout"></a> [build\_timeout](#input\_build\_timeout) | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed | `number` | `60` | no |
+| <a name="input_buildspec"></a> [buildspec](#input\_buildspec) | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | `string` | `""` | no |
+| <a name="input_capacity_provider_strategies"></a> [capacity\_provider\_strategies](#input\_capacity\_provider\_strategies) | The capacity provider strategies to use for the service. See `capacity_provider_strategy` configuration block: https://www.terraform.io/docs/providers/aws/r/ecs_service.html#capacity_provider_strategy | <pre>list(object({<br>    capacity_provider = string<br>    weight            = number<br>    base              = number<br>  }))</pre> | `[]` | no |
+| <a name="input_cloudwatch_log_group_enabled"></a> [cloudwatch\_log\_group\_enabled](#input\_cloudwatch\_log\_group\_enabled) | A boolean to disable cloudwatch log group creation | `bool` | `true` | no |
+| <a name="input_codepipeline_build_cache_bucket_suffix_enabled"></a> [codepipeline\_build\_cache\_bucket\_suffix\_enabled](#input\_codepipeline\_build\_cache\_bucket\_suffix\_enabled) | The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache\_type is 'S3' | `bool` | `true` | no |
+| <a name="input_codepipeline_build_compute_type"></a> [codepipeline\_build\_compute\_type](#input\_codepipeline\_build\_compute\_type) | `CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE` | `string` | `"BUILD_GENERAL1_SMALL"` | no |
+| <a name="input_codepipeline_enabled"></a> [codepipeline\_enabled](#input\_codepipeline\_enabled) | A boolean to enable/disable AWS Codepipeline and ECR | `bool` | `true` | no |
+| <a name="input_codepipeline_s3_bucket_force_destroy"></a> [codepipeline\_s3\_bucket\_force\_destroy](#input\_codepipeline\_s3\_bucket\_force\_destroy) | A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error | `bool` | `false` | no |
+| <a name="input_command"></a> [command](#input\_command) | The command that is passed to the container | `list(string)` | `null` | no |
+| <a name="input_container_cpu"></a> [container\_cpu](#input\_container\_cpu) | The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `256` | no |
+| <a name="input_container_definition"></a> [container\_definition](#input\_container\_definition) | Override the main container\_definition | `string` | `""` | no |
+| <a name="input_container_environment"></a> [container\_environment](#input\_container\_environment) | The environment variables to pass to the container. This is a list of maps | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `null` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | The default container image to use in container definition | `string` | `"cloudposse/default-backend"` | no |
+| <a name="input_container_memory"></a> [container\_memory](#input\_container\_memory) | The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `512` | no |
+| <a name="input_container_memory_reservation"></a> [container\_memory\_reservation](#input\_container\_memory\_reservation) | The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than `container_memory` if set | `number` | `128` | no |
+| <a name="input_container_port"></a> [container\_port](#input\_container\_port) | The port number on the container bound to assigned host\_port | `number` | `80` | no |
+| <a name="input_container_start_timeout"></a> [container\_start\_timeout](#input\_container\_start\_timeout) | Time duration (in seconds) to wait before giving up on resolving dependencies for a container | `number` | `30` | no |
+| <a name="input_container_stop_timeout"></a> [container\_stop\_timeout](#input\_container\_stop\_timeout) | Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own | `number` | `30` | no |
+| <a name="input_context"></a> [context](#input\_context) | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |
+| <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
+| <a name="input_deployment_controller_type"></a> [deployment\_controller\_type](#input\_deployment\_controller\_type) | Type of deployment controller. Valid values are CODE\_DEPLOY and ECS | `string` | `"ECS"` | no |
+| <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | The desired number of tasks to start with. Set this to 0 if using DAEMON Service type. (FARGATE does not suppoert DAEMON Service type) | `number` | `1` | no |
+| <a name="input_ecr_image_tag_mutability"></a> [ecr\_image\_tag\_mutability](#input\_ecr\_image\_tag\_mutability) | The tag mutability setting for the ecr repository. Must be one of: `MUTABLE` or `IMMUTABLE` | `string` | `"IMMUTABLE"` | no |
+| <a name="input_ecr_scan_images_on_push"></a> [ecr\_scan\_images\_on\_push](#input\_ecr\_scan\_images\_on\_push) | Indicates whether images are scanned after being pushed to the repository (true) or not (false) | `bool` | `false` | no |
+| <a name="input_ecs_alarms_cpu_utilization_high_alarm_actions"></a> [ecs\_alarms\_cpu\_utilization\_high\_alarm\_actions](#input\_ecs\_alarms\_cpu\_utilization\_high\_alarm\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High Alarm action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_cpu_utilization_high_evaluation_periods"></a> [ecs\_alarms\_cpu\_utilization\_high\_evaluation\_periods](#input\_ecs\_alarms\_cpu\_utilization\_high\_evaluation\_periods) | Number of periods to evaluate for the alarm | `number` | `1` | no |
+| <a name="input_ecs_alarms_cpu_utilization_high_ok_actions"></a> [ecs\_alarms\_cpu\_utilization\_high\_ok\_actions](#input\_ecs\_alarms\_cpu\_utilization\_high\_ok\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization High OK action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_cpu_utilization_high_period"></a> [ecs\_alarms\_cpu\_utilization\_high\_period](#input\_ecs\_alarms\_cpu\_utilization\_high\_period) | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
+| <a name="input_ecs_alarms_cpu_utilization_high_threshold"></a> [ecs\_alarms\_cpu\_utilization\_high\_threshold](#input\_ecs\_alarms\_cpu\_utilization\_high\_threshold) | The maximum percentage of CPU utilization average | `number` | `80` | no |
+| <a name="input_ecs_alarms_cpu_utilization_low_alarm_actions"></a> [ecs\_alarms\_cpu\_utilization\_low\_alarm\_actions](#input\_ecs\_alarms\_cpu\_utilization\_low\_alarm\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low Alarm action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_cpu_utilization_low_evaluation_periods"></a> [ecs\_alarms\_cpu\_utilization\_low\_evaluation\_periods](#input\_ecs\_alarms\_cpu\_utilization\_low\_evaluation\_periods) | Number of periods to evaluate for the alarm | `number` | `1` | no |
+| <a name="input_ecs_alarms_cpu_utilization_low_ok_actions"></a> [ecs\_alarms\_cpu\_utilization\_low\_ok\_actions](#input\_ecs\_alarms\_cpu\_utilization\_low\_ok\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on CPU Utilization Low OK action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_cpu_utilization_low_period"></a> [ecs\_alarms\_cpu\_utilization\_low\_period](#input\_ecs\_alarms\_cpu\_utilization\_low\_period) | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
+| <a name="input_ecs_alarms_cpu_utilization_low_threshold"></a> [ecs\_alarms\_cpu\_utilization\_low\_threshold](#input\_ecs\_alarms\_cpu\_utilization\_low\_threshold) | The minimum percentage of CPU utilization average | `number` | `20` | no |
+| <a name="input_ecs_alarms_enabled"></a> [ecs\_alarms\_enabled](#input\_ecs\_alarms\_enabled) | A boolean to enable/disable CloudWatch Alarms for ECS Service metrics | `bool` | `false` | no |
+| <a name="input_ecs_alarms_memory_utilization_high_alarm_actions"></a> [ecs\_alarms\_memory\_utilization\_high\_alarm\_actions](#input\_ecs\_alarms\_memory\_utilization\_high\_alarm\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High Alarm action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_memory_utilization_high_evaluation_periods"></a> [ecs\_alarms\_memory\_utilization\_high\_evaluation\_periods](#input\_ecs\_alarms\_memory\_utilization\_high\_evaluation\_periods) | Number of periods to evaluate for the alarm | `number` | `1` | no |
+| <a name="input_ecs_alarms_memory_utilization_high_ok_actions"></a> [ecs\_alarms\_memory\_utilization\_high\_ok\_actions](#input\_ecs\_alarms\_memory\_utilization\_high\_ok\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization High OK action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_memory_utilization_high_period"></a> [ecs\_alarms\_memory\_utilization\_high\_period](#input\_ecs\_alarms\_memory\_utilization\_high\_period) | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
+| <a name="input_ecs_alarms_memory_utilization_high_threshold"></a> [ecs\_alarms\_memory\_utilization\_high\_threshold](#input\_ecs\_alarms\_memory\_utilization\_high\_threshold) | The maximum percentage of Memory utilization average | `number` | `80` | no |
+| <a name="input_ecs_alarms_memory_utilization_low_alarm_actions"></a> [ecs\_alarms\_memory\_utilization\_low\_alarm\_actions](#input\_ecs\_alarms\_memory\_utilization\_low\_alarm\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low Alarm action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_memory_utilization_low_evaluation_periods"></a> [ecs\_alarms\_memory\_utilization\_low\_evaluation\_periods](#input\_ecs\_alarms\_memory\_utilization\_low\_evaluation\_periods) | Number of periods to evaluate for the alarm | `number` | `1` | no |
+| <a name="input_ecs_alarms_memory_utilization_low_ok_actions"></a> [ecs\_alarms\_memory\_utilization\_low\_ok\_actions](#input\_ecs\_alarms\_memory\_utilization\_low\_ok\_actions) | A list of ARNs (i.e. SNS Topic ARN) to notify on Memory Utilization Low OK action | `list(string)` | `[]` | no |
+| <a name="input_ecs_alarms_memory_utilization_low_period"></a> [ecs\_alarms\_memory\_utilization\_low\_period](#input\_ecs\_alarms\_memory\_utilization\_low\_period) | Duration in seconds to evaluate for the alarm | `number` | `300` | no |
+| <a name="input_ecs_alarms_memory_utilization_low_threshold"></a> [ecs\_alarms\_memory\_utilization\_low\_threshold](#input\_ecs\_alarms\_memory\_utilization\_low\_threshold) | The minimum percentage of Memory utilization average | `number` | `20` | no |
+| <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | The ECS Cluster ARN where ECS Service will be provisioned | `string` | n/a | yes |
+| <a name="input_ecs_cluster_name"></a> [ecs\_cluster\_name](#input\_ecs\_cluster\_name) | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | `null` | no |
+| <a name="input_ecs_private_subnet_ids"></a> [ecs\_private\_subnet\_ids](#input\_ecs\_private\_subnet\_ids) | List of Private Subnet IDs to provision ECS Service onto | `list(string)` | n/a | yes |
+| <a name="input_ecs_security_group_ids"></a> [ecs\_security\_group\_ids](#input\_ecs\_security\_group\_ids) | Additional Security Group IDs to allow into ECS Service | `list(string)` | `[]` | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
+| <a name="input_entrypoint"></a> [entrypoint](#input\_entrypoint) | The entry point that is passed to the container | `list(string)` | `null` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
+| <a name="input_github_oauth_token"></a> [github\_oauth\_token](#input\_github\_oauth\_token) | GitHub Oauth Token with permissions to access private repositories | `string` | `""` | no |
+| <a name="input_github_webhook_events"></a> [github\_webhook\_events](#input\_github\_webhook\_events) | A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/) | `list(string)` | <pre>[<br>  "push"<br>]</pre> | no |
+| <a name="input_github_webhooks_token"></a> [github\_webhooks\_token](#input\_github\_webhooks\_token) | GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable | `string` | `""` | no |
+| <a name="input_health_check_grace_period_seconds"></a> [health\_check\_grace\_period\_seconds](#input\_health\_check\_grace\_period\_seconds) | Seconds to ignore failing load balancer health checks on newly instantiated tasks to prevent premature shutdown, up to 7200. Only valid for services configured to use load balancers | `number` | `0` | no |
+| <a name="input_healthcheck"></a> [healthcheck](#input\_healthcheck) | A map containing command (string), timeout, interval (duration in seconds), retries (1-10, number of times to retry before marking container unhealthy), and startPeriod (0-300, optional grace period to wait, in seconds, before failed healthchecks count toward retries) | <pre>object({<br>    command     = list(string)<br>    retries     = number<br>    timeout     = number<br>    interval    = number<br>    startPeriod = number<br>  })</pre> | `null` | no |
+| <a name="input_id_length_limit"></a> [id\_length\_limit](#input\_id\_length\_limit) | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
+| <a name="input_ignore_changes_task_definition"></a> [ignore\_changes\_task\_definition](#input\_ignore\_changes\_task\_definition) | Ignore changes (like environment variables) to the ECS task definition | `bool` | `true` | no |
+| <a name="input_init_containers"></a> [init\_containers](#input\_init\_containers) | A list of additional init containers to start. The map contains the container\_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY. | <pre>list(object({<br>    container_definition = any<br>    condition            = string<br>  }))</pre> | `[]` | no |
+| <a name="input_label_key_case"></a> [label\_key\_case](#input\_label\_key\_case) | The letter case of label keys (`tag` names) (i.e. `name`, `namespace`, `environment`, `stage`, `attributes`) to use in `tags`.<br>Possible values: `lower`, `title`, `upper`.<br>Default value: `title`. | `string` | `null` | no |
+| <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | `null` | no |
+| <a name="input_label_value_case"></a> [label\_value\_case](#input\_label\_value\_case) | The letter case of output label values (also used in `tags` and `id`).<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Default value: `lower`. | `string` | `null` | no |
+| <a name="input_launch_type"></a> [launch\_type](#input\_launch\_type) | The ECS launch type (valid options: FARGATE or EC2) | `string` | `"FARGATE"` | no |
+| <a name="input_log_driver"></a> [log\_driver](#input\_log\_driver) | The log driver to use for the container. If using Fargate launch type, only supported value is awslogs | `string` | `"awslogs"` | no |
+| <a name="input_log_retention_in_days"></a> [log\_retention\_in\_days](#input\_log\_retention\_in\_days) | The number of days to retain logs for the log group | `number` | `90` | no |
+| <a name="input_map_container_environment"></a> [map\_container\_environment](#input\_map\_container\_environment) | The environment variables to pass to the container. This is a map of string: {key: value}. `environment` overrides `map_environment` | `map(string)` | `null` | no |
+| <a name="input_mount_points"></a> [mount\_points](#input\_mount\_points) | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>  }))</pre> | `[]` | no |
+| <a name="input_name"></a> [name](#input\_name) | Solution name, e.g. 'app' or 'jenkins' | `string` | `null` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
+| <a name="input_nlb_cidr_blocks"></a> [nlb\_cidr\_blocks](#input\_nlb\_cidr\_blocks) | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
+| <a name="input_nlb_container_name"></a> [nlb\_container\_name](#input\_nlb\_container\_name) | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
+| <a name="input_nlb_container_port"></a> [nlb\_container\_port](#input\_nlb\_container\_port) | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
+| <a name="input_nlb_ingress_target_group_arn"></a> [nlb\_ingress\_target\_group\_arn](#input\_nlb\_ingress\_target\_group\_arn) | Target group ARN of the NLB ingress | `string` | `""` | no |
+| <a name="input_platform_version"></a> [platform\_version](#input\_platform\_version) | The platform version on which to run your service. Only applicable for launch\_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide. | `string` | `"LATEST"` | no |
+| <a name="input_poll_source_changes"></a> [poll\_source\_changes](#input\_poll\_source\_changes) | Periodically check the location of your source content and run the pipeline if changes are detected | `bool` | `false` | no |
+| <a name="input_port_mappings"></a> [port\_mappings](#input\_port\_mappings) | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | <pre>list(object({<br>    containerPort = number<br>    hostPort      = number<br>    protocol      = string<br>  }))</pre> | <pre>[<br>  {<br>    "containerPort": 80,<br>    "hostPort": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
+| <a name="input_privileged"></a> [privileged](#input\_privileged) | When this variable is `true`, the container is given elevated privileges on the host container instance (similar to the root user). This parameter is not supported for Windows containers or tasks using the Fargate launch type. Due to how Terraform type casts booleans in json it is required to double quote this value | `string` | `null` | no |
+| <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS Region for S3 bucket | `string` | `null` | no |
+| <a name="input_repo_name"></a> [repo\_name](#input\_repo\_name) | GitHub repository name of the application to be built and deployed to ECS | `string` | `""` | no |
+| <a name="input_repo_owner"></a> [repo\_owner](#input\_repo\_owner) | GitHub Organization or Username | `string` | `""` | no |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
+| <a name="input_service_registries"></a> [service\_registries](#input\_service\_registries) | The service discovery registries for the service. The maximum number of service\_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1 | <pre>list(object({<br>    registry_arn   = string<br>    port           = number<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
+| <a name="input_stage"></a> [stage](#input\_stage) | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
+| <a name="input_system_controls"></a> [system\_controls](#input\_system\_controls) | A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = "", value = ""} | `list(map(string))` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
+| <a name="input_task_cpu"></a> [task\_cpu](#input\_task\_cpu) | The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
+| <a name="input_task_memory"></a> [task\_memory](#input\_task\_memory) | The amount of memory (in MiB) used by the task. If unspecified, it will default to `container_memory`. If using Fargate launch type `task_memory` must match supported cpu value (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size) | `number` | `null` | no |
+| <a name="input_ulimits"></a> [ulimits](#input\_ulimits) | The ulimits to configure for the container. This is a list of maps. Each map should contain "name", "softLimit" and "hardLimit" | <pre>list(object({<br>    name      = string<br>    softLimit = number<br>    hardLimit = number<br>  }))</pre> | `[]` | no |
+| <a name="input_use_alb_security_group"></a> [use\_alb\_security\_group](#input\_use\_alb\_security\_group) | A boolean to enable adding an ALB security group rule for the service task | `bool` | `false` | no |
+| <a name="input_use_ecr_image"></a> [use\_ecr\_image](#input\_use\_ecr\_image) | If true, use ECR repo URL for image, otherwise use value in container\_image | `bool` | `false` | no |
+| <a name="input_use_nlb_cidr_blocks"></a> [use\_nlb\_cidr\_blocks](#input\_use\_nlb\_cidr\_blocks) | A flag to enable/disable adding the NLB ingress rule to the security group | `bool` | `false` | no |
+| <a name="input_volumes"></a> [volumes](#input\_volumes) | Task volume definitions as list of configuration objects | <pre>list(object({<br>    host_path = string<br>    name      = string<br>    docker_volume_configuration = list(object({<br>      autoprovision = bool<br>      driver        = string<br>      driver_opts   = map(string)<br>      labels        = map(string)<br>      scope         = string<br>    }))<br>    efs_volume_configuration = list(object({<br>      file_system_id          = string<br>      root_directory          = string<br>      transit_encryption      = string<br>      transit_encryption_port = string<br>      authorization_config = list(object({<br>        access_point_id = string<br>        iam             = string<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where resources are created | `string` | n/a | yes |
+| <a name="input_webhook_authentication"></a> [webhook\_authentication](#input\_webhook\_authentication) | The type of authentication to use. One of IP, GITHUB\_HMAC, or UNAUTHENTICATED | `string` | `"GITHUB_HMAC"` | no |
+| <a name="input_webhook_enabled"></a> [webhook\_enabled](#input\_webhook\_enabled) | Set to false to prevent the module from creating any webhook resources | `bool` | `true` | no |
+| <a name="input_webhook_filter_json_path"></a> [webhook\_filter\_json\_path](#input\_webhook\_filter\_json\_path) | The JSON path to filter on | `string` | `"$.ref"` | no |
+| <a name="input_webhook_filter_match_equals"></a> [webhook\_filter\_match\_equals](#input\_webhook\_filter\_match\_equals) | The value to match on (e.g. refs/heads/{Branch}) | `string` | `"refs/heads/{Branch}"` | no |
+| <a name="input_webhook_target_action"></a> [webhook\_target\_action](#input\_webhook\_target\_action) | The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline | `string` | `"Source"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| alb\_ingress | All outputs from `module.alb_ingress` |
-| alb\_ingress\_target\_group\_arn | ALB Target Group ARN |
-| alb\_ingress\_target\_group\_arn\_suffix | ALB Target Group ARN suffix |
-| alb\_ingress\_target\_group\_name | ALB Target Group name |
-| alb\_target\_group\_cloudwatch\_sns\_alarms | All outputs from `module.alb_target_group_cloudwatch_sns_alarms` |
-| cloudwatch\_log\_group | All outputs from `aws_cloudwatch_log_group.app` |
-| cloudwatch\_log\_group\_arn | Cloudwatch log group ARN |
-| cloudwatch\_log\_group\_name | Cloudwatch log group name |
-| codebuild | All outputs from `module.ecs_codepipeline` |
-| codebuild\_badge\_url | The URL of the build badge when badge\_enabled is enabled |
-| codebuild\_cache\_bucket\_arn | CodeBuild cache S3 bucket ARN |
-| codebuild\_cache\_bucket\_name | CodeBuild cache S3 bucket name |
-| codebuild\_project\_id | CodeBuild project ID |
-| codebuild\_project\_name | CodeBuild project name |
-| codebuild\_role\_arn | CodeBuild IAM Role ARN |
-| codebuild\_role\_id | CodeBuild IAM Role ID |
-| codepipeline\_arn | CodePipeline ARN |
-| codepipeline\_id | CodePipeline ID |
-| codepipeline\_webhook\_id | The CodePipeline webhook's ID |
-| codepipeline\_webhook\_url | The CodePipeline webhook's URL. POST events to this endpoint to trigger the target |
-| container\_definition | All outputs from `module.container_definition` |
-| container\_definition\_json | JSON encoded list of container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
-| container\_definition\_json\_map | JSON encoded container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
-| ecr | All outputs from `module.ecr` |
-| ecr\_registry\_id | Registry ID |
-| ecr\_registry\_url | Repository URL |
-| ecr\_repository\_arn | ARN of ECR repository |
-| ecr\_repository\_name | Registry name |
-| ecr\_repository\_url | Repository URL |
-| ecs\_alarms | All outputs from `module.ecs_cloudwatch_sns_alarms` |
-| ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization high CloudWatch metric alarm ARN |
-| ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id | ECS CPU utilization high CloudWatch metric alarm ID |
-| ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn | ECS CPU utilization low CloudWatch metric alarm ARN |
-| ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_id | ECS CPU utilization low CloudWatch metric alarm ID |
-| ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_arn | ECS Memory utilization high CloudWatch metric alarm ARN |
-| ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id | ECS Memory utilization high CloudWatch metric alarm ID |
-| ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn | ECS Memory utilization low CloudWatch metric alarm ARN |
-| ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_id | ECS Memory utilization low CloudWatch metric alarm ID |
-| ecs\_alb\_service\_task | All outputs from `module.ecs_alb_service_task` |
-| ecs\_cloudwatch\_autoscaling | All outputs from `module.ecs_cloudwatch_autoscaling` |
-| ecs\_cloudwatch\_autoscaling\_scale\_down\_policy\_arn | ARN of the scale down policy |
-| ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn | ARN of the scale up policy |
-| ecs\_exec\_role\_policy\_id | The ECS service role policy ID, in the form of `role_name:role_policy_name` |
-| ecs\_exec\_role\_policy\_name | ECS service role name |
-| ecs\_service\_name | ECS Service name |
-| ecs\_service\_role\_arn | ECS Service role ARN |
-| ecs\_service\_security\_group\_id | Security Group ID of the ECS task |
-| ecs\_task\_definition\_family | ECS task definition family |
-| ecs\_task\_definition\_revision | ECS task definition revision |
-| ecs\_task\_exec\_role\_arn | ECS Task exec role ARN |
-| ecs\_task\_exec\_role\_name | ECS Task role name |
-| ecs\_task\_role\_arn | ECS Task role ARN |
-| ecs\_task\_role\_id | ECS Task role id |
-| ecs\_task\_role\_name | ECS Task role name |
-| httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_arn | ALB 5xx count CloudWatch metric alarm ARN |
-| httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_id | ALB 5xx count CloudWatch metric alarm ID |
-| httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_arn | ALB Target Group 3xx count CloudWatch metric alarm ARN |
-| httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 3xx count CloudWatch metric alarm ID |
-| httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_arn | ALB Target Group 4xx count CloudWatch metric alarm ARN |
-| httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 4xx count CloudWatch metric alarm ID |
-| httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_arn | ALB Target Group 5xx count CloudWatch metric alarm ARN |
-| httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id | ALB Target Group 5xx count CloudWatch metric alarm ID |
-| target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn | ALB Target Group response time average CloudWatch metric alarm ARN |
-| target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id | ALB Target Group response time average CloudWatch metric alarm ID |
+| <a name="output_alb_ingress"></a> [alb\_ingress](#output\_alb\_ingress) | All outputs from `module.alb_ingress` |
+| <a name="output_alb_ingress_target_group_arn"></a> [alb\_ingress\_target\_group\_arn](#output\_alb\_ingress\_target\_group\_arn) | ALB Target Group ARN |
+| <a name="output_alb_ingress_target_group_arn_suffix"></a> [alb\_ingress\_target\_group\_arn\_suffix](#output\_alb\_ingress\_target\_group\_arn\_suffix) | ALB Target Group ARN suffix |
+| <a name="output_alb_ingress_target_group_name"></a> [alb\_ingress\_target\_group\_name](#output\_alb\_ingress\_target\_group\_name) | ALB Target Group name |
+| <a name="output_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#output\_alb\_target\_group\_cloudwatch\_sns\_alarms) | All outputs from `module.alb_target_group_cloudwatch_sns_alarms` |
+| <a name="output_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#output\_cloudwatch\_log\_group) | All outputs from `aws_cloudwatch_log_group.app` |
+| <a name="output_cloudwatch_log_group_arn"></a> [cloudwatch\_log\_group\_arn](#output\_cloudwatch\_log\_group\_arn) | Cloudwatch log group ARN |
+| <a name="output_cloudwatch_log_group_name"></a> [cloudwatch\_log\_group\_name](#output\_cloudwatch\_log\_group\_name) | Cloudwatch log group name |
+| <a name="output_codebuild"></a> [codebuild](#output\_codebuild) | All outputs from `module.ecs_codepipeline` |
+| <a name="output_codebuild_badge_url"></a> [codebuild\_badge\_url](#output\_codebuild\_badge\_url) | The URL of the build badge when badge\_enabled is enabled |
+| <a name="output_codebuild_cache_bucket_arn"></a> [codebuild\_cache\_bucket\_arn](#output\_codebuild\_cache\_bucket\_arn) | CodeBuild cache S3 bucket ARN |
+| <a name="output_codebuild_cache_bucket_name"></a> [codebuild\_cache\_bucket\_name](#output\_codebuild\_cache\_bucket\_name) | CodeBuild cache S3 bucket name |
+| <a name="output_codebuild_project_id"></a> [codebuild\_project\_id](#output\_codebuild\_project\_id) | CodeBuild project ID |
+| <a name="output_codebuild_project_name"></a> [codebuild\_project\_name](#output\_codebuild\_project\_name) | CodeBuild project name |
+| <a name="output_codebuild_role_arn"></a> [codebuild\_role\_arn](#output\_codebuild\_role\_arn) | CodeBuild IAM Role ARN |
+| <a name="output_codebuild_role_id"></a> [codebuild\_role\_id](#output\_codebuild\_role\_id) | CodeBuild IAM Role ID |
+| <a name="output_codepipeline_arn"></a> [codepipeline\_arn](#output\_codepipeline\_arn) | CodePipeline ARN |
+| <a name="output_codepipeline_id"></a> [codepipeline\_id](#output\_codepipeline\_id) | CodePipeline ID |
+| <a name="output_codepipeline_webhook_id"></a> [codepipeline\_webhook\_id](#output\_codepipeline\_webhook\_id) | The CodePipeline webhook's ID |
+| <a name="output_codepipeline_webhook_url"></a> [codepipeline\_webhook\_url](#output\_codepipeline\_webhook\_url) | The CodePipeline webhook's URL. POST events to this endpoint to trigger the target |
+| <a name="output_container_definition"></a> [container\_definition](#output\_container\_definition) | All outputs from `module.container_definition` |
+| <a name="output_container_definition_json"></a> [container\_definition\_json](#output\_container\_definition\_json) | JSON encoded list of container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
+| <a name="output_container_definition_json_map"></a> [container\_definition\_json\_map](#output\_container\_definition\_json\_map) | JSON encoded container definitions for use with other terraform resources such as aws\_ecs\_task\_definition |
+| <a name="output_ecr"></a> [ecr](#output\_ecr) | All outputs from `module.ecr` |
+| <a name="output_ecr_registry_id"></a> [ecr\_registry\_id](#output\_ecr\_registry\_id) | Registry ID |
+| <a name="output_ecr_registry_url"></a> [ecr\_registry\_url](#output\_ecr\_registry\_url) | Repository URL |
+| <a name="output_ecr_repository_arn"></a> [ecr\_repository\_arn](#output\_ecr\_repository\_arn) | ARN of ECR repository |
+| <a name="output_ecr_repository_name"></a> [ecr\_repository\_name](#output\_ecr\_repository\_name) | Registry name |
+| <a name="output_ecr_repository_url"></a> [ecr\_repository\_url](#output\_ecr\_repository\_url) | Repository URL |
+| <a name="output_ecs_alarms"></a> [ecs\_alarms](#output\_ecs\_alarms) | All outputs from `module.ecs_cloudwatch_sns_alarms` |
+| <a name="output_ecs_alarms_cpu_utilization_high_cloudwatch_metric_alarm_arn"></a> [ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_arn](#output\_ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_arn) | ECS CPU utilization high CloudWatch metric alarm ARN |
+| <a name="output_ecs_alarms_cpu_utilization_high_cloudwatch_metric_alarm_id"></a> [ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id](#output\_ecs\_alarms\_cpu\_utilization\_high\_cloudwatch\_metric\_alarm\_id) | ECS CPU utilization high CloudWatch metric alarm ID |
+| <a name="output_ecs_alarms_cpu_utilization_low_cloudwatch_metric_alarm_arn"></a> [ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn](#output\_ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_arn) | ECS CPU utilization low CloudWatch metric alarm ARN |
+| <a name="output_ecs_alarms_cpu_utilization_low_cloudwatch_metric_alarm_id"></a> [ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_id](#output\_ecs\_alarms\_cpu\_utilization\_low\_cloudwatch\_metric\_alarm\_id) | ECS CPU utilization low CloudWatch metric alarm ID |
+| <a name="output_ecs_alarms_memory_utilization_high_cloudwatch_metric_alarm_arn"></a> [ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_arn](#output\_ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_arn) | ECS Memory utilization high CloudWatch metric alarm ARN |
+| <a name="output_ecs_alarms_memory_utilization_high_cloudwatch_metric_alarm_id"></a> [ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id](#output\_ecs\_alarms\_memory\_utilization\_high\_cloudwatch\_metric\_alarm\_id) | ECS Memory utilization high CloudWatch metric alarm ID |
+| <a name="output_ecs_alarms_memory_utilization_low_cloudwatch_metric_alarm_arn"></a> [ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn](#output\_ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_arn) | ECS Memory utilization low CloudWatch metric alarm ARN |
+| <a name="output_ecs_alarms_memory_utilization_low_cloudwatch_metric_alarm_id"></a> [ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_id](#output\_ecs\_alarms\_memory\_utilization\_low\_cloudwatch\_metric\_alarm\_id) | ECS Memory utilization low CloudWatch metric alarm ID |
+| <a name="output_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#output\_ecs\_alb\_service\_task) | All outputs from `module.ecs_alb_service_task` |
+| <a name="output_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#output\_ecs\_cloudwatch\_autoscaling) | All outputs from `module.ecs_cloudwatch_autoscaling` |
+| <a name="output_ecs_cloudwatch_autoscaling_scale_down_policy_arn"></a> [ecs\_cloudwatch\_autoscaling\_scale\_down\_policy\_arn](#output\_ecs\_cloudwatch\_autoscaling\_scale\_down\_policy\_arn) | ARN of the scale down policy |
+| <a name="output_ecs_cloudwatch_autoscaling_scale_up_policy_arn"></a> [ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn](#output\_ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn) | ARN of the scale up policy |
+| <a name="output_ecs_exec_role_policy_id"></a> [ecs\_exec\_role\_policy\_id](#output\_ecs\_exec\_role\_policy\_id) | The ECS service role policy ID, in the form of `role_name:role_policy_name` |
+| <a name="output_ecs_exec_role_policy_name"></a> [ecs\_exec\_role\_policy\_name](#output\_ecs\_exec\_role\_policy\_name) | ECS service role name |
+| <a name="output_ecs_service_name"></a> [ecs\_service\_name](#output\_ecs\_service\_name) | ECS Service name |
+| <a name="output_ecs_service_role_arn"></a> [ecs\_service\_role\_arn](#output\_ecs\_service\_role\_arn) | ECS Service role ARN |
+| <a name="output_ecs_service_security_group_id"></a> [ecs\_service\_security\_group\_id](#output\_ecs\_service\_security\_group\_id) | Security Group ID of the ECS task |
+| <a name="output_ecs_task_definition_family"></a> [ecs\_task\_definition\_family](#output\_ecs\_task\_definition\_family) | ECS task definition family |
+| <a name="output_ecs_task_definition_revision"></a> [ecs\_task\_definition\_revision](#output\_ecs\_task\_definition\_revision) | ECS task definition revision |
+| <a name="output_ecs_task_exec_role_arn"></a> [ecs\_task\_exec\_role\_arn](#output\_ecs\_task\_exec\_role\_arn) | ECS Task exec role ARN |
+| <a name="output_ecs_task_exec_role_name"></a> [ecs\_task\_exec\_role\_name](#output\_ecs\_task\_exec\_role\_name) | ECS Task role name |
+| <a name="output_ecs_task_role_arn"></a> [ecs\_task\_role\_arn](#output\_ecs\_task\_role\_arn) | ECS Task role ARN |
+| <a name="output_ecs_task_role_id"></a> [ecs\_task\_role\_id](#output\_ecs\_task\_role\_id) | ECS Task role id |
+| <a name="output_ecs_task_role_name"></a> [ecs\_task\_role\_name](#output\_ecs\_task\_role\_name) | ECS Task role name |
+| <a name="output_httpcode_elb_5xx_count_cloudwatch_metric_alarm_arn"></a> [httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_arn](#output\_httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_arn) | ALB 5xx count CloudWatch metric alarm ARN |
+| <a name="output_httpcode_elb_5xx_count_cloudwatch_metric_alarm_id"></a> [httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_id](#output\_httpcode\_elb\_5xx\_count\_cloudwatch\_metric\_alarm\_id) | ALB 5xx count CloudWatch metric alarm ID |
+| <a name="output_httpcode_target_3xx_count_cloudwatch_metric_alarm_arn"></a> [httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_arn](#output\_httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_arn) | ALB Target Group 3xx count CloudWatch metric alarm ARN |
+| <a name="output_httpcode_target_3xx_count_cloudwatch_metric_alarm_id"></a> [httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_id](#output\_httpcode\_target\_3xx\_count\_cloudwatch\_metric\_alarm\_id) | ALB Target Group 3xx count CloudWatch metric alarm ID |
+| <a name="output_httpcode_target_4xx_count_cloudwatch_metric_alarm_arn"></a> [httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_arn](#output\_httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_arn) | ALB Target Group 4xx count CloudWatch metric alarm ARN |
+| <a name="output_httpcode_target_4xx_count_cloudwatch_metric_alarm_id"></a> [httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_id](#output\_httpcode\_target\_4xx\_count\_cloudwatch\_metric\_alarm\_id) | ALB Target Group 4xx count CloudWatch metric alarm ID |
+| <a name="output_httpcode_target_5xx_count_cloudwatch_metric_alarm_arn"></a> [httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_arn](#output\_httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_arn) | ALB Target Group 5xx count CloudWatch metric alarm ARN |
+| <a name="output_httpcode_target_5xx_count_cloudwatch_metric_alarm_id"></a> [httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id](#output\_httpcode\_target\_5xx\_count\_cloudwatch\_metric\_alarm\_id) | ALB Target Group 5xx count CloudWatch metric alarm ID |
+| <a name="output_target_response_time_average_cloudwatch_metric_alarm_arn"></a> [target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn](#output\_target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn) | ALB Target Group response time average CloudWatch metric alarm ARN |
+| <a name="output_target_response_time_average_cloudwatch_metric_alarm_id"></a> [target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id](#output\_target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id) | ALB Target Group response time average CloudWatch metric alarm ID |
 <!-- markdownlint-restore -->
