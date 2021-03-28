@@ -62,7 +62,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.49.2"
+  version                      = "0.56.0"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -128,7 +128,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.47.0"
+  version = "0.54.2"
 
   alb_security_group                = var.alb_security_group
   use_alb_security_group            = var.use_alb_security_group
