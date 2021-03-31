@@ -911,3 +911,9 @@ variable "ecr_image_tag_mutability" {
   default     = "IMMUTABLE"
   description = "The tag mutability setting for the ecr repository. Must be one of: `MUTABLE` or `IMMUTABLE`"
 }
+
+variable "force_new_deployment" {
+  type        = bool
+  description = "Enable to force a new task deployment of the service."
+  default     = false
+}
