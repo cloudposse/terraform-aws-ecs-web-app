@@ -10,6 +10,24 @@ variable "codepipeline_enabled" {
   default     = true
 }
 
+variable "codepipeline_cdn_bucket_id" {
+  type        = string
+  default     = null
+  description = "Optional bucket for static asset deployment. If specified, the buildspec must include a secondary artifacts section which controls the files deployed to the bucket [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
+}
+
+variable "codepipeline_cdn_bucket_encryption_enabled" {
+  type        = bool
+  default     = false
+  description = "If set to true, enable encryption on the optional CDN asset deployment bucket"
+}
+
+variable "codepipeline_cdn_bucket_buildspec_identifier" {
+  type        = string
+  default     = null
+  description = "Identifier for buildspec section controlling the optional CDN asset deployment."
+}
+
 variable "use_ecr_image" {
   type        = bool
   description = "If true, use ECR repo URL for image, otherwise use value in container_image"
