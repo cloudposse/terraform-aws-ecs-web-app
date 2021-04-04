@@ -183,6 +183,10 @@ module "ecs_codepipeline" {
   privileged_mode             = true
   poll_source_changes         = var.poll_source_changes
 
+  secondary_artifact_bucket_id          = var.codepipeline_cdn_bucket_id
+  secondary_artifact_encryption_enabled = var.codepipeline_cdn_bucket_encryption_enabled
+  secondary_artifact_identifier         = var.codepipeline_cdn_bucket_buildspec_identifier
+
   webhook_enabled             = var.webhook_enabled
   webhook_target_action       = var.webhook_target_action
   webhook_authentication      = var.webhook_authentication
