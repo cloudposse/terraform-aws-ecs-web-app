@@ -820,9 +820,9 @@ variable "authentication_cognito_user_pool_domain" {
 }
 
 variable "authentication_cognito_scope" {
-  type        = list(string)
-  description = "Cognito scope"
-  default     = []
+  type        = string
+  description = "Cognito scope, which should be a space separated string of requested scopes (see https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims)"
+  default     = null
 }
 
 variable "authentication_oidc_client_id" {
@@ -862,9 +862,9 @@ variable "authentication_oidc_user_info_endpoint" {
 }
 
 variable "authentication_oidc_scope" {
-  type        = list(string)
-  description = "OIDC scope"
-  default     = []
+  type        = string
+  description = "OIDC scope, which should be a space separated string of requested scopes (see https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims, and https://developers.google.com/identity/protocols/oauth2/openid-connect#scope-param for an example set of scopes when using Google as the IdP)"
+  default     = null
 }
 
 variable "codepipeline_build_cache_bucket_suffix_enabled" {
