@@ -22,7 +22,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.20.0"
+  version = "0.23.0"
 
   vpc_id                       = var.vpc_id
   port                         = var.container_port
@@ -39,10 +39,8 @@ module "alb_ingress" {
   authenticated_priority   = var.alb_ingress_listener_authenticated_priority
   unauthenticated_priority = var.alb_ingress_listener_unauthenticated_priority
 
-  unauthenticated_listener_arns       = var.alb_ingress_unauthenticated_listener_arns
-  unauthenticated_listener_arns_count = var.alb_ingress_unauthenticated_listener_arns_count
-  authenticated_listener_arns         = var.alb_ingress_authenticated_listener_arns
-  authenticated_listener_arns_count   = var.alb_ingress_authenticated_listener_arns_count
+  unauthenticated_listener_arns = var.alb_ingress_unauthenticated_listener_arns
+  authenticated_listener_arns   = var.alb_ingress_authenticated_listener_arns
 
   authentication_type                        = var.authentication_type
   authentication_cognito_user_pool_arn       = var.authentication_cognito_user_pool_arn
