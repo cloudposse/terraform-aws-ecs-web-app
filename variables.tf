@@ -41,9 +41,9 @@ variable "container_image" {
 }
 
 variable "container_repo_credentials_secret" {
-  type        = string
-  default     = null
-  description = "The name of a secret with the username and password to use to connect to a private repository (if using one)."
+  type        = map(string)
+  default     = {}
+  description = "Container repository credentials; required when using a private repo. This map currently supports a single key; \"credentialsParameter\", which should be the ARN of a Secrets Manager's secret holding the credentials"
 }
 
 variable "ecr_scan_images_on_push" {
