@@ -42,7 +42,7 @@ variable "container_image" {
 
 variable "container_repo_credentials" {
   type        = map(string)
-  default     = {}
+  default     = null
   description = "Container repository credentials; required when using a private repo. This map currently supports a single key; \"credentialsParameter\", which should be the ARN of a Secrets Manager's secret holding the credentials"
 }
 
