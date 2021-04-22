@@ -1,3 +1,4 @@
+
 <!-- markdownlint-disable -->
 # terraform-aws-ecs-web-app [![Codefresh Build Status](https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-ecs-web-app?type=cf-1)](https://g.codefresh.io/public/accounts/cloudposse/pipelines/5dbb22a15c2e97b3b73ab484) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg)](https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 <!-- markdownlint-restore -->
@@ -29,7 +30,6 @@
 
 A Terraform module which implements a web app on ECS and supporting AWS resources.
 
-
 ---
 
 This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops) approach towards DevOps.
@@ -54,7 +54,6 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 We literally have [*hundreds of terraform modules*][terraform_modules] that are Open Source and well-maintained. Check them out!
-
 
 
 
@@ -268,6 +267,7 @@ Available targets:
 | <a name="input_container_memory"></a> [container\_memory](#input\_container\_memory) | The amount of RAM to allow container to use in MB. (If FARGATE launch type is used below, this must be a supported Memory size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) | `number` | `512` | no |
 | <a name="input_container_memory_reservation"></a> [container\_memory\_reservation](#input\_container\_memory\_reservation) | The amount of RAM (Soft Limit) to allow container to use in MB. This value must be less than `container_memory` if set | `number` | `128` | no |
 | <a name="input_container_port"></a> [container\_port](#input\_container\_port) | The port number on the container bound to assigned host\_port | `number` | `80` | no |
+| <a name="input_container_repo_credentials_secret"></a> [container\_repo\_credentials\_secret](#input\_container\_repo\_credentials\_secret) | The name of a secret with the username and password to use to connect to a private repository (if using one). | `string` | `null` | no |
 | <a name="input_container_start_timeout"></a> [container\_start\_timeout](#input\_container\_start\_timeout) | Time duration (in seconds) to wait before giving up on resolving dependencies for a container | `number` | `30` | no |
 | <a name="input_container_stop_timeout"></a> [container\_stop\_timeout](#input\_container\_stop\_timeout) | Time duration (in seconds) to wait before the container is forcefully killed if it doesn't exit normally on its own | `number` | `30` | no |
 | <a name="input_context"></a> [context](#input\_context) | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {}<br>}</pre> | no |

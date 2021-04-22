@@ -40,6 +40,12 @@ variable "container_image" {
   default     = "cloudposse/default-backend"
 }
 
+variable "container_repo_credentials_secret" {
+  type        = string
+  default     = null
+  description = "The name of a secret with the username and password to use to connect to a private repository (if using one)."
+}
+
 variable "ecr_scan_images_on_push" {
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not (false)"
