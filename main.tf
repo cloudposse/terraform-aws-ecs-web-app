@@ -80,7 +80,7 @@ module "container_definition" {
   command                      = var.command
   mount_points                 = var.mount_points
   container_depends_on         = local.container_depends_on
-  repository_credentials       = {
+  repository_credentials = {
     credentialsParameter = var.container_repo_credentials_secret
   }
 
