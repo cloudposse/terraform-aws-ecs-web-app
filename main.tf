@@ -80,7 +80,7 @@ module "container_definition" {
   command                      = var.command
   mount_points                 = var.mount_points
   container_depends_on         = local.container_depends_on
-  repository_credentials       = var.container_repo_credentials_secret
+  repository_credentials       = var.container_repo_credentials
 
   log_configuration = var.cloudwatch_log_group_enabled ? {
     logDriver = var.log_driver
