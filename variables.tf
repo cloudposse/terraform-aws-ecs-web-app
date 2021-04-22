@@ -40,6 +40,12 @@ variable "container_image" {
   default     = "cloudposse/default-backend"
 }
 
+variable "container_repo_credentials" {
+  type        = map(string)
+  default     = null
+  description = "Container repository credentials; required when using a private repo. This map currently supports a single key; \"credentialsParameter\", which should be the ARN of a Secrets Manager's secret holding the credentials"
+}
+
 variable "ecr_scan_images_on_push" {
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not (false)"
