@@ -178,7 +178,7 @@ Available targets:
 | <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.55.1 |
 | <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.0 |
 | <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
-| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.26.0 |
+| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.27.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.24.1 |
 
 ## Resources
@@ -246,7 +246,7 @@ Available targets:
 | <a name="input_aws_logs_region"></a> [aws\_logs\_region](#input\_aws\_logs\_region) | The region for the AWS Cloudwatch Logs group | `string` | `null` | no |
 | <a name="input_badge_enabled"></a> [badge\_enabled](#input\_badge\_enabled) | Generates a publicly-accessible URL for the projects build badge. Available as badge\_url attribute when enabled | `bool` | `false` | no |
 | <a name="input_branch"></a> [branch](#input\_branch) | Branch of the GitHub repository, e.g. `master` | `string` | `""` | no |
-| <a name="input_build_environment_variables"></a> [build\_environment\_variables](#input\_build\_environment\_variables) | A list of maps, that contain both the key 'name' and the key 'value' to be used as additional environment variables for the build | <pre>list(object(<br>    {<br>      name  = string<br>      value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_build_environment_variables"></a> [build\_environment\_variables](#input\_build\_environment\_variables) | A list of maps, that contain the keys 'name', 'value', and 'type' to be used as additional environment variables for the build. Valid types are 'PLAINTEXT', 'PARAMETER\_STORE', or 'SECRETS\_MANAGER' | <pre>list(object(<br>    {<br>      name  = string<br>      value = string<br>      type  = string<br>  }))</pre> | `[]` | no |
 | <a name="input_build_image"></a> [build\_image](#input\_build\_image) | Docker image for build environment, _e.g._ `aws/codebuild/docker:docker:17.09.0` | `string` | `"aws/codebuild/docker:17.09.0"` | no |
 | <a name="input_build_timeout"></a> [build\_timeout](#input\_build\_timeout) | How long in minutes, from 5 to 480 (8 hours), for AWS CodeBuild to wait until timing out any related build that does not get marked as completed | `number` | `60` | no |
 | <a name="input_buildspec"></a> [buildspec](#input\_buildspec) | Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html) | `string` | `""` | no |
