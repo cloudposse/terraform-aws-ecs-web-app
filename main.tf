@@ -200,6 +200,7 @@ module "ecs_codepipeline" {
       {
         name  = "CONTAINER_NAME"
         value = module.this.id
+        type  = "PLAINTEXT"
       }
     ]
   )
