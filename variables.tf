@@ -892,6 +892,12 @@ variable "codepipeline_s3_bucket_force_destroy" {
   default     = false
 }
 
+variable "codepipeline_s3_cache_type" {
+  type        = string
+  description = "The type of storage that will be used for the AWS CodeBuild project cache. Valid values: NO_CACHE, LOCAL, and S3.  Defaults to S3.  If cache_type is S3, it will create an S3 bucket for storing codebuild cache inside"
+  default     = "S3"
+}
+
 variable "init_containers" {
   type = list(object({
     container_definition = any
