@@ -194,7 +194,7 @@ module "ecs_codepipeline" {
 
   s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
 
-  s3_cache_type = var.codepipeline_s3_cache_type
+  cache_type = var.codebuild_cache_type
 
   environment_variables = concat(
     var.build_environment_variables,
