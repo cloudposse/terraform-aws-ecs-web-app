@@ -942,3 +942,9 @@ variable "force_new_deployment" {
   description = "Enable to force a new task deployment of the service."
   default     = false
 }
+
+variable "exec_enabled" {
+  type        = bool
+  description = "Specifies whether to enable Amazon ECS Exec for the tasks within the service"
+  default     = false
+}
