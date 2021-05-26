@@ -154,6 +154,7 @@ module "ecs_alb_service_task" {
   ecs_load_balancers                = local.load_balancers
   deployment_controller_type        = var.deployment_controller_type
   force_new_deployment              = var.force_new_deployment
+  exec_enabled                      = var.exec_enabled
 
   context = module.this.context
 }
