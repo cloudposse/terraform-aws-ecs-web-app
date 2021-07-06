@@ -284,6 +284,12 @@ variable "health_check_grace_period_seconds" {
   default     = 0
 }
 
+variable "alb_enabled" {
+  type = bool
+  description = "If false, ALB won't be created along with any respective dependencies"
+  default = true
+}
+
 variable "alb_target_group_alarms_enabled" {
   type        = bool
   description = "A boolean to enable/disable CloudWatch Alarms for ALB Target metrics"
@@ -353,6 +359,7 @@ variable "alb_arn_suffix" {
 variable "alb_security_group" {
   type        = string
   description = "Security group of the ALB"
+  default = ""
 }
 
 variable "use_alb_security_group" {
