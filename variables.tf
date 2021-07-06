@@ -285,9 +285,9 @@ variable "health_check_grace_period_seconds" {
 }
 
 variable "alb_enabled" {
-  type = bool
+  type        = bool
   description = "If false, ALB won't be created along with any respective dependencies"
-  default = true
+  default     = true
 }
 
 variable "alb_target_group_alarms_enabled" {
@@ -359,7 +359,7 @@ variable "alb_arn_suffix" {
 variable "alb_security_group" {
   type        = string
   description = "Security group of the ALB"
-  default = ""
+  default     = ""
 }
 
 variable "use_alb_security_group" {

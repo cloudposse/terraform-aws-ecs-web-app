@@ -108,7 +108,7 @@ locals {
     target_group_arn = var.nlb_ingress_target_group_arn
   }
   alb_load_balancers = var.alb_enabled ? [local.alb] : []
-  load_balancers = var.nlb_ingress_target_group_arn != "" ? local.alb_load_balancers + [local.nlb] : local.alb_load_balancers
+  load_balancers     = var.nlb_ingress_target_group_arn != "" ? local.alb_load_balancers + [local.nlb] : local.alb_load_balancers
   init_container_definitions = [
     for init_container in var.init_containers : lookup(init_container, "container_definition")
   ]
