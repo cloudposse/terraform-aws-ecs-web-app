@@ -353,6 +353,7 @@ variable "alb_arn_suffix" {
 variable "alb_security_group" {
   type        = string
   description = "Security group of the ALB"
+  default = ""
 }
 
 variable "use_alb_security_group" {
