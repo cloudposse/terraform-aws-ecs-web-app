@@ -295,7 +295,7 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
-variable "codestar_connection_arn" {
+variable "codepipeline_codestar_connection_arn" {
   type        = string
   description = "Used instead of a Github token, for the v2 Github integration."
   default     = null
