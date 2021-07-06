@@ -23,6 +23,7 @@ resource "aws_cloudwatch_log_group" "app" {
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
   version = "0.23.0"
+  enabled = var.alb_enabled
 
   vpc_id                       = var.vpc_id
   port                         = var.container_port
@@ -98,7 +99,7 @@ locals {
     container_name   = coalesce(var.alb_container_name, module.this.id)
     container_port   = var.container_port
     elb_name         = null
-    target_group_arn = module.alb_ingress.target_group_arn
+    target_group_arn = var.alb_enabled ? module.alb_ingress.target_group_arn : ""
   }
   nlb = {
     container_name   = coalesce(var.nlb_container_name, module.this.id)
@@ -106,7 +107,8 @@ locals {
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
   }
-  load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
+  alb_load_balancers = var.alb_enabled ? [local.alb] : []
+  load_balancers     = var.nlb_ingress_target_group_arn != "" ? local.alb_load_balancers + [local.nlb] : local.alb_load_balancers
   init_container_definitions = [
     for init_container in var.init_containers : lookup(init_container, "container_definition")
   ]
@@ -135,7 +137,7 @@ module "ecs_alb_service_task" {
   use_nlb_cidr_blocks               = var.use_nlb_cidr_blocks
   container_definition_json         = local.all_container_definitions
   desired_count                     = var.desired_count
-  health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  health_check_grace_period_seconds = var.alb_enabled ? var.health_check_grace_period_seconds : null
   task_cpu                          = coalesce(var.task_cpu, var.container_cpu)
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ignore_changes_task_definition    = var.ignore_changes_task_definition
@@ -300,7 +302,7 @@ module "ecs_cloudwatch_sns_alarms" {
 module "alb_target_group_cloudwatch_sns_alarms" {
   source  = "cloudposse/alb-target-group-cloudwatch-sns-alarms/aws"
   version = "0.15.0"
-  enabled = var.alb_target_group_alarms_enabled
+  enabled = var.alb_enabled && var.alb_target_group_alarms_enabled
 
   alarm_actions                  = var.alb_target_group_alarms_alarm_actions
   ok_actions                     = var.alb_target_group_alarms_ok_actions
