@@ -295,6 +295,12 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
+variable "codepipeline_codestar_connection_arn" {
+  type        = string
+  description = "Used instead of a Github token, for the v2 Github integration."
+  default     = null
+}
+
 variable "codepipeline_github_oauth_token" {
   type        = string
   description = "GitHub Oauth Token with permissions to access private repositories"
