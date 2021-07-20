@@ -88,6 +88,18 @@ variable "task_memory" {
   default     = null
 }
 
+variable "task_role_arn" {
+  type        = string
+  description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services"
+  default     = ""
+}
+
+variable "task_policy_arns" {
+  type        = list(string)
+  description = "A list of IAM Policy ARNs to attach to the generated task role."
+  default     = []
+}
+
 variable "ignore_changes_task_definition" {
   type        = bool
   description = "Ignore changes (like environment variables) to the ECS task definition"
