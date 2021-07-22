@@ -155,6 +155,8 @@ module "ecs_alb_service_task" {
   deployment_controller_type        = var.deployment_controller_type
   force_new_deployment              = var.force_new_deployment
   exec_enabled                      = var.exec_enabled
+  task_policy_arns                  = var.task_policy_arns
+  task_role_arn                     = var.task_role_arn
 
   context = module.this.context
 }
