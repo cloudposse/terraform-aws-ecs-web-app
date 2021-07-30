@@ -60,7 +60,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.56.0"
+  version                      = "0.57.0"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -155,6 +155,8 @@ module "ecs_alb_service_task" {
   deployment_controller_type        = var.deployment_controller_type
   force_new_deployment              = var.force_new_deployment
   exec_enabled                      = var.exec_enabled
+  task_policy_arns                  = var.task_policy_arns
+  task_role_arn                     = var.task_role_arn
 
   context = module.this.context
 }
