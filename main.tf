@@ -24,12 +24,16 @@ module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
   version = "0.23.0"
 
-  vpc_id                       = var.vpc_id
-  port                         = var.container_port
-  health_check_path            = var.alb_ingress_healthcheck_path
-  health_check_protocol        = var.alb_ingress_healthcheck_protocol
-  default_target_group_enabled = var.alb_ingress_enable_default_target_group
-  target_group_arn             = var.alb_ingress_target_group_arn
+  vpc_id                           = var.vpc_id
+  port                             = var.container_port
+  health_check_path                = var.alb_ingress_healthcheck_path
+  health_check_protocol            = var.alb_ingress_healthcheck_protocol
+  health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
+  health_check_interval            = var.alb_ingress_health_check_interval
+  health_check_timeout             = var.alb_ingress_health_check_timeout
+  health_check_unhealthy_threshold = var.alb_ingress_health_check_unhealthy_threshold
+  default_target_group_enabled     = var.alb_ingress_enable_default_target_group
+  target_group_arn                 = var.alb_ingress_target_group_arn
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
