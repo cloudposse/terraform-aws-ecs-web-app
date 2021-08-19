@@ -91,6 +91,7 @@ usage: |-
     vpc_id                                          = module.vpc.vpc_id
     alb_ingress_unauthenticated_listener_arns       = module.alb.listener_arns
     alb_ingress_unauthenticated_listener_arns_count = 1
+    alb_security_group                              = module.alb.security_group_id
     aws_logs_region                                 = "us-east-2"
     ecs_cluster_arn                                 = aws_ecs_cluster.default.arn
     ecs_cluster_name                                = aws_ecs_cluster.default.name
