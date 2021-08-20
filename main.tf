@@ -24,12 +24,16 @@ module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
   version = "0.23.0"
 
-  vpc_id                       = var.vpc_id
-  port                         = var.container_port
-  health_check_path            = var.alb_ingress_healthcheck_path
-  health_check_protocol        = var.alb_ingress_healthcheck_protocol
-  default_target_group_enabled = var.alb_ingress_enable_default_target_group
-  target_group_arn             = var.alb_ingress_target_group_arn
+  vpc_id                           = var.vpc_id
+  port                             = var.container_port
+  health_check_path                = var.alb_ingress_healthcheck_path
+  health_check_protocol            = var.alb_ingress_healthcheck_protocol
+  health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
+  health_check_interval            = var.alb_ingress_health_check_interval
+  health_check_timeout             = var.alb_ingress_health_check_timeout
+  health_check_unhealthy_threshold = var.alb_ingress_health_check_unhealthy_threshold
+  default_target_group_enabled     = var.alb_ingress_enable_default_target_group
+  target_group_arn                 = var.alb_ingress_target_group_arn
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
@@ -65,7 +69,7 @@ locals {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.57.0"
+  version                      = "0.58.0"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -161,6 +165,10 @@ module "ecs_alb_service_task" {
   deployment_controller_type        = var.deployment_controller_type
   force_new_deployment              = var.force_new_deployment
   exec_enabled                      = var.exec_enabled
+  task_policy_arns                  = var.task_policy_arns
+  task_role_arn                     = var.task_role_arn
+  propagate_tags                    = var.propagate_tags
+  enable_ecs_managed_tags           = var.enable_ecs_managed_tags
 
   context = module.this.context
 }
@@ -168,7 +176,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.27.0"
+  version = "0.28.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token

@@ -88,6 +88,18 @@ variable "task_memory" {
   default     = null
 }
 
+variable "task_role_arn" {
+  type        = string
+  description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services"
+  default     = ""
+}
+
+variable "task_policy_arns" {
+  type        = list(string)
+  description = "A list of IAM Policy ARNs to attach to the generated task role."
+  default     = []
+}
+
 variable "ignore_changes_task_definition" {
   type        = bool
   description = "Ignore changes (like environment variables) to the ECS task definition"
@@ -217,6 +229,7 @@ variable "mount_points" {
   type = list(object({
     containerPath = string
     sourceVolume  = string
+    readOnly      = bool
   }))
 
   description = "Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume`"
@@ -396,6 +409,30 @@ variable "alb_ingress_healthcheck_protocol" {
   type        = string
   default     = "HTTP"
   description = "The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda`"
+}
+
+variable "alb_ingress_health_check_healthy_threshold" {
+  type        = number
+  default     = 2
+  description = "The number of consecutive health checks successes required before healthy"
+}
+
+variable "alb_ingress_health_check_unhealthy_threshold" {
+  type        = number
+  default     = 2
+  description = "The number of consecutive health check failures required before unhealthy"
+}
+
+variable "alb_ingress_health_check_interval" {
+  type        = number
+  default     = 15
+  description = "The duration in seconds in between health checks"
+}
+
+variable "alb_ingress_health_check_timeout" {
+  type        = number
+  default     = 10
+  description = "The amount of time to wait in seconds before failing a health check request"
 }
 
 variable "alb_ingress_listener_unauthenticated_priority" {
@@ -947,5 +984,17 @@ variable "force_new_deployment" {
 variable "exec_enabled" {
   type        = bool
   description = "Specifies whether to enable Amazon ECS Exec for the tasks within the service"
+  default     = false
+}
+
+variable "propagate_tags" {
+  type        = string
+  description = "Specifies whether to propagate the tags from the task definition or the service to the tasks. The valid values are SERVICE and TASK_DEFINITION"
+  default     = null
+}
+
+variable "enable_ecs_managed_tags" {
+  type        = bool
+  description = "Specifies whether to enable Amazon ECS managed tags for the tasks within the service"
   default     = false
 }
