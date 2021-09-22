@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.32.3"
-  enabled = var.codepipeline_enabled
+  # enabled = var.codepipeline_enabled
 
   attributes           = ["ecr"]
   scan_images_on_push  = var.ecr_scan_images_on_push

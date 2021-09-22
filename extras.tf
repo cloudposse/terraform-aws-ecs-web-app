@@ -1,15 +1,3 @@
-module "ecr" {
-  source  = "cloudposse/ecr/aws"
-  version = "0.32.3"
-  count   = var.codepipeline_enabled ? 0 : 1 #UPDATE: using this because the cp module only creates ecr when codepipeline is enabled
-
-  attributes           = ["ecr"]
-  scan_images_on_push  = var.ecr_scan_images_on_push
-  image_tag_mutability = var.ecr_image_tag_mutability
-
-  context = module.this.context
-}
-
 
 ### Updating permissions
 data "aws_iam_policy_document" "task_perms" { #UPDATE: adding some basic permissions 
