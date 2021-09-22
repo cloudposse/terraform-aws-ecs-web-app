@@ -167,55 +167,55 @@ module "ecs_alb_service_task" {
   context = module.this.context
 }
 
-module "ecs_codepipeline" {
-  enabled = var.codepipeline_enabled
-  source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.0"
+# module "ecs_codepipeline" {
+#   enabled = var.codepipeline_enabled
+#   source  = "cloudposse/ecs-codepipeline/aws"
+#   version = "0.28.0"
 
-  region                      = coalesce(var.region, data.aws_region.current.name)
-  github_oauth_token          = var.github_oauth_token
-  github_webhooks_token       = var.github_webhooks_token
-  github_webhook_events       = var.github_webhook_events
-  repo_owner                  = var.repo_owner
-  repo_name                   = var.repo_name
-  branch                      = var.branch
-  badge_enabled               = var.badge_enabled
-  build_image                 = var.build_image
-  build_compute_type          = var.codepipeline_build_compute_type
-  build_timeout               = var.build_timeout
-  buildspec                   = var.buildspec
-  cache_bucket_suffix_enabled = var.codepipeline_build_cache_bucket_suffix_enabled
-  image_repo_name             = module.ecr.repository_name
-  service_name                = module.ecs_alb_service_task.service_name
-  ecs_cluster_name            = var.ecs_cluster_name
-  privileged_mode             = true
-  poll_source_changes         = var.poll_source_changes
+#   region                      = coalesce(var.region, data.aws_region.current.name)
+#   github_oauth_token          = var.github_oauth_token
+#   github_webhooks_token       = var.github_webhooks_token
+#   github_webhook_events       = var.github_webhook_events
+#   repo_owner                  = var.repo_owner
+#   repo_name                   = var.repo_name
+#   branch                      = var.branch
+#   badge_enabled               = var.badge_enabled
+#   build_image                 = var.build_image
+#   build_compute_type          = var.codepipeline_build_compute_type
+#   build_timeout               = var.build_timeout
+#   buildspec                   = var.buildspec
+#   cache_bucket_suffix_enabled = var.codepipeline_build_cache_bucket_suffix_enabled
+#   image_repo_name             = module.ecr.repository_name
+#   service_name                = module.ecs_alb_service_task.service_name
+#   ecs_cluster_name            = var.ecs_cluster_name
+#   privileged_mode             = true
+#   poll_source_changes         = var.poll_source_changes
 
-  secondary_artifact_bucket_id          = var.codepipeline_cdn_bucket_id
-  secondary_artifact_encryption_enabled = var.codepipeline_cdn_bucket_encryption_enabled
-  secondary_artifact_identifier         = var.codepipeline_cdn_bucket_buildspec_identifier
+#   secondary_artifact_bucket_id          = var.codepipeline_cdn_bucket_id
+#   secondary_artifact_encryption_enabled = var.codepipeline_cdn_bucket_encryption_enabled
+#   secondary_artifact_identifier         = var.codepipeline_cdn_bucket_buildspec_identifier
 
-  webhook_enabled             = var.webhook_enabled
-  webhook_target_action       = var.webhook_target_action
-  webhook_authentication      = var.webhook_authentication
-  webhook_filter_json_path    = var.webhook_filter_json_path
-  webhook_filter_match_equals = var.webhook_filter_match_equals
+#   webhook_enabled             = var.webhook_enabled
+#   webhook_target_action       = var.webhook_target_action
+#   webhook_authentication      = var.webhook_authentication
+#   webhook_filter_json_path    = var.webhook_filter_json_path
+#   webhook_filter_match_equals = var.webhook_filter_match_equals
 
-  s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
+#   s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
 
-  environment_variables = concat(
-    var.build_environment_variables,
-    [
-      {
-        name  = "CONTAINER_NAME"
-        value = module.this.id
-        type  = "PLAINTEXT"
-      }
-    ]
-  )
+#   environment_variables = concat(
+#     var.build_environment_variables,
+#     [
+#       {
+#         name  = "CONTAINER_NAME"
+#         value = module.this.id
+#         type  = "PLAINTEXT"
+#       }
+#     ]
+#   )
 
-  context = module.this.context
-}
+#   context = module.this.context
+# }
 
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
