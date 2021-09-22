@@ -1,3 +1,14 @@
+
+########################
+# Additional Variables #
+########################
+
+variable "additional_task_permissions" {
+  type        = list(any)
+  description = "Additional values to add to the task role" #UPDATE I didn't see another way to do this. 
+  default     = []
+}
+
 variable "region" {
   type        = string
   description = "AWS Region for S3 bucket"
