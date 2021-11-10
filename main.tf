@@ -59,6 +59,10 @@ module "alb_ingress" {
   authentication_oidc_user_info_endpoint     = var.authentication_oidc_user_info_endpoint
   authentication_oidc_scope                  = var.authentication_oidc_scope
 
+  stickiness_cookie_duration = var.alb_stickiness_cookie_duration
+  stickiness_enabled         = var.alb_stickiness_enabled
+  stickiness_type            = var.alb_stickiness_type
+
   context = module.this.context
 }
 
