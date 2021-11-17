@@ -176,7 +176,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.0"
+  version = "0.28.4"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
@@ -226,7 +226,7 @@ module "ecs_codepipeline" {
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
   source                = "cloudposse/ecs-cloudwatch-autoscaling/aws"
-  version               = "0.7.0"
+  version               = "0.7.1"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
@@ -313,7 +313,7 @@ module "ecs_cloudwatch_sns_alarms" {
 
 module "alb_target_group_cloudwatch_sns_alarms" {
   source  = "cloudposse/alb-target-group-cloudwatch-sns-alarms/aws"
-  version = "0.15.0"
+  version = "0.16.0"
   enabled = local.alb_enabled && var.alb_target_group_alarms_enabled
 
   alarm_actions                  = var.alb_target_group_alarms_alarm_actions
