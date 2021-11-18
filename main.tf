@@ -22,7 +22,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.23.0"
+  version = "0.24.0"
 
   vpc_id                           = var.vpc_id
   port                             = var.container_port
@@ -58,6 +58,10 @@ module "alb_ingress" {
   authentication_oidc_token_endpoint         = var.authentication_oidc_token_endpoint
   authentication_oidc_user_info_endpoint     = var.authentication_oidc_user_info_endpoint
   authentication_oidc_scope                  = var.authentication_oidc_scope
+
+  stickiness_cookie_duration = var.alb_stickiness_cookie_duration
+  stickiness_enabled         = var.alb_stickiness_enabled
+  stickiness_type            = var.alb_stickiness_type
 
   context = module.this.context
 }
