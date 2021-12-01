@@ -297,7 +297,7 @@ variable "ecs_security_group_ids" {
 
 variable "codepipeline_github_oauth_token" {
   type        = string
-  description = "GitHub Oauth Token with permissions to access private repositories"
+  description = "Name of the SSM parameter containing a GitHub Oauth Token with permissions to access private repositories"
   default     = ""
 }
 
