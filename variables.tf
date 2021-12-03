@@ -9,6 +9,30 @@ variable "additional_task_permissions" {
   default     = []
 }
 
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_FirelensConfiguration.html
+variable "firelens_configuration" {
+  type = object({
+    type    = string
+    options = map(string)
+  })
+  description = "The FireLens configuration for the container. This is used to specify and configure a log router for container logs. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_FirelensConfiguration.html"
+  default     = null
+}
+
+
+variable "firelens_enabled" {
+  type        = bool
+  description = "A boolean to disable firelense creation"
+  default     = false
+}
+
+variable "ecr_create_enabled" {
+  type        = bool
+  description = "A boolean to enable/disable AWS ECR"
+  default     = true
+}
+
+#############################
 variable "region" {
   type        = string
   description = "AWS Region for S3 bucket"
