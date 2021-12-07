@@ -224,7 +224,7 @@ module "ecs_codepipeline" {
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
   source                = "cloudposse/ecs-cloudwatch-autoscaling/aws"
-  version               = "0.7.1"
+  version               = "0.7.2"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
