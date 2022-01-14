@@ -152,6 +152,7 @@ module "ecs_alb_service_task" {
   capacity_provider_strategies       = var.capacity_provider_strategies
   service_registries                 = var.service_registries
   launch_type                        = var.launch_type
+  enable_all_egress_rule             = var.enable_all_egress_rule
   platform_version                   = var.platform_version
   vpc_id                             = var.vpc_id
   assign_public_ip                   = var.assign_public_ip
