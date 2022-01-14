@@ -135,7 +135,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.55.1"
+  version = "0.60.1"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
