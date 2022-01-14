@@ -152,8 +152,8 @@
 | <a name="input_ecs_alarms_memory_utilization_low_threshold"></a> [ecs\_alarms\_memory\_utilization\_low\_threshold](#input\_ecs\_alarms\_memory\_utilization\_low\_threshold) | The minimum percentage of Memory utilization average | `number` | `20` | no |
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | The ECS Cluster ARN where ECS Service will be provisioned | `string` | n/a | yes |
 | <a name="input_ecs_cluster_name"></a> [ecs\_cluster\_name](#input\_ecs\_cluster\_name) | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | `null` | no |
-| <a name="input_ecs_private_subnet_ids"></a> [ecs\_private\_subnet\_ids](#input\_ecs\_private\_subnet\_ids) | List of Private Subnet IDs to provision ECS Service onto | `list(string)` | n/a | yes |
-| <a name="input_ecs_security_group_ids"></a> [ecs\_security\_group\_ids](#input\_ecs\_security\_group\_ids) | Additional Security Group IDs to allow into ECS Service | `list(string)` | `[]` | no |
+| <a name="input_ecs_private_subnet_ids"></a> [ecs\_private\_subnet\_ids](#input\_ecs\_private\_subnet\_ids) | List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = "awsvpc"` | `list(string)` | n/a | yes |
+| <a name="input_ecs_security_group_ids"></a> [ecs\_security\_group\_ids](#input\_ecs\_security\_group\_ids) | Additional Security Group IDs to allow into ECS Service if `var.network_mode = "awsvpc"` | `list(string)` | `[]` | no |
 | <a name="input_enable_ecs_managed_tags"></a> [enable\_ecs\_managed\_tags](#input\_enable\_ecs\_managed\_tags) | Specifies whether to enable Amazon ECS managed tags for the tasks within the service | `bool` | `false` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | <a name="input_entrypoint"></a> [entrypoint](#input\_entrypoint) | The entry point that is passed to the container | `list(string)` | `null` | no |
@@ -179,6 +179,7 @@
 | <a name="input_mount_points"></a> [mount\_points](#input\_mount\_points) | Container mount points. This is a list of maps, where each map should contain a `containerPath` and `sourceVolume` | <pre>list(object({<br>    containerPath = string<br>    sourceVolume  = string<br>    readOnly      = bool<br>  }))</pre> | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.<br>This is the only ID element not also included as a `tag`.<br>The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input. | `string` | `null` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
+| <a name="input_network_mode"></a> [network\_mode](#input\_network\_mode) | The network mode to use for the task. This is required to be `awsvpc` for `FARGATE` `launch_type` or `null` for `EC2` `launch_type` | `string` | `"awsvpc"` | no |
 | <a name="input_nlb_cidr_blocks"></a> [nlb\_cidr\_blocks](#input\_nlb\_cidr\_blocks) | A list of CIDR blocks to add to the ingress rule for the NLB container port | `list(string)` | `[]` | no |
 | <a name="input_nlb_container_name"></a> [nlb\_container\_name](#input\_nlb\_container\_name) | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
 | <a name="input_nlb_container_port"></a> [nlb\_container\_port](#input\_nlb\_container\_port) | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
