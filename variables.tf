@@ -76,6 +76,12 @@ variable "container_stop_timeout" {
   default     = 30
 }
 
+variable "network_mode" {
+  type        = string
+  description = "The network mode to use for the task. This is required to be `awsvpc` for `FARGATE` `launch_type` or `null` for `EC2` `launch_type`"
+  default     = "awsvpc"
+}
+
 variable "task_cpu" {
   type        = number
   description = "The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
@@ -668,13 +674,13 @@ variable "ecs_alarms_memory_utilization_low_ok_actions" {
 
 variable "ecs_security_group_ids" {
   type        = list(string)
-  description = "Additional Security Group IDs to allow into ECS Service"
+  description = "Additional Security Group IDs to allow into ECS Service if `var.network_mode = \"awsvpc\"`"
   default     = []
 }
 
 variable "ecs_private_subnet_ids" {
   type        = list(string)
-  description = "List of Private Subnet IDs to provision ECS Service onto"
+  description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
 }
 
 variable "github_oauth_token" {

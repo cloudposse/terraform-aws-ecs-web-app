@@ -144,6 +144,7 @@ module "ecs_alb_service_task" {
   container_definition_json         = local.all_container_definitions
   desired_count                     = var.desired_count
   health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  network_mode                      = var.network_mode
   task_cpu                          = coalesce(var.task_cpu, var.container_cpu)
   task_memory                       = coalesce(var.task_memory, var.container_memory)
   ignore_changes_task_definition    = var.ignore_changes_task_definition
