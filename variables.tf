@@ -112,6 +112,12 @@ variable "ignore_changes_task_definition" {
   default     = true
 }
 
+variable "ignore_changes_desired_count" {
+  type        = bool
+  description = "Whether to ignore changes for desired count in the ECS service"
+  default     = false
+}
+
 variable "system_controls" {
   type        = list(map(string))
   description = "A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = \"\", value = \"\"}"

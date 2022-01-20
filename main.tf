@@ -143,6 +143,7 @@ module "ecs_alb_service_task" {
   use_nlb_cidr_blocks                = var.use_nlb_cidr_blocks
   container_definition_json          = local.all_container_definitions
   desired_count                      = var.desired_count
+  ignore_changes_desired_count       = var.ignore_changes_desired_count
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
   network_mode                       = var.network_mode
   task_cpu                           = coalesce(var.task_cpu, var.container_cpu)
