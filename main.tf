@@ -103,13 +103,13 @@ module "container_definition" {
 
 locals {
   alb = {
-    container_name   = coalesce(var.alb_container_name, module.this.id)
+    container_name   = module.this.enabled ? coalesce(var.alb_container_name, module.this.id) : null
     container_port   = var.container_port
     elb_name         = null
     target_group_arn = module.alb_ingress.target_group_arn
   }
   nlb = {
-    container_name   = coalesce(var.nlb_container_name, module.this.id)
+    container_name   = module.this.enabled ? coalesce(var.nlb_container_name, module.this.id) : null
     container_port   = var.nlb_container_port
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
