@@ -13,7 +13,7 @@ module "ecr" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  count = var.cloudwatch_log_group_enabled ? 1 : 0
+  count = module.this.enabled && var.cloudwatch_log_group_enabled ? 1 : 0
 
   name              = module.this.id
   tags              = module.this.tags
