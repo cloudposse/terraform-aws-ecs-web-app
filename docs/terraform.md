@@ -16,7 +16,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.24.1 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.24.2 |
 | <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.16.1 |
 | <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.0 |
 | <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.32.3 |
@@ -47,6 +47,7 @@
 | <a name="input_alb_ingress_enable_default_target_group"></a> [alb\_ingress\_enable\_default\_target\_group](#input\_alb\_ingress\_enable\_default\_target\_group) | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
 | <a name="input_alb_ingress_health_check_healthy_threshold"></a> [alb\_ingress\_health\_check\_healthy\_threshold](#input\_alb\_ingress\_health\_check\_healthy\_threshold) | The number of consecutive health checks successes required before healthy | `number` | `2` | no |
 | <a name="input_alb_ingress_health_check_interval"></a> [alb\_ingress\_health\_check\_interval](#input\_alb\_ingress\_health\_check\_interval) | The duration in seconds in between health checks | `number` | `15` | no |
+| <a name="input_alb_ingress_health_check_matcher"></a> [alb\_ingress\_health\_check\_matcher](#input\_alb\_ingress\_health\_check\_matcher) | The HTTP response codes to indicate a healthy check | `string` | `"200-399"` | no |
 | <a name="input_alb_ingress_health_check_timeout"></a> [alb\_ingress\_health\_check\_timeout](#input\_alb\_ingress\_health\_check\_timeout) | The amount of time to wait in seconds before failing a health check request | `number` | `10` | no |
 | <a name="input_alb_ingress_health_check_unhealthy_threshold"></a> [alb\_ingress\_health\_check\_unhealthy\_threshold](#input\_alb\_ingress\_health\_check\_unhealthy\_threshold) | The number of consecutive health check failures required before unhealthy | `number` | `2` | no |
 | <a name="input_alb_ingress_healthcheck_path"></a> [alb\_ingress\_healthcheck\_path](#input\_alb\_ingress\_healthcheck\_path) | The path of the healthcheck which the ALB checks | `string` | `"/"` | no |

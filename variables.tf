@@ -446,6 +446,12 @@ variable "alb_ingress_health_check_interval" {
   description = "The duration in seconds in between health checks"
 }
 
+variable "alb_ingress_health_check_matcher" {
+  type        = string
+  default     = "200-399"
+  description = "The HTTP response codes to indicate a healthy check"
+}
+
 variable "alb_ingress_health_check_timeout" {
   type        = number
   default     = 10
