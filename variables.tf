@@ -713,6 +713,12 @@ variable "github_webhooks_token" {
   default     = ""
 }
 
+variable "permissions_boundary" {
+  type        = string
+  description = "A permissions boundary ARN to apply to the 3 roles that are created."
+  default     = ""
+}
+
 variable "github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
