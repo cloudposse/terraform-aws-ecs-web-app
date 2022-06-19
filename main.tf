@@ -173,6 +173,7 @@ module "ecs_alb_service_task" {
   enable_ecs_managed_tags            = var.enable_ecs_managed_tags
   circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
   circuit_breaker_rollback_enabled   = var.circuit_breaker_rollback_enabled
+  permissions_boundary               = var.permissions_boundary
 
   context = module.this.context
 }
