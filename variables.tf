@@ -76,6 +76,12 @@ variable "container_stop_timeout" {
   default     = 30
 }
 
+variable "network_mode" {
+  type        = string
+  description = "The network mode to use for the task. This is required to be `awsvpc` for `FARGATE` `launch_type` or `null` for `EC2` `launch_type`"
+  default     = "awsvpc"
+}
+
 variable "task_cpu" {
   type        = number
   description = "The number of CPU units used by the task. If unspecified, it will default to `container_cpu`. If using `FARGATE` launch type `task_cpu` must match supported memory values (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size)"
@@ -104,6 +110,12 @@ variable "ignore_changes_task_definition" {
   type        = bool
   description = "Ignore changes (like environment variables) to the ECS task definition"
   default     = true
+}
+
+variable "ignore_changes_desired_count" {
+  type        = bool
+  description = "Whether to ignore changes for desired count in the ECS service"
+  default     = false
 }
 
 variable "system_controls" {
@@ -170,6 +182,12 @@ variable "launch_type" {
   type        = string
   description = "The ECS launch type (valid options: FARGATE or EC2)"
   default     = "FARGATE"
+}
+
+variable "enable_all_egress_rule" {
+  type        = bool
+  description = "A flag to enable/disable adding the all ports egress rule to the ECS security group"
+  default     = true
 }
 
 variable "platform_version" {
@@ -428,6 +446,12 @@ variable "alb_ingress_health_check_interval" {
   description = "The duration in seconds in between health checks"
 }
 
+variable "alb_ingress_health_check_matcher" {
+  type        = string
+  default     = "200-399"
+  description = "The HTTP response codes to indicate a healthy check"
+}
+
 variable "alb_ingress_health_check_timeout" {
   type        = number
   default     = 10
@@ -474,6 +498,24 @@ variable "nlb_ingress_target_group_arn" {
   type        = string
   description = "Target group ARN of the NLB ingress"
   default     = ""
+}
+
+variable "alb_stickiness_type" {
+  type        = string
+  default     = "lb_cookie"
+  description = "The type of sticky sessions. The only current possible value is `lb_cookie`"
+}
+
+variable "alb_stickiness_cookie_duration" {
+  type        = number
+  default     = 86400
+  description = "The time period, in seconds, during which requests from a client should be routed to the same target. After this time period expires, the load balancer-generated cookie is considered stale. The range is 1 second to 1 week (604800 seconds). The default value is 1 day (86400 seconds)"
+}
+
+variable "alb_stickiness_enabled" {
+  type        = bool
+  default     = true
+  description = "Boolean to enable / disable `stickiness`. Default is `true`"
 }
 
 variable "vpc_id" {
@@ -650,13 +692,13 @@ variable "ecs_alarms_memory_utilization_low_ok_actions" {
 
 variable "ecs_security_group_ids" {
   type        = list(string)
-  description = "Additional Security Group IDs to allow into ECS Service"
+  description = "Additional Security Group IDs to allow into ECS Service if `var.network_mode = \"awsvpc\"`"
   default     = []
 }
 
 variable "ecs_private_subnet_ids" {
   type        = list(string)
-  description = "List of Private Subnet IDs to provision ECS Service onto"
+  description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
 }
 
 variable "github_oauth_token" {
@@ -1001,5 +1043,17 @@ variable "propagate_tags" {
 variable "enable_ecs_managed_tags" {
   type        = bool
   description = "Specifies whether to enable Amazon ECS managed tags for the tasks within the service"
+  default     = false
+}
+
+variable "circuit_breaker_deployment_enabled" {
+  type        = bool
+  description = "If `true`, enable the deployment circuit breaker logic for the service"
+  default     = false
+}
+
+variable "circuit_breaker_rollback_enabled" {
+  type        = bool
+  description = "If `true`, Amazon ECS will roll back the service if a service deployment fails"
   default     = false
 }
