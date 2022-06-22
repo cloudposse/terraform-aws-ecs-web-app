@@ -114,6 +114,8 @@ codepipeline_enabled = true
 
 codepipeline_s3_bucket_force_destroy = true
 
+codepipeline_codestar_connection_arn = ""
+
 codepipeline_github_oauth_token = "test"
 
 codepipeline_github_webhook_events = ["push"]

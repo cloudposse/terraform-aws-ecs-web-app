@@ -959,6 +959,12 @@ variable "authentication_oidc_scope" {
   default     = null
 }
 
+variable "codestar_connection_arn" {
+  type        = string
+  description = "Used instead of a Github token, for the v2 Github integration."
+  default     = null
+}
+
 variable "codepipeline_build_cache_bucket_suffix_enabled" {
   type        = bool
   description = "The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache_type is 'S3'"

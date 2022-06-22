@@ -184,6 +184,7 @@ module "ecs_codepipeline" {
   version = "0.28.7"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
+  codestar_connection_arn     = var.codestar_connection_arn
   github_oauth_token          = var.github_oauth_token
   github_webhooks_token       = var.github_webhooks_token
   github_webhook_events       = var.github_webhook_events

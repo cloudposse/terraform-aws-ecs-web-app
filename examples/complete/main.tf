@@ -113,6 +113,7 @@ module "ecs_web_app" {
   # CodePipeline
   codepipeline_enabled                 = var.codepipeline_enabled
   badge_enabled                        = var.codepipeline_badge_enabled
+  codestar_connection_arn              = var.codepipeline_codestar_connection_arn
   github_oauth_token                   = var.codepipeline_github_oauth_token
   github_webhooks_token                = var.codepipeline_github_webhooks_token
   github_webhook_events                = var.codepipeline_github_webhook_events
