@@ -228,6 +228,15 @@ variable "volumes" {
       labels        = map(string)
       scope         = string
     }))
+  }))
+  description = "Task volume definitions as list of configuration objects"
+  default     = []
+}
+
+variable "efs_volumes" {
+  type = list(object({
+    host_path = string
+    name      = string
     efs_volume_configuration = list(object({
       file_system_id          = string
       root_directory          = string
@@ -239,7 +248,7 @@ variable "volumes" {
       }))
     }))
   }))
-  description = "Task volume definitions as list of configuration objects"
+  description = "Task volume definitions as list of configuration objects. EFS volumes only."
   default     = []
 }
 
