@@ -719,6 +719,16 @@ variable "permissions_boundary" {
   default     = ""
 }
 
+variable "runtime_platform" {
+  type        = list(map(string))
+  description = <<-EOT
+    Zero or one runtime platform configurations that containers in your task may use.
+    Map of strings with optional keys `operating_system_family` and `cpu_architecture`.
+    See `runtime_platform` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#runtime_platform
+    EOT
+  default     = []
+}
+
 variable "github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
