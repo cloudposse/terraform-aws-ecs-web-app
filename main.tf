@@ -175,6 +175,7 @@ module "ecs_alb_service_task" {
   circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
   circuit_breaker_rollback_enabled   = var.circuit_breaker_rollback_enabled
   permissions_boundary               = var.permissions_boundary
+  runtime_platform                   = var.runtime_platform
 
   context = module.this.context
 }
