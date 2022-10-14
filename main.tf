@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.34.0"
-  enabled = var.codepipeline_enabled
+  enabled = var.ecr_enabled || var.codepipeline_enabled
 
   attributes           = ["ecr"]
   scan_images_on_push  = var.ecr_scan_images_on_push
@@ -186,7 +186,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.8"
+  version = "0.30.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token

@@ -4,9 +4,15 @@ variable "region" {
   default     = null
 }
 
+variable "ecr_enabled" {
+  type        = bool
+  description = "A boolean to enable/disable AWS ECR"
+  default     = true
+}
+
 variable "codepipeline_enabled" {
   type        = bool
-  description = "A boolean to enable/disable AWS Codepipeline and ECR"
+  description = "A boolean to enable/disable AWS Codepipeline. If `false`, use `ecr_enabled` to control if AWS ECR stays enabled."
   default     = true
 }
 
