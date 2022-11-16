@@ -217,17 +217,10 @@ variable "service_registries" {
   default     = []
 }
 
-variable "volumes" {
+variable "efs_volumes" {
   type = list(object({
     host_path = string
     name      = string
-    docker_volume_configuration = list(object({
-      autoprovision = bool
-      driver        = string
-      driver_opts   = map(string)
-      labels        = map(string)
-      scope         = string
-    }))
     efs_volume_configuration = list(object({
       file_system_id          = string
       root_directory          = string
@@ -239,7 +232,43 @@ variable "volumes" {
       }))
     }))
   }))
-  description = "Task volume definitions as list of configuration objects"
+
+  description = "Task EFS volume definitions as list of configuration objects. You can define multiple EFS volumes on the same task definition, but a single volume can only have one `efs_volume_configuration`."
+  default     = []
+}
+
+variable "docker_volumes" {
+  type = list(object({
+    host_path = string
+    name      = string
+    docker_volume_configuration = list(object({
+      autoprovision = bool
+      driver        = string
+      driver_opts   = map(string)
+      labels        = map(string)
+      scope         = string
+    }))
+  }))
+
+  description = "Task docker volume definitions as list of configuration objects. You can define multiple Docker volumes on the same task definition, but a single volume can only have one `docker_volume_configuration`."
+  default     = []
+}
+
+variable "fsx_volumes" {
+  type = list(object({
+    host_path = string
+    name      = string
+    fsx_windows_file_server_volume_configuration = list(object({
+      file_system_id = string
+      root_directory = string
+      authorization_config = list(object({
+        credentials_parameter = string
+        domain                = string
+      }))
+    }))
+  }))
+
+  description = "Task FSx volume definitions as list of configuration objects. You can define multiple FSx volumes on the same task definition, but a single volume can only have one `fsx_windows_file_server_volume_configuration`."
   default     = []
 }
 

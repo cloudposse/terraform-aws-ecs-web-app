@@ -132,6 +132,22 @@ locals {
   main_container_definition = coalesce(var.container_definition, module.container_definition.json_map_encoded)
   # combine all container definitions
   all_container_definitions = "[${join(",", concat(local.init_container_definitions, [local.main_container_definition]))}]"
+
+  efs_volumes = concat(var.efs_volumes, [
+    for volume_definition in var.volumes : {
+      host_path                = volume_definition["host_path"]
+      name                     = volume_definition["name"]
+      efs_volume_configuration = volume_definition["efs_volume_configuration"]
+    }
+  ])
+
+  docker_volumes = concat(var.docker_volumes, [
+    for volume_definition in var.volumes : {
+      host_path                   = volume_definition["host_path"]
+      name                        = volume_definition["name"]
+      docker_volume_configuration = volume_definition["docker_volume_configuration"]
+    }
+  ])
 }
 
 module "ecs_alb_service_task" {
@@ -162,7 +178,9 @@ module "ecs_alb_service_task" {
   subnet_ids                         = var.ecs_private_subnet_ids
   container_port                     = var.container_port
   nlb_container_port                 = var.nlb_container_port
-  docker_volumes                     = var.volumes
+  efs_volumes                        = local.efs_volumes
+  docker_volumes                     = local.docker_volumes
+  fsx_volumes                        = var.fsx_volumes
   ecs_load_balancers                 = local.load_balancers
   deployment_controller_type         = var.deployment_controller_type
   force_new_deployment               = var.force_new_deployment
