@@ -464,7 +464,7 @@ variable "alb_ingress_listener_unauthenticated_priority" {
   description = "The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority"
 }
 
-variable "" {
+variable "alb_ingress_listener_authenticated_priority" {
   type        = number
   default     = 300
   description = "The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority"
