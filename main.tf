@@ -28,7 +28,7 @@ module "alb_ingress" {
   port   = var.container_port
 
   protocol         = var.alb_ingress_protocol
-  protocol_version = var.alb_ingerss_protocol_version
+  protocol_version = var.alb_ingress_protocol_version
 
   health_check_path                = var.alb_ingress_healthcheck_path
   health_check_protocol            = var.alb_ingress_healthcheck_protocol
