@@ -24,8 +24,12 @@ module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
   version = "0.24.2"
 
-  vpc_id                           = var.vpc_id
-  port                             = var.container_port
+  vpc_id = var.vpc_id
+  port   = var.container_port
+
+  protocol         = var.alb_ingress_protocol
+  protocol_version = var.alb_ingerss_protocol_version
+
   health_check_path                = var.alb_ingress_healthcheck_path
   health_check_protocol            = var.alb_ingress_healthcheck_protocol
   health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
