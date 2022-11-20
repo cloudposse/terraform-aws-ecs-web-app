@@ -470,6 +470,18 @@ variable "alb_ingress_listener_authenticated_priority" {
   description = "The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority"
 }
 
+variable "alb_ingress_protocol" {
+  type        = string
+  default     = "HTTP"
+  description = "The protocol for the created ALB target group (if target_group_arn is not set). One of `HTTP`, `HTTPS`. Defaults to `HTTP`."
+}
+
+variable "alb_ingress_protocol_version" {
+  type        = string
+  default     = "HTTP1"
+  description = "The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1"
+}
+
 variable "alb_ingress_unauthenticated_hosts" {
   type        = list(string)
   default     = []
