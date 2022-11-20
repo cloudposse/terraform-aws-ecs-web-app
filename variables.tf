@@ -479,7 +479,7 @@ variable "alb_ingress_protocol" {
 variable "alb_ingress_protocol_version" {
   type        = string
   default     = "HTTP1"
-  description = "he protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1"
+  description = "The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1"
 }
 
 variable "alb_ingress_unauthenticated_hosts" {
