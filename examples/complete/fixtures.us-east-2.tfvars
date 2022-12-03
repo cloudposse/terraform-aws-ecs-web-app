@@ -139,3 +139,21 @@ build_environment_variables = [
 ]
 
 container_environment = []
+
+linux_parameters = {
+  capabilities = {
+    add = ["ALL"]
+  }
+  devices = [{
+    containerPath = "/dev/xvdh"
+    permissions   = ["read"]
+  }]
+  initProcessEnabled = true
+  maxSwap            = 1
+  swappiness         = 1
+  tmpfs = [{
+    containerPath = "/dev/xvdi"
+    mountOptions  = ["defaults"]
+    size          = 12
+  }]
+}

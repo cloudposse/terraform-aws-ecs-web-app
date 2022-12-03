@@ -504,3 +504,28 @@ variable "codepipeline_s3_bucket_force_destroy" {
   description = "A boolean that indicates all objects should be deleted from the CodePipeline artifact store S3 bucket so that the bucket can be destroyed without error"
   default     = false
 }
+
+variable "linux_parameters" {
+  type = object({
+    capabilities = optional(object({
+      add  = optional(list(string))
+      drop = optional(list(string))
+    }))
+    devices = optional(list(object({
+      containerPath = optional(string)
+      hostPath      = optional(string)
+      permissions   = optional(list(string))
+    })))
+    initProcessEnabled = optional(bool)
+    maxSwap            = optional(number)
+    sharedMemorySize   = optional(number)
+    swappiness         = optional(number)
+    tmpfs = optional(list(object({
+      containerPath = optional(string)
+      mountOptions  = optional(list(string))
+      size          = number
+    })))
+  })
+  description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
+  default     = null
+}
