@@ -2,7 +2,7 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.32.3"
+  version = "0.34.0"
   enabled = var.codepipeline_enabled
 
   attributes           = ["ecr"]
@@ -22,14 +22,19 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.24.1"
+  version = "0.25.1"
 
-  vpc_id                           = var.vpc_id
-  port                             = var.container_port
+  vpc_id = var.vpc_id
+  port   = var.container_port
+
+  protocol         = var.alb_ingress_protocol
+  protocol_version = var.alb_ingress_protocol_version
+
   health_check_path                = var.alb_ingress_healthcheck_path
   health_check_protocol            = var.alb_ingress_healthcheck_protocol
   health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
   health_check_interval            = var.alb_ingress_health_check_interval
+  health_check_matcher             = var.alb_ingress_health_check_matcher
   health_check_timeout             = var.alb_ingress_health_check_timeout
   health_check_unhealthy_threshold = var.alb_ingress_health_check_unhealthy_threshold
   default_target_group_enabled     = var.alb_ingress_enable_default_target_group
@@ -68,7 +73,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.58.0"
+  version                      = "0.58.1"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
@@ -139,7 +144,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.60.1"
+  version = "0.64.1"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
@@ -165,7 +170,7 @@ module "ecs_alb_service_task" {
   subnet_ids                         = var.ecs_private_subnet_ids
   container_port                     = var.container_port
   nlb_container_port                 = var.nlb_container_port
-  volumes                            = var.volumes
+  docker_volumes                     = var.volumes
   ecs_load_balancers                 = local.load_balancers
   deployment_controller_type         = var.deployment_controller_type
   force_new_deployment               = var.force_new_deployment
@@ -176,6 +181,8 @@ module "ecs_alb_service_task" {
   enable_ecs_managed_tags            = var.enable_ecs_managed_tags
   circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
   circuit_breaker_rollback_enabled   = var.circuit_breaker_rollback_enabled
+  permissions_boundary               = var.permissions_boundary
+  runtime_platform                   = var.runtime_platform
 
   context = module.this.context
 }
@@ -183,7 +190,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.4"
+  version = "0.28.8"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
@@ -216,6 +223,8 @@ module "ecs_codepipeline" {
 
   s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
 
+  cache_type = var.codebuild_cache_type
+
   environment_variables = concat(
     var.build_environment_variables,
     [
@@ -233,7 +242,7 @@ module "ecs_codepipeline" {
 module "ecs_cloudwatch_autoscaling" {
   enabled               = var.autoscaling_enabled
   source                = "cloudposse/ecs-cloudwatch-autoscaling/aws"
-  version               = "0.7.2"
+  version               = "0.7.3"
   name                  = var.name
   namespace             = var.namespace
   stage                 = var.stage
@@ -257,7 +266,7 @@ locals {
 
 module "ecs_cloudwatch_sns_alarms" {
   source  = "cloudposse/ecs-cloudwatch-sns-alarms/aws"
-  version = "0.12.1"
+  version = "0.12.2"
   enabled = var.ecs_alarms_enabled
 
   cluster_name = var.ecs_cluster_name
@@ -320,7 +329,7 @@ module "ecs_cloudwatch_sns_alarms" {
 
 module "alb_target_group_cloudwatch_sns_alarms" {
   source  = "cloudposse/alb-target-group-cloudwatch-sns-alarms/aws"
-  version = "0.16.1"
+  version = "0.17.0"
   enabled = var.alb_target_group_alarms_enabled
 
   alarm_actions                  = var.alb_target_group_alarms_alarm_actions

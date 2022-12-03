@@ -171,14 +171,14 @@ Available targets:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.24.1 |
-| <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.16.1 |
-| <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.0 |
-| <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.32.3 |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.60.1 |
-| <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.2 |
-| <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.1 |
-| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.28.4 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.25.1 |
+| <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.17.0 |
+| <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.1 |
+| <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.34.0 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.64.1 |
+| <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.3 |
+| <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.2 |
+| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.28.8 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -202,12 +202,15 @@ Available targets:
 | <a name="input_alb_ingress_enable_default_target_group"></a> [alb\_ingress\_enable\_default\_target\_group](#input\_alb\_ingress\_enable\_default\_target\_group) | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
 | <a name="input_alb_ingress_health_check_healthy_threshold"></a> [alb\_ingress\_health\_check\_healthy\_threshold](#input\_alb\_ingress\_health\_check\_healthy\_threshold) | The number of consecutive health checks successes required before healthy | `number` | `2` | no |
 | <a name="input_alb_ingress_health_check_interval"></a> [alb\_ingress\_health\_check\_interval](#input\_alb\_ingress\_health\_check\_interval) | The duration in seconds in between health checks | `number` | `15` | no |
+| <a name="input_alb_ingress_health_check_matcher"></a> [alb\_ingress\_health\_check\_matcher](#input\_alb\_ingress\_health\_check\_matcher) | The HTTP response codes to indicate a healthy check | `string` | `"200-399"` | no |
 | <a name="input_alb_ingress_health_check_timeout"></a> [alb\_ingress\_health\_check\_timeout](#input\_alb\_ingress\_health\_check\_timeout) | The amount of time to wait in seconds before failing a health check request | `number` | `10` | no |
 | <a name="input_alb_ingress_health_check_unhealthy_threshold"></a> [alb\_ingress\_health\_check\_unhealthy\_threshold](#input\_alb\_ingress\_health\_check\_unhealthy\_threshold) | The number of consecutive health check failures required before unhealthy | `number` | `2` | no |
 | <a name="input_alb_ingress_healthcheck_path"></a> [alb\_ingress\_healthcheck\_path](#input\_alb\_ingress\_healthcheck\_path) | The path of the healthcheck which the ALB checks | `string` | `"/"` | no |
 | <a name="input_alb_ingress_healthcheck_protocol"></a> [alb\_ingress\_healthcheck\_protocol](#input\_alb\_ingress\_healthcheck\_protocol) | The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda` | `string` | `"HTTP"` | no |
 | <a name="input_alb_ingress_listener_authenticated_priority"></a> [alb\_ingress\_listener\_authenticated\_priority](#input\_alb\_ingress\_listener\_authenticated\_priority) | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `300` | no |
 | <a name="input_alb_ingress_listener_unauthenticated_priority"></a> [alb\_ingress\_listener\_unauthenticated\_priority](#input\_alb\_ingress\_listener\_unauthenticated\_priority) | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `1000` | no |
+| <a name="input_alb_ingress_protocol"></a> [alb\_ingress\_protocol](#input\_alb\_ingress\_protocol) | The protocol for the created ALB target group (if target\_group\_arn is not set). One of `HTTP`, `HTTPS`. Defaults to `HTTP`. | `string` | `"HTTP"` | no |
+| <a name="input_alb_ingress_protocol_version"></a> [alb\_ingress\_protocol\_version](#input\_alb\_ingress\_protocol\_version) | The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1 | `string` | `"HTTP1"` | no |
 | <a name="input_alb_ingress_target_group_arn"></a> [alb\_ingress\_target\_group\_arn](#input\_alb\_ingress\_target\_group\_arn) | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
 | <a name="input_alb_ingress_unauthenticated_hosts"></a> [alb\_ingress\_unauthenticated\_hosts](#input\_alb\_ingress\_unauthenticated\_hosts) | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_unauthenticated_listener_arns"></a> [alb\_ingress\_unauthenticated\_listener\_arns](#input\_alb\_ingress\_unauthenticated\_listener\_arns) | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
@@ -261,6 +264,7 @@ Available targets:
 | <a name="input_circuit_breaker_deployment_enabled"></a> [circuit\_breaker\_deployment\_enabled](#input\_circuit\_breaker\_deployment\_enabled) | If `true`, enable the deployment circuit breaker logic for the service | `bool` | `false` | no |
 | <a name="input_circuit_breaker_rollback_enabled"></a> [circuit\_breaker\_rollback\_enabled](#input\_circuit\_breaker\_rollback\_enabled) | If `true`, Amazon ECS will roll back the service if a service deployment fails | `bool` | `false` | no |
 | <a name="input_cloudwatch_log_group_enabled"></a> [cloudwatch\_log\_group\_enabled](#input\_cloudwatch\_log\_group\_enabled) | A boolean to disable cloudwatch log group creation | `bool` | `true` | no |
+| <a name="input_codebuild_cache_type"></a> [codebuild\_cache\_type](#input\_codebuild\_cache\_type) | The type of storage that will be used for the AWS CodeBuild project cache. Valid values: NO\_CACHE, LOCAL, and S3.  Defaults to NO\_CACHE.  If cache\_type is S3, it will create an S3 bucket for storing codebuild cache inside | `string` | `"S3"` | no |
 | <a name="input_codepipeline_build_cache_bucket_suffix_enabled"></a> [codepipeline\_build\_cache\_bucket\_suffix\_enabled](#input\_codepipeline\_build\_cache\_bucket\_suffix\_enabled) | The codebuild cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache\_type is 'S3' | `bool` | `true` | no |
 | <a name="input_codepipeline_build_compute_type"></a> [codepipeline\_build\_compute\_type](#input\_codepipeline\_build\_compute\_type) | `CodeBuild` instance size. Possible values are: `BUILD_GENERAL1_SMALL` `BUILD_GENERAL1_MEDIUM` `BUILD_GENERAL1_LARGE` | `string` | `"BUILD_GENERAL1_SMALL"` | no |
 | <a name="input_codepipeline_cdn_bucket_buildspec_identifier"></a> [codepipeline\_cdn\_bucket\_buildspec\_identifier](#input\_codepipeline\_cdn\_bucket\_buildspec\_identifier) | Identifier for buildspec section controlling the optional CDN asset deployment. | `string` | `null` | no |
@@ -344,6 +348,7 @@ Available targets:
 | <a name="input_nlb_container_name"></a> [nlb\_container\_name](#input\_nlb\_container\_name) | The name of the container to associate with the NLB. If not provided, the generated container will be used | `string` | `null` | no |
 | <a name="input_nlb_container_port"></a> [nlb\_container\_port](#input\_nlb\_container\_port) | The port number on the container bound to assigned NLB host\_port | `number` | `80` | no |
 | <a name="input_nlb_ingress_target_group_arn"></a> [nlb\_ingress\_target\_group\_arn](#input\_nlb\_ingress\_target\_group\_arn) | Target group ARN of the NLB ingress | `string` | `""` | no |
+| <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | A permissions boundary ARN to apply to the 3 roles that are created. | `string` | `""` | no |
 | <a name="input_platform_version"></a> [platform\_version](#input\_platform\_version) | The platform version on which to run your service. Only applicable for launch\_type set to FARGATE. More information about Fargate platform versions can be found in the AWS ECS User Guide. | `string` | `"LATEST"` | no |
 | <a name="input_poll_source_changes"></a> [poll\_source\_changes](#input\_poll\_source\_changes) | Periodically check the location of your source content and run the pipeline if changes are detected | `bool` | `false` | no |
 | <a name="input_port_mappings"></a> [port\_mappings](#input\_port\_mappings) | The port mappings to configure for the container. This is a list of maps. Each map should contain "containerPort", "hostPort", and "protocol", where "protocol" is one of "tcp" or "udp". If using containers in a task with the awsvpc or host network mode, the hostPort can either be left blank or set to the same value as the containerPort | <pre>list(object({<br>    containerPort = number<br>    hostPort      = number<br>    protocol      = string<br>  }))</pre> | <pre>[<br>  {<br>    "containerPort": 80,<br>    "hostPort": 80,<br>    "protocol": "tcp"<br>  }<br>]</pre> | no |
@@ -353,6 +358,7 @@ Available targets:
 | <a name="input_region"></a> [region](#input\_region) | AWS Region for S3 bucket | `string` | `null` | no |
 | <a name="input_repo_name"></a> [repo\_name](#input\_repo\_name) | GitHub repository name of the application to be built and deployed to ECS | `string` | `""` | no |
 | <a name="input_repo_owner"></a> [repo\_owner](#input\_repo\_owner) | GitHub Organization or Username | `string` | `""` | no |
+| <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | Zero or one runtime platform configurations that containers in your task may use.<br>Map of strings with optional keys `operating_system_family` and `cpu_architecture`.<br>See `runtime_platform` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#runtime_platform | `list(map(string))` | `[]` | no |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
 | <a name="input_service_registries"></a> [service\_registries](#input\_service\_registries) | The service discovery registries for the service. The maximum number of service\_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1 | <pre>list(object({<br>    registry_arn   = string<br>    port           = number<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
@@ -423,6 +429,7 @@ Available targets:
 | <a name="output_ecs_cloudwatch_autoscaling_scale_up_policy_arn"></a> [ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn](#output\_ecs\_cloudwatch\_autoscaling\_scale\_up\_policy\_arn) | ARN of the scale up policy |
 | <a name="output_ecs_exec_role_policy_id"></a> [ecs\_exec\_role\_policy\_id](#output\_ecs\_exec\_role\_policy\_id) | The ECS service role policy ID, in the form of `role_name:role_policy_name` |
 | <a name="output_ecs_exec_role_policy_name"></a> [ecs\_exec\_role\_policy\_name](#output\_ecs\_exec\_role\_policy\_name) | ECS service role name |
+| <a name="output_ecs_service_arn"></a> [ecs\_service\_arn](#output\_ecs\_service\_arn) | ECS Service ARN |
 | <a name="output_ecs_service_name"></a> [ecs\_service\_name](#output\_ecs\_service\_name) | ECS Service name |
 | <a name="output_ecs_service_role_arn"></a> [ecs\_service\_role\_arn](#output\_ecs\_service\_role\_arn) | ECS Service role ARN |
 | <a name="output_ecs_service_security_group_id"></a> [ecs\_service\_security\_group\_id](#output\_ecs\_service\_security\_group\_id) | Security Group ID of the ECS task |
@@ -615,7 +622,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
-
+<!-- markdownlint-disable -->
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-web-app&utm_content=docs
   [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-web-app&utm_content=website
@@ -646,3 +653,4 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-aws-ecs-web-app
   [share_email]: mailto:?subject=terraform-aws-ecs-web-app&body=https://github.com/cloudposse/terraform-aws-ecs-web-app
   [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-aws-ecs-web-app?pixel&cs=github&cm=readme&an=terraform-aws-ecs-web-app
+<!-- markdownlint-restore -->
