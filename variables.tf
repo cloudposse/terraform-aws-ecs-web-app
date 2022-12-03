@@ -49,24 +49,24 @@ variable "container_repo_credentials" {
 # https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html
 variable "linux_parameters" {
   type = object({
-    capabilities = object({
-      add  = list(string)
-      drop = list(string)
-    })
-    devices = list(object({
-      containerPath = string
-      hostPath      = string
-      permissions   = list(string)
+    capabilities = optional(object({
+      add  = optional(list(string))
+      drop = optional(list(string))
     }))
-    initProcessEnabled = bool
-    maxSwap            = number
-    sharedMemorySize   = number
-    swappiness         = number
-    tmpfs = list(object({
-      containerPath = string
-      mountOptions  = list(string)
+    devices = optional(list(object({
+      containerPath = optional(string)
+      hostPath      = optional(string)
+      permissions   = optional(list(string))
+    })))
+    initProcessEnabled = optional(bool)
+    maxSwap            = optional(number)
+    sharedMemorySize   = optional(number)
+    swappiness         = optional(number)
+    tmpfs = optional(list(object({
+      containerPath = optional(string)
+      mountOptions  = optional(list(string))
       size          = number
-    }))
+    })))
   })
   description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
   default     = null
