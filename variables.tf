@@ -1032,3 +1032,10 @@ variable "enable_ecs_managed_tags" {
   description = "Specifies whether to enable Amazon ECS managed tags for the tasks within the service"
   default     = false
 }
+
+variable "target_group_protocol" {
+  type        = string
+  description = "passed into the alb-ingress module as protocol -- gets passed to the target_group.  Protocol for talking to target group"
+  default     = "HTTP"
+}
+
