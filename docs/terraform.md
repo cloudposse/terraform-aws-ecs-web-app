@@ -159,6 +159,7 @@
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | The ECS Cluster ARN where ECS Service will be provisioned | `string` | n/a | yes |
 | <a name="input_ecs_cluster_name"></a> [ecs\_cluster\_name](#input\_ecs\_cluster\_name) | The ECS Cluster Name to use in ECS Code Pipeline Deployment step | `string` | `null` | no |
 | <a name="input_ecs_private_subnet_ids"></a> [ecs\_private\_subnet\_ids](#input\_ecs\_private\_subnet\_ids) | List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = "awsvpc"` | `list(string)` | n/a | yes |
+| <a name="input_ecs_security_group_enabled"></a> [ecs\_security\_group\_enabled](#input\_ecs\_security\_group\_enabled) | Whether to create a security group for the service. | `bool` | `true` | no |
 | <a name="input_ecs_security_group_ids"></a> [ecs\_security\_group\_ids](#input\_ecs\_security\_group\_ids) | Additional Security Group IDs to allow into ECS Service if `var.network_mode = "awsvpc"` | `list(string)` | `[]` | no |
 | <a name="input_enable_all_egress_rule"></a> [enable\_all\_egress\_rule](#input\_enable\_all\_egress\_rule) | A flag to enable/disable adding the all ports egress rule to the ECS security group | `bool` | `true` | no |
 | <a name="input_enable_ecs_managed_tags"></a> [enable\_ecs\_managed\_tags](#input\_enable\_ecs\_managed\_tags) | Specifies whether to enable Amazon ECS managed tags for the tasks within the service | `bool` | `false` | no |
