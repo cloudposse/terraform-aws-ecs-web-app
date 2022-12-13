@@ -708,6 +708,12 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
+variable "ecs_security_group_enabled" {
+  type        = bool
+  description = "Whether to create a security group for the service."
+  default     = true
+}
+
 variable "ecs_private_subnet_ids" {
   type        = list(string)
   description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
