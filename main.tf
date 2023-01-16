@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.34.0"
-  enabled = var.codepipeline_enabled
+  enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
   attributes           = ["ecr"]
   scan_images_on_push  = var.ecr_scan_images_on_push
@@ -22,10 +22,14 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.24.2"
+  version = "0.25.1"
 
-  vpc_id                           = var.vpc_id
-  port                             = var.container_port
+  vpc_id = var.vpc_id
+  port   = var.container_port
+
+  protocol         = var.alb_ingress_protocol
+  protocol_version = var.alb_ingress_protocol_version
+
   health_check_path                = var.alb_ingress_healthcheck_path
   health_check_protocol            = var.alb_ingress_healthcheck_protocol
   health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
@@ -136,7 +140,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.64.0"
+  version = "0.64.1"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
@@ -173,6 +177,8 @@ module "ecs_alb_service_task" {
   enable_ecs_managed_tags            = var.enable_ecs_managed_tags
   circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
   circuit_breaker_rollback_enabled   = var.circuit_breaker_rollback_enabled
+  permissions_boundary               = var.permissions_boundary
+  runtime_platform                   = var.runtime_platform
 
   context = module.this.context
 }
@@ -180,7 +186,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.6"
+  version = "0.30.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
