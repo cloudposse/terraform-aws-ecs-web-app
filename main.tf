@@ -162,6 +162,7 @@ module "ecs_alb_service_task" {
   platform_version                   = var.platform_version
   vpc_id                             = var.vpc_id
   assign_public_ip                   = var.assign_public_ip
+  security_group_enabled             = var.ecs_security_group_enabled
   security_group_ids                 = var.ecs_security_group_ids
   subnet_ids                         = var.ecs_private_subnet_ids
   container_port                     = var.container_port
