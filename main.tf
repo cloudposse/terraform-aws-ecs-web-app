@@ -170,6 +170,8 @@ module "ecs_alb_service_task" {
   docker_volumes                     = var.volumes
   ecs_load_balancers                 = local.load_balancers
   deployment_controller_type         = var.deployment_controller_type
+  deployment_maximum_percent         = var.deployment_maximum_percent
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   force_new_deployment               = var.force_new_deployment
   exec_enabled                       = var.exec_enabled
   task_policy_arns                   = var.task_policy_arns
