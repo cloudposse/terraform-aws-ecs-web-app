@@ -13,7 +13,7 @@ module "ecr" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  count = var.cloudwatch_log_group_enabled ? 1 : 0
+  count = module.this.enabled && var.cloudwatch_log_group_enabled ? 1 : 0
 
   name              = module.this.id
   tags              = module.this.tags
@@ -108,13 +108,13 @@ module "container_definition" {
 
 locals {
   alb = {
-    container_name   = coalesce(var.alb_container_name, module.this.id)
+    container_name   = var.alb_container_name != null ? var.alb_container_name : module.this.id
     container_port   = var.container_port
     elb_name         = null
     target_group_arn = module.alb_ingress.target_group_arn
   }
   nlb = {
-    container_name   = coalesce(var.nlb_container_name, module.this.id)
+    container_name   = var.alb_container_name != null ? var.alb_container_name : module.this.id
     container_port   = var.nlb_container_port
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
