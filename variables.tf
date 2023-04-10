@@ -4,9 +4,15 @@ variable "region" {
   default     = null
 }
 
+variable "ecr_enabled" {
+  type        = bool
+  description = "A boolean to enable/disable AWS ECR"
+  default     = true
+}
+
 variable "codepipeline_enabled" {
   type        = bool
-  description = "A boolean to enable/disable AWS Codepipeline and ECR"
+  description = "A boolean to enable/disable AWS Codepipeline. If `false`, use `ecr_enabled` to control if AWS ECR stays enabled."
   default     = true
 }
 
@@ -110,6 +116,12 @@ variable "ignore_changes_task_definition" {
   type        = bool
   description = "Ignore changes (like environment variables) to the ECS task definition"
   default     = true
+}
+
+variable "ignore_changes_desired_count" {
+  type        = bool
+  description = "Whether to ignore changes for desired count in the ECS service"
+  default     = false
 }
 
 variable "system_controls" {
@@ -440,6 +452,12 @@ variable "alb_ingress_health_check_interval" {
   description = "The duration in seconds in between health checks"
 }
 
+variable "alb_ingress_health_check_matcher" {
+  type        = string
+  default     = "200-399"
+  description = "The HTTP response codes to indicate a healthy check"
+}
+
 variable "alb_ingress_health_check_timeout" {
   type        = number
   default     = 10
@@ -456,6 +474,18 @@ variable "alb_ingress_listener_authenticated_priority" {
   type        = number
   default     = 300
   description = "The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority"
+}
+
+variable "alb_ingress_protocol" {
+  type        = string
+  default     = "HTTP"
+  description = "The protocol for the created ALB target group (if target_group_arn is not set). One of `HTTP`, `HTTPS`. Defaults to `HTTP`."
+}
+
+variable "alb_ingress_protocol_version" {
+  type        = string
+  default     = "HTTP1"
+  description = "The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1"
 }
 
 variable "alb_ingress_unauthenticated_hosts" {
@@ -684,6 +714,12 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
+variable "ecs_security_group_enabled" {
+  type        = bool
+  description = "Whether to create a security group for the service."
+  default     = true
+}
+
 variable "ecs_private_subnet_ids" {
   type        = list(string)
   description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
@@ -699,6 +735,22 @@ variable "github_webhooks_token" {
   type        = string
   description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
+}
+
+variable "permissions_boundary" {
+  type        = string
+  description = "A permissions boundary ARN to apply to the 3 roles that are created."
+  default     = ""
+}
+
+variable "runtime_platform" {
+  type        = list(map(string))
+  description = <<-EOT
+    Zero or one runtime platform configurations that containers in your task may use.
+    Map of strings with optional keys `operating_system_family` and `cpu_architecture`.
+    See `runtime_platform` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#runtime_platform
+    EOT
+  default     = []
 }
 
 variable "github_webhook_events" {
@@ -959,6 +1011,12 @@ variable "codepipeline_s3_bucket_force_destroy" {
   default     = false
 }
 
+variable "codebuild_cache_type" {
+  type        = string
+  description = "The type of storage that will be used for the AWS CodeBuild project cache. Valid values: NO_CACHE, LOCAL, and S3.  Defaults to NO_CACHE.  If cache_type is S3, it will create an S3 bucket for storing codebuild cache inside"
+  default     = "S3"
+}
+
 variable "init_containers" {
   type = list(object({
     container_definition = any
@@ -996,6 +1054,18 @@ variable "deployment_controller_type" {
   type        = string
   description = "Type of deployment controller. Valid values are CODE_DEPLOY and ECS"
   default     = "ECS"
+}
+
+variable "deployment_maximum_percent" {
+  type        = number
+  description = "The upper limit of the number of tasks (as a percentage of `desired_count`) that can be running in a service during a deployment"
+  default     = 200
+}
+
+variable "deployment_minimum_healthy_percent" {
+  type        = number
+  description = "The lower limit (as a percentage of `desired_count`) of the number of tasks that must remain running and healthy in a service during a deployment"
+  default     = 100
 }
 
 variable "ecr_image_tag_mutability" {

@@ -9,9 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: "Handle common commands"
-        uses: cloudposse/actions/github/slash-command-dispatch@0.22.0
+        uses: cloudposse/actions/github/slash-command-dispatch@0.30.0
         with:
-          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
           repository: cloudposse/actions
           commands: rebuild-readme, terraform-fmt
@@ -24,9 +24,9 @@ jobs:
       - name: "Checkout commit"
         uses: actions/checkout@v2
       - name: "Run tests"
-        uses: cloudposse/actions/github/slash-command-dispatch@0.22.0
+        uses: cloudposse/actions/github/slash-command-dispatch@0.30.0
         with:
-          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
           repository: cloudposse/actions
           commands: test
