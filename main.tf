@@ -3,7 +3,7 @@ data "aws_region" "current" {}
 module "ecr" {
   source  = "cloudposse/ecr/aws"
   version = "0.34.0"
-  enabled = var.codepipeline_enabled
+  enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
   attributes           = ["ecr"]
   scan_images_on_push  = var.ecr_scan_images_on_push
@@ -13,7 +13,7 @@ module "ecr" {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  count = var.cloudwatch_log_group_enabled ? 1 : 0
+  count = module.this.enabled && var.cloudwatch_log_group_enabled ? 1 : 0
 
   name              = module.this.id
   tags              = module.this.tags
@@ -112,13 +112,13 @@ module "container_definition" {
 
 locals {
   alb = {
-    container_name   = coalesce(var.alb_container_name, module.this.id)
+    container_name   = var.alb_container_name != null ? var.alb_container_name : module.this.id
     container_port   = var.container_port
     elb_name         = null
     target_group_arn = module.alb_ingress.target_group_arn
   }
   nlb = {
-    container_name   = coalesce(var.nlb_container_name, module.this.id)
+    container_name   = var.alb_container_name != null ? var.alb_container_name : module.this.id
     container_port   = var.nlb_container_port
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
@@ -166,6 +166,7 @@ module "ecs_alb_service_task" {
   platform_version                   = var.platform_version
   vpc_id                             = var.vpc_id
   assign_public_ip                   = var.assign_public_ip
+  security_group_enabled             = var.ecs_security_group_enabled
   security_group_ids                 = var.ecs_security_group_ids
   subnet_ids                         = var.ecs_private_subnet_ids
   container_port                     = var.container_port
@@ -173,6 +174,8 @@ module "ecs_alb_service_task" {
   docker_volumes                     = var.volumes
   ecs_load_balancers                 = local.load_balancers
   deployment_controller_type         = var.deployment_controller_type
+  deployment_maximum_percent         = var.deployment_maximum_percent
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   force_new_deployment               = var.force_new_deployment
   exec_enabled                       = var.exec_enabled
   task_policy_arns                   = var.task_policy_arns
@@ -190,7 +193,7 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.28.8"
+  version = "0.30.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token

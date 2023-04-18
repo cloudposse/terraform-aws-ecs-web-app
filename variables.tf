@@ -4,9 +4,15 @@ variable "region" {
   default     = null
 }
 
+variable "ecr_enabled" {
+  type        = bool
+  description = "A boolean to enable/disable AWS ECR"
+  default     = true
+}
+
 variable "codepipeline_enabled" {
   type        = bool
-  description = "A boolean to enable/disable AWS Codepipeline and ECR"
+  description = "A boolean to enable/disable AWS Codepipeline. If `false`, use `ecr_enabled` to control if AWS ECR stays enabled."
   default     = true
 }
 
@@ -734,6 +740,12 @@ variable "ecs_security_group_ids" {
   default     = []
 }
 
+variable "ecs_security_group_enabled" {
+  type        = bool
+  description = "Whether to create a security group for the service."
+  default     = true
+}
+
 variable "ecs_private_subnet_ids" {
   type        = list(string)
   description = "List of Private Subnet IDs to provision ECS Service onto if `var.network_mode = \"awsvpc\"`"
@@ -1068,6 +1080,18 @@ variable "deployment_controller_type" {
   type        = string
   description = "Type of deployment controller. Valid values are CODE_DEPLOY and ECS"
   default     = "ECS"
+}
+
+variable "deployment_maximum_percent" {
+  type        = number
+  description = "The upper limit of the number of tasks (as a percentage of `desired_count`) that can be running in a service during a deployment"
+  default     = 200
+}
+
+variable "deployment_minimum_healthy_percent" {
+  type        = number
+  description = "The lower limit (as a percentage of `desired_count`) of the number of tasks that must remain running and healthy in a service during a deployment"
+  default     = 100
 }
 
 variable "ecr_image_tag_mutability" {
