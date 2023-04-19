@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source     = "cloudposse/vpc/aws"
-  version    = "2.0.0"
+  source  = "cloudposse/vpc/aws"
+  version = "2.0.0"
 
   ipv4_primary_cidr_block = var.vpc_cidr_block
 

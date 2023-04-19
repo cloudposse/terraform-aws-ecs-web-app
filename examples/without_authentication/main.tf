@@ -34,8 +34,8 @@ module "subnets" {
 }
 
 module "alb" {
-  source                    = "cloudposse/alb/aws"
-  version                   = "1.7.0"
+  source  = "cloudposse/alb/aws"
+  version = "1.7.0"
 
   vpc_id                    = module.vpc.vpc_id
   ip_address_type           = "ipv4"
