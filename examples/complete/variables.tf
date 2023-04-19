@@ -301,12 +301,6 @@ variable "codepipeline_github_oauth_token" {
   default     = ""
 }
 
-variable "codepipeline_github_webhooks_token" {
-  type        = string
-  description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
-  default     = ""
-}
-
 variable "codepipeline_github_webhook_events" {
   type        = list(string)
   description = "A list of events which should trigger the webhook. See a list of [available events](https://developer.github.com/v3/activity/events/types/)"
@@ -528,4 +522,16 @@ variable "linux_parameters" {
   })
   description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
   default     = null
+}
+
+variable "build_environment_variables" {
+  type = list(object(
+    {
+      name  = string
+      value = string
+      type  = string
+  }))
+
+  default     = []
+  description = "A list of maps, that contain the keys 'name', 'value', and 'type' to be used as additional environment variables for the build. Valid types are 'PLAINTEXT', 'PARAMETER_STORE', or 'SECRETS_MANAGER'"
 }

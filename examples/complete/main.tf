@@ -4,20 +4,21 @@ provider "aws" {
 
 module "vpc" {
   source     = "cloudposse/vpc/aws"
-  version    = "0.18.2"
-  cidr_block = var.vpc_cidr_block
+  version    = "2.0.0"
+
+  ipv4_primary_cidr_block = var.vpc_cidr_block
 
   context = module.this.context
-
 }
 
 module "subnets" {
-  source                   = "cloudposse/dynamic-subnets/aws"
-  version                  = "0.34.0"
+  source  = "cloudposse/dynamic-subnets/aws"
+  version = "2.1.0"
+
   availability_zones       = var.availability_zones
   vpc_id                   = module.vpc.vpc_id
-  igw_id                   = module.vpc.igw_id
-  cidr_block               = module.vpc.vpc_cidr_block
+  igw_id                   = [module.vpc.igw_id]
+  ipv4_cidr_block          = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled      = true
   nat_instance_enabled     = false
   aws_route_create_timeout = "5m"
@@ -27,18 +28,20 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "cloudposse/alb/aws"
-  version                                 = "0.27.0"
-  vpc_id                                  = module.vpc.vpc_id
-  security_group_ids                      = [module.vpc.vpc_default_security_group_id]
-  subnet_ids                              = module.subnets.public_subnet_ids
-  internal                                = false
-  http_enabled                            = true
-  access_logs_enabled                     = true
-  alb_access_logs_s3_bucket_force_destroy = true
-  cross_zone_load_balancing_enabled       = true
-  http2_enabled                           = true
-  deletion_protection_enabled             = false
+  source  = "cloudposse/alb/aws"
+  version = "1.7.0"
+
+  vpc_id                                          = module.vpc.vpc_id
+  security_group_ids                              = [module.vpc.vpc_default_security_group_id]
+  subnet_ids                                      = module.subnets.public_subnet_ids
+  internal                                        = false
+  http_enabled                                    = true
+  access_logs_enabled                             = true
+  alb_access_logs_s3_bucket_force_destroy         = true
+  alb_access_logs_s3_bucket_force_destroy_enabled = true
+  cross_zone_load_balancing_enabled               = true
+  http2_enabled                                   = true
+  deletion_protection_enabled                     = false
 
   context = module.this.context
 }
@@ -114,7 +117,6 @@ module "ecs_web_app" {
   codepipeline_enabled                 = var.codepipeline_enabled
   badge_enabled                        = var.codepipeline_badge_enabled
   github_oauth_token                   = var.codepipeline_github_oauth_token
-  github_webhooks_token                = var.codepipeline_github_webhooks_token
   github_webhook_events                = var.codepipeline_github_webhook_events
   repo_owner                           = var.codepipeline_repo_owner
   repo_name                            = var.codepipeline_repo_name
@@ -131,6 +133,7 @@ module "ecs_web_app" {
   codepipeline_s3_bucket_force_destroy = var.codepipeline_s3_bucket_force_destroy
   container_environment                = var.container_environment
   secrets                              = var.secrets
+  build_environment_variables          = var.build_environment_variables
 
   # Autoscaling
   autoscaling_enabled               = var.autoscaling_enabled

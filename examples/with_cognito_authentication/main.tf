@@ -4,27 +4,27 @@ provider "aws" {
 
 module "vpc" {
   source  = "cloudposse/vpc/aws"
-  version = "0.18.0"
+  version = "2.0.0"
 
-  cidr_block = "172.16.0.0/16"
+  ipv4_primary_cidr_block = "172.16.0.0/16"
 
   context = module.this.context
 }
 
-data "aws_availability_zones" "available" {
-}
+data "aws_availability_zones" "available" {}
 
 locals {
   availability_zones = slice(data.aws_availability_zones.available.names, 0, 2)
 }
 
 module "subnets" {
-  source                   = "cloudposse/dynamic-subnets/aws"
-  version                  = "0.32.0"
+  source  = "cloudposse/dynamic-subnets/aws"
+  version = "2.1.0"
+
   availability_zones       = local.availability_zones
   vpc_id                   = module.vpc.vpc_id
-  igw_id                   = module.vpc.igw_id
-  cidr_block               = module.vpc.vpc_cidr_block
+  igw_id                   = [module.vpc.igw_id]
+  ipv4_cidr_block          = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled      = true
   nat_instance_enabled     = false
   aws_route_create_timeout = "5m"
@@ -34,8 +34,9 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "cloudposse/alb/aws"
-  version                                 = "0.23.0"
+  source  = "cloudposse/alb/aws"
+  version = "1.7.0"
+
   vpc_id                                  = module.vpc.vpc_id
   security_group_ids                      = [module.vpc.vpc_default_security_group_id]
   subnet_ids                              = module.subnets.public_subnet_ids
@@ -43,6 +44,7 @@ module "alb" {
   http_enabled                            = true
   access_logs_enabled                     = true
   alb_access_logs_s3_bucket_force_destroy = true
+  alb_access_logs_s3_bucket_force_destroy_enabled = true
   cross_zone_load_balancing_enabled       = true
   http2_enabled                           = true
   deletion_protection_enabled             = false

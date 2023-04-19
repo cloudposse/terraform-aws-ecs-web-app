@@ -75,7 +75,7 @@ variable "linux_parameters" {
     })))
   })
   description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
-  default     = null
+  default     = {}
 }
 
 variable "ecr_scan_images_on_push" {
@@ -754,12 +754,6 @@ variable "ecs_private_subnet_ids" {
 variable "github_oauth_token" {
   type        = string
   description = "GitHub Oauth Token with permissions to access private repositories"
-  default     = ""
-}
-
-variable "github_webhooks_token" {
-  type        = string
-  description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
 }
 

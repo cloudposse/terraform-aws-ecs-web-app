@@ -6,7 +6,7 @@ namespace = "eg"
 
 stage = "test"
 
-name = "ecs-web-app"
+name = "ecs-web-app-complete"
 
 vpc_cidr_block = "172.16.0.0/16"
 
