@@ -106,6 +106,18 @@ variable "task_role_arn" {
   default     = ""
 }
 
+variable "task_exec_role_arn" {
+  type        = any
+  description = <<-EOT
+    A `list(string)` of zero or one ARNs of IAM roles that allows the
+    ECS/Fargate agent to make calls to the ECS API on your behalf.
+    If the list is empty, a role will be created for you.
+    DEPRECATED: you can also pass a `string` with the ARN, but that
+    string must be known a "plan" time.
+    EOT
+  default     = []
+}
+
 variable "task_policy_arns" {
   type        = list(string)
   description = "A list of IAM Policy ARNs to attach to the generated task role."

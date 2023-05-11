@@ -176,6 +176,7 @@ module "ecs_alb_service_task" {
   exec_enabled                       = var.exec_enabled
   task_policy_arns                   = var.task_policy_arns
   task_role_arn                      = var.task_role_arn
+  task_exec_role_arn                 = var.task_exec_role_arn
   propagate_tags                     = var.propagate_tags
   enable_ecs_managed_tags            = var.enable_ecs_managed_tags
   circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
