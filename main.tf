@@ -99,7 +99,7 @@ module "container_definition" {
     logDriver = var.log_driver
     options = {
       "awslogs-region"        = coalesce(var.aws_logs_region, data.aws_region.current.name)
-      "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
+      "awslogs-group"         = join("", aws_cloudwatch_log_group.app[*].name)
       "awslogs-stream-prefix" = var.aws_logs_prefix == "" ? module.this.name : var.aws_logs_prefix
     }
     secretOptions = null
