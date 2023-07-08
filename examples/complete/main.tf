@@ -3,9 +3,9 @@ provider "aws" {
 }
 
 module "vpc" {
-  source     = "cloudposse/vpc/aws"
-  version    = "0.18.2"
-  cidr_block = var.vpc_cidr_block
+  source                  = "cloudposse/vpc/aws"
+  version                 = "2.1.0"
+  ipv4_primary_cidr_block = var.vpc_cidr_block
 
   context = module.this.context
 
@@ -13,11 +13,11 @@ module "vpc" {
 
 module "subnets" {
   source                   = "cloudposse/dynamic-subnets/aws"
-  version                  = "0.34.0"
+  version                  = "2.3.0"
   availability_zones       = var.availability_zones
   vpc_id                   = module.vpc.vpc_id
-  igw_id                   = module.vpc.igw_id
-  cidr_block               = module.vpc.vpc_cidr_block
+  igw_id                   = [module.vpc.igw_id]
+  ipv4_cidr_block          = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled      = true
   nat_instance_enabled     = false
   aws_route_create_timeout = "5m"
@@ -27,18 +27,19 @@ module "subnets" {
 }
 
 module "alb" {
-  source                                  = "cloudposse/alb/aws"
-  version                                 = "0.27.0"
-  vpc_id                                  = module.vpc.vpc_id
-  security_group_ids                      = [module.vpc.vpc_default_security_group_id]
-  subnet_ids                              = module.subnets.public_subnet_ids
-  internal                                = false
-  http_enabled                            = true
-  access_logs_enabled                     = true
-  alb_access_logs_s3_bucket_force_destroy = true
-  cross_zone_load_balancing_enabled       = true
-  http2_enabled                           = true
-  deletion_protection_enabled             = false
+  source                                          = "cloudposse/alb/aws"
+  version                                         = "1.7.0"
+  vpc_id                                          = module.vpc.vpc_id
+  security_group_ids                              = [module.vpc.vpc_default_security_group_id]
+  subnet_ids                                      = module.subnets.public_subnet_ids
+  internal                                        = false
+  http_enabled                                    = true
+  access_logs_enabled                             = true
+  alb_access_logs_s3_bucket_force_destroy         = true
+  alb_access_logs_s3_bucket_force_destroy_enabled = true
+  cross_zone_load_balancing_enabled               = true
+  http2_enabled                                   = true
+  deletion_protection_enabled                     = false
 
   context = module.this.context
 }
