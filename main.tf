@@ -167,7 +167,8 @@ module "ecs_alb_service_task" {
   subnet_ids                         = var.ecs_private_subnet_ids
   container_port                     = var.container_port
   nlb_container_port                 = var.nlb_container_port
-  docker_volumes                     = var.volumes
+  docker_volumes                     = [for volume in var.volumes : volume if length(volume.docker_volume_configuration) > 0]
+  efs_volumes                        = [for volume in var.volumes : volume if length(volume.efs_volume_configuration) > 0]
   ecs_load_balancers                 = local.load_balancers
   deployment_controller_type         = var.deployment_controller_type
   deployment_maximum_percent         = var.deployment_maximum_percent
