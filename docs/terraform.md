@@ -10,7 +10,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.76.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.34 |
 
 ## Modules
 
