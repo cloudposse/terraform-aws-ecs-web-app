@@ -9,6 +9,7 @@ module "ecr" {
   scan_images_on_push  = var.ecr_scan_images_on_push
   image_tag_mutability = var.ecr_image_tag_mutability
 
+  use_fullname = var.ecr_use_fullname
   context = module.this.context
 }
 
