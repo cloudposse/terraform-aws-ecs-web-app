@@ -32,6 +32,12 @@ variable "ecr_create_enabled" {
   default     = true
 }
 
+variable "ecr_use_fullname" {
+  type        = bool
+  default     = true
+  description = "Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`"
+}
+
 #############################
 variable "region" {
   type        = string
