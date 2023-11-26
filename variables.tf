@@ -38,12 +38,6 @@ variable "ecr_use_fullname" {
   description = "Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`"
 }
 
-variable "container_use_fullname" {
-  type        = bool
-  default     = true
-  description = "Set 'true' to use `namespace-stage-name` for ecs container name else just `name`"
-}
-
 #############################
 variable "region" {
   type        = string
