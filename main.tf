@@ -188,8 +188,7 @@ module "ecs_alb_service_task" {
 
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
-  source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.30.0"
+  source  = "github.com/Curia-ai/terraform-aws-ecs-codepipeline?ref=switch-source-to-codestar"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
