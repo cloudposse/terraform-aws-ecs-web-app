@@ -212,6 +212,8 @@ module "ecs_codepipeline" {
   secondary_artifact_encryption_enabled = var.codepipeline_cdn_bucket_encryption_enabled
   secondary_artifact_identifier         = var.codepipeline_cdn_bucket_buildspec_identifier
 
+  codestar_connection_arn = var.codestar_connection_arn
+
   webhook_enabled             = var.webhook_enabled
   webhook_target_action       = var.webhook_target_action
   webhook_authentication      = var.webhook_authentication

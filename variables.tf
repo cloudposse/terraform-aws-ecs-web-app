@@ -10,6 +10,12 @@ variable "ecr_enabled" {
   default     = true
 }
 
+variable "codepipeline_codestar_connection_arn" {
+  type        = string
+  default     = ""
+  description = "The ARN of the AWS CodeStar Connection created with AWS CodeStar or the ARN of the GitHub or Bitbucket connection"
+}
+
 variable "codepipeline_enabled" {
   type        = bool
   description = "A boolean to enable/disable AWS Codepipeline. If `false`, use `ecr_enabled` to control if AWS ECR stays enabled."
