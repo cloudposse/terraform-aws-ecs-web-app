@@ -125,11 +125,18 @@ locals {
     }
   ]
 
-  # override container_definition if var.container_definition is supplied
+  datadog_container = var.datadog_ecs_agent.enabled ? templatefile("${path.module}/templates/datadog-container.tmpl",
+    {
+      AWS_REGION = coalesce(var.region, data.aws_region.current.name)
+      DATADOG_API_KEY = var.datadog_ecs_agent.parameter_store_dd_api_key_location
+    }) : "{}"
+
   main_container_definition = coalesce(var.container_definition, module.container_definition.json_map_encoded)
+   
   # combine all container definitions
-  all_container_definitions = "[${join(",", concat(local.init_container_definitions, [local.main_container_definition]))}]"
+  all_container_definitions = "[${join(",", concat(local.init_container_definitions, [local.main_container_definition], [local.datadog_container] ))}]"
 }
+
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"

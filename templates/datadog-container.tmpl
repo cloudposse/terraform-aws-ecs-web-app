@@ -1,0 +1,35 @@
+{
+    "image": "datadog/agent:latest",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-group": "/datadog/datadog-agent",
+            "awslogs-region": "${AWS_REGION}",
+            "awslogs-stream-prefix": "ecs"
+        }
+    },
+    "cpu": 128,
+    "memory": 256,
+    "mountPoints": [],
+    "environment": [
+        {
+            "name": "ECS_FARGATE",
+            "value": "true"
+        },
+        {
+            "name": "DD_PROCESS_AGENT_ENABLED",
+            "value": "true"
+        },
+        {
+            "name": "DD_DOGSTATSD_NON_LOCAL_TRAFFIC",
+            "value": "true"
+        }
+    ],
+    "secrets": [
+        {
+            "name": "DD_API_KEY",
+            "valueFrom": "${DATADOG_API_KEY}" 
+        }
+    ],
+    "name": "api-server-datadog-agent"
+}
