@@ -1045,3 +1045,13 @@ variable "target_group_protocol" {
   default     = "HTTP"
 }
 
+variable "datadog_ecs_agent" {
+  type = object({
+    enabled = optional(bool, false)
+    parameter_store_dd_api_key_location = optional(string)
+  })
+  default = {
+    enabled = false
+    parameter_store_dd_api_key_location = null
+  }
+}
