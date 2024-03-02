@@ -73,7 +73,7 @@ module "alb_ingress" {
 
 module "container_definition" {
   source                       = "cloudposse/ecs-container-definition/aws"
-  version                      = "0.58.1"
+  version                      = "0.61.1"
   container_name               = module.this.id
   container_image              = var.use_ecr_image ? module.ecr.repository_url : var.container_image
   container_memory             = var.container_memory
