@@ -512,6 +512,12 @@ variable "alb_ingress_authenticated_paths" {
   description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
 }
 
+variable "alb_ingress_load_balancing_algorithm_type" {
+  type        = string
+  default     = "round_robin"
+  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups. The value is round_robin or least_outstanding_requests. The default is round_robin."
+}
+
 variable "nlb_ingress_target_group_arn" {
   type        = string
   description = "Target group ARN of the NLB ingress"
