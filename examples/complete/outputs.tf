@@ -96,11 +96,13 @@ output "alb_ingress_target_group_arn_suffix" {
 output "container_definition_json" {
   description = "JSON encoded list of container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.ecs_web_app.container_definition_json
+  sensitive   = true
 }
 
 output "container_definition_json_map" {
   description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition"
   value       = module.ecs_web_app.container_definition_json_map
+  sensitive   = true
 }
 
 output "ecs_exec_role_policy_id" {
