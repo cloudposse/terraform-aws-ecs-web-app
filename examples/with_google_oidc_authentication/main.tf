@@ -35,7 +35,7 @@ module "subnets" {
 
 module "alb" {
   source                    = "cloudposse/alb/aws"
-  version                   = "1.7.0"
+  version                   = "1.11.1"
   vpc_id                    = module.vpc.vpc_id
   ip_address_type           = "ipv4"
   subnet_ids                = module.subnets.public_subnet_ids
@@ -45,6 +45,8 @@ module "alb" {
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
   certificate_arn           = var.certificate_arn
   health_check_interval     = 60
+
+  alb_access_logs_s3_bucket_force_destroy = true
 
   context = module.this.context
 }
