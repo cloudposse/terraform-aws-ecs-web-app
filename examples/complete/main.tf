@@ -33,7 +33,7 @@ module "subnets" {
 
 module "alb" {
   source                                          = "cloudposse/alb/aws"
-  version                                         = "1.7.0"
+  version                                         = "1.11.1"
   vpc_id                                          = module.vpc.vpc_id
   security_group_ids                              = [module.vpc.vpc_default_security_group_id]
   subnet_ids                                      = module.subnets.public_subnet_ids
@@ -41,7 +41,6 @@ module "alb" {
   http_enabled                                    = true
   access_logs_enabled                             = true
   alb_access_logs_s3_bucket_force_destroy         = true
-  alb_access_logs_s3_bucket_force_destroy_enabled = true
   cross_zone_load_balancing_enabled               = true
   http2_enabled                                   = true
   deletion_protection_enabled                     = false
