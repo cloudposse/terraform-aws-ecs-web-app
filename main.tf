@@ -140,7 +140,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.55.1"
+  version = "0.64.1"
 
   alb_security_group                = var.alb_security_group
   use_alb_security_group            = var.use_alb_security_group
@@ -163,7 +163,7 @@ module "ecs_alb_service_task" {
   subnet_ids                        = var.ecs_private_subnet_ids
   container_port                    = var.container_port
   nlb_container_port                = var.nlb_container_port
-  volumes                           = var.volumes
+  docker_volumes                    = var.volumes
   ecs_load_balancers                = local.load_balancers
   deployment_controller_type        = var.deployment_controller_type
   force_new_deployment              = var.force_new_deployment
@@ -172,6 +172,8 @@ module "ecs_alb_service_task" {
   task_role_arn                     = var.task_role_arn
   propagate_tags                    = var.propagate_tags
   enable_ecs_managed_tags           = var.enable_ecs_managed_tags
+  circuit_breaker_deployment_enabled = var.circuit_breaker_deployment_enabled
+  circuit_breaker_rollback_enabled = var.circuit_breaker_rollback_enabled
 
   context = module.this.context
 }

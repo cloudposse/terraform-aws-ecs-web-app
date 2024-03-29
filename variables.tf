@@ -1055,3 +1055,15 @@ variable "datadog_ecs_agent" {
     parameter_store_dd_api_key_location = null
   }
 }
+
+variable "circuit_breaker_deployment_enabled" {
+  type        = bool
+  description = "If `true`, enable the deployment circuit breaker logic for the service. If using `CODE_DEPLOY` for `deployment_controller_type`, this value will be ignored"
+  default     = false
+}
+
+variable "circuit_breaker_rollback_enabled" {
+  type        = bool
+  description = "If `true`, Amazon ECS will roll back the service if a service deployment fails. If using `CODE_DEPLOY` for `deployment_controller_type`, this value will be ignored"
+  default     = false
+}
