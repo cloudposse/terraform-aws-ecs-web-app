@@ -4,9 +4,9 @@ provider "aws" {
 
 module "vpc" {
   source  = "cloudposse/vpc/aws"
-  version = "0.18.0"
+  version = "2.1.0"
 
-  cidr_block = "172.16.0.0/16"
+  ipv4_primary_cidr_block = "172.16.0.0/16"
 
   context = module.this.context
 }
@@ -20,11 +20,11 @@ locals {
 
 module "subnets" {
   source                   = "cloudposse/dynamic-subnets/aws"
-  version                  = "0.32.0"
+  version                  = "2.3.0"
   availability_zones       = local.availability_zones
   vpc_id                   = module.vpc.vpc_id
-  igw_id                   = module.vpc.igw_id
-  cidr_block               = module.vpc.vpc_cidr_block
+  igw_id                   = [module.vpc.igw_id]
+  ipv4_cidr_block          = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled      = true
   nat_instance_enabled     = false
   aws_route_create_timeout = "5m"
@@ -35,7 +35,7 @@ module "subnets" {
 
 module "alb" {
   source                    = "cloudposse/alb/aws"
-  version                   = "0.23.0"
+  version                   = "1.11.1"
   vpc_id                    = module.vpc.vpc_id
   ip_address_type           = "ipv4"
   subnet_ids                = module.subnets.public_subnet_ids
@@ -45,6 +45,8 @@ module "alb" {
   https_ingress_cidr_blocks = ["0.0.0.0/0"]
   certificate_arn           = var.certificate_arn
   health_check_interval     = 60
+
+  alb_access_logs_s3_bucket_force_destroy = true
 
   context = module.this.context
 }

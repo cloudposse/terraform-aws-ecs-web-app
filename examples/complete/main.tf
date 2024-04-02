@@ -2,10 +2,15 @@ provider "aws" {
   region = var.region
 }
 
+provider "github" {
+  owner = var.codepipeline_repo_owner
+  token = var.codepipeline_github_webhooks_token
+}
+
 module "vpc" {
-  source     = "cloudposse/vpc/aws"
-  version    = "0.18.2"
-  cidr_block = var.vpc_cidr_block
+  source                  = "cloudposse/vpc/aws"
+  version                 = "2.1.0"
+  ipv4_primary_cidr_block = var.vpc_cidr_block
 
   context = module.this.context
 
@@ -13,11 +18,11 @@ module "vpc" {
 
 module "subnets" {
   source                   = "cloudposse/dynamic-subnets/aws"
-  version                  = "0.34.0"
+  version                  = "2.3.0"
   availability_zones       = var.availability_zones
   vpc_id                   = module.vpc.vpc_id
-  igw_id                   = module.vpc.igw_id
-  cidr_block               = module.vpc.vpc_cidr_block
+  igw_id                   = [module.vpc.igw_id]
+  ipv4_cidr_block          = [module.vpc.vpc_cidr_block]
   nat_gateway_enabled      = true
   nat_instance_enabled     = false
   aws_route_create_timeout = "5m"
@@ -28,7 +33,7 @@ module "subnets" {
 
 module "alb" {
   source                                  = "cloudposse/alb/aws"
-  version                                 = "0.27.0"
+  version                                 = "1.11.1"
   vpc_id                                  = module.vpc.vpc_id
   security_group_ids                      = [module.vpc.vpc_default_security_group_id]
   subnet_ids                              = module.subnets.public_subnet_ids
@@ -114,7 +119,6 @@ module "ecs_web_app" {
   codepipeline_enabled                 = var.codepipeline_enabled
   badge_enabled                        = var.codepipeline_badge_enabled
   github_oauth_token                   = var.codepipeline_github_oauth_token
-  github_webhooks_token                = var.codepipeline_github_webhooks_token
   github_webhook_events                = var.codepipeline_github_webhook_events
   repo_owner                           = var.codepipeline_repo_owner
   repo_name                            = var.codepipeline_repo_name
