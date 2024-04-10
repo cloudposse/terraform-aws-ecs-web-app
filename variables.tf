@@ -737,12 +737,6 @@ variable "github_oauth_token" {
   default     = ""
 }
 
-variable "github_webhooks_token" {
-  type        = string
-  description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
-  default     = ""
-}
-
 variable "permissions_boundary" {
   type        = string
   description = "A permissions boundary ARN to apply to the 3 roles that are created."

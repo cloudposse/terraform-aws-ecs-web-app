@@ -2,7 +2,7 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.34.0"
+  version = "0.41.0"
   enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
   attributes           = ["ecr"]
@@ -190,11 +190,10 @@ module "ecs_alb_service_task" {
 module "ecs_codepipeline" {
   enabled = var.codepipeline_enabled
   source  = "cloudposse/ecs-codepipeline/aws"
-  version = "0.30.0"
+  version = "0.33.0"
 
   region                      = coalesce(var.region, data.aws_region.current.name)
   github_oauth_token          = var.github_oauth_token
-  github_webhooks_token       = var.github_webhooks_token
   github_webhook_events       = var.github_webhook_events
   repo_owner                  = var.repo_owner
   repo_name                   = var.repo_name

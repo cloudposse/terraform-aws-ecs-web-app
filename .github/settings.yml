@@ -1,0 +1,7 @@
+# Upstream changes from _extends are only recognized when modifications are made to this file in the default branch.
+_extends: .github
+repository:
+  name: terraform-aws-ecs-web-app
+  description: Terraform module that implements a web app on ECS and supports autoscaling, CI/CD, monitoring, ALB integration, and much more.
+  homepage: https://cloudposse.com/accelerate
+  topics: terraform, terraform-module, ecs, website, webapp, ecs-cluster, ecs-task, ecs-service, alb, ingress, access-logs, cloudwatch, cloudwatch-logs, aws, container-definition, hcl2
