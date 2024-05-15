@@ -1,8 +1,9 @@
 
 
 <!-- markdownlint-disable -->
-# terraform-aws-ecs-web-app <a href="https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-web-app&utm_content="><img align="right" src="https://cloudposse.com/logo-300x69.svg" width="150" /></a>
-<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a>
+<a href="https://cpco.io/homepage"><img src=".github/banner.png?raw=true" alt="Project Banner"/></a><br/>
+    <p align="right">
+<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -132,7 +133,7 @@ Available targets:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.26.0 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.28.0 |
 | <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.17.0 |
 | <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.1 |
 | <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.41.0 |
