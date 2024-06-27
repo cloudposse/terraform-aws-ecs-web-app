@@ -1,8 +1,9 @@
 
 
 <!-- markdownlint-disable -->
-# terraform-aws-ecs-web-app <a href="https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-web-app&utm_content="><img align="right" src="https://cloudposse.com/logo-300x69.svg" width="150" /></a>
-<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a>
+<a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-aws-ecs-web-app/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
+    <p align="right">
+<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -132,10 +133,10 @@ Available targets:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.25.1 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.28.0 |
 | <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.17.0 |
 | <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.1 |
-| <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.34.0 |
+| <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.41.0 |
 | <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.64.1 |
 | <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.3 |
 | <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.2 |
@@ -170,6 +171,7 @@ Available targets:
 | <a name="input_alb_ingress_healthcheck_protocol"></a> [alb\_ingress\_healthcheck\_protocol](#input\_alb\_ingress\_healthcheck\_protocol) | The protocol to use to connect with the target. Defaults to `HTTP`. Not applicable when `target_type` is `lambda` | `string` | `"HTTP"` | no |
 | <a name="input_alb_ingress_listener_authenticated_priority"></a> [alb\_ingress\_listener\_authenticated\_priority](#input\_alb\_ingress\_listener\_authenticated\_priority) | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_unauthenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `300` | no |
 | <a name="input_alb_ingress_listener_unauthenticated_priority"></a> [alb\_ingress\_listener\_unauthenticated\_priority](#input\_alb\_ingress\_listener\_unauthenticated\_priority) | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `alb_ingress_listener_authenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `1000` | no |
+| <a name="input_alb_ingress_load_balancing_algorithm_type"></a> [alb\_ingress\_load\_balancing\_algorithm\_type](#input\_alb\_ingress\_load\_balancing\_algorithm\_type) | Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups. The value is round\_robin or least\_outstanding\_requests. The default is round\_robin. | `string` | `"round_robin"` | no |
 | <a name="input_alb_ingress_protocol"></a> [alb\_ingress\_protocol](#input\_alb\_ingress\_protocol) | The protocol for the created ALB target group (if target\_group\_arn is not set). One of `HTTP`, `HTTPS`. Defaults to `HTTP`. | `string` | `"HTTP"` | no |
 | <a name="input_alb_ingress_protocol_version"></a> [alb\_ingress\_protocol\_version](#input\_alb\_ingress\_protocol\_version) | The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1 | `string` | `"HTTP1"` | no |
 | <a name="input_alb_ingress_target_group_arn"></a> [alb\_ingress\_target\_group\_arn](#input\_alb\_ingress\_target\_group\_arn) | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
@@ -438,9 +440,9 @@ Check out these related projects.
 >
 > Use Cloud Posse's ready-to-go [terraform architecture blueprints](https://cloudposse.com/reference-architecture/) for AWS to get up and running quickly.
 >
-> ✅ We build it with you.<br/>
-> ✅ You own everything.<br/>
-> ✅ Your team wins.<br/>
+> ✅ We build it together with your team.<br/>
+> ✅ Your team owns everything.<br/>
+> ✅ 100% Open Source and backed by fanatical support.<br/>
 >
 > <a href="https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-ecs-web-app&utm_content=commercial_support"><img alt="Request Quote" src="https://img.shields.io/badge/request%20quote-success.svg?style=for-the-badge"/></a>
 > <details><summary>📚 <strong>Learn More</strong></summary>

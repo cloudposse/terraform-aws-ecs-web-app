@@ -2,7 +2,7 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.34.0"
+  version = "0.41.0"
   enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
   attributes           = ["ecr"]
@@ -22,7 +22,7 @@ resource "aws_cloudwatch_log_group" "app" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.25.1"
+  version = "0.28.0"
 
   vpc_id = var.vpc_id
   port   = var.container_port
@@ -39,6 +39,7 @@ module "alb_ingress" {
   health_check_unhealthy_threshold = var.alb_ingress_health_check_unhealthy_threshold
   default_target_group_enabled     = var.alb_ingress_enable_default_target_group
   target_group_arn                 = var.alb_ingress_target_group_arn
+  load_balancing_algorithm_type    = var.alb_ingress_load_balancing_algorithm_type
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
