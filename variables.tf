@@ -416,6 +416,12 @@ variable "alb_ingress_enable_default_target_group" {
   default     = true
 }
 
+variable "alb_ingress_target_type" {
+  type        = string
+  description = "Target type for the ALB ingress. One of `ip`, `instance`, `lambda` or `container`. Defaults to `ip`, for bridge networking mode should be `instance`"
+  default     = "ip"
+}
+
 variable "alb_ingress_target_group_arn" {
   type        = string
   description = "Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group"

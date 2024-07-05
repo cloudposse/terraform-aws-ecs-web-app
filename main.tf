@@ -30,6 +30,7 @@ module "alb_ingress" {
   protocol         = var.alb_ingress_protocol
   protocol_version = var.alb_ingress_protocol_version
 
+  target_type                      = var.alb_ingress_target_type
   health_check_path                = var.alb_ingress_healthcheck_path
   health_check_protocol            = var.alb_ingress_healthcheck_protocol
   health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
