@@ -142,7 +142,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.64.1"
+  version = "0.76.0"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
@@ -184,6 +184,7 @@ module "ecs_alb_service_task" {
   circuit_breaker_rollback_enabled   = var.circuit_breaker_rollback_enabled
   permissions_boundary               = var.permissions_boundary
   runtime_platform                   = var.runtime_platform
+  service_connect_configurations     = var.service_connect_configurations
 
   context = module.this.context
 }
