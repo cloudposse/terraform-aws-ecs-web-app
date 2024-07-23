@@ -3,14 +3,14 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | < 5.44 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | < 5.44 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0 |
 
 ## Modules
 
@@ -20,10 +20,10 @@
 | <a name="module_alb_target_group_cloudwatch_sns_alarms"></a> [alb\_target\_group\_cloudwatch\_sns\_alarms](#module\_alb\_target\_group\_cloudwatch\_sns\_alarms) | cloudposse/alb-target-group-cloudwatch-sns-alarms/aws | 0.17.0 |
 | <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.1 |
 | <a name="module_ecr"></a> [ecr](#module\_ecr) | cloudposse/ecr/aws | 0.41.0 |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.64.1 |
-| <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.3 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.76.0 |
+| <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.5 |
 | <a name="module_ecs_cloudwatch_sns_alarms"></a> [ecs\_cloudwatch\_sns\_alarms](#module\_ecs\_cloudwatch\_sns\_alarms) | cloudposse/ecs-cloudwatch-sns-alarms/aws | 0.12.2 |
-| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.33.0 |
+| <a name="module_ecs_codepipeline"></a> [ecs\_codepipeline](#module\_ecs\_codepipeline) | cloudposse/ecs-codepipeline/aws | 0.34.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -58,7 +58,7 @@
 | <a name="input_alb_ingress_protocol"></a> [alb\_ingress\_protocol](#input\_alb\_ingress\_protocol) | The protocol for the created ALB target group (if target\_group\_arn is not set). One of `HTTP`, `HTTPS`. Defaults to `HTTP`. | `string` | `"HTTP"` | no |
 | <a name="input_alb_ingress_protocol_version"></a> [alb\_ingress\_protocol\_version](#input\_alb\_ingress\_protocol\_version) | The protocol version. One of `HTTP1`, `HTTP2`, `GRPC`. Only applicable when protocol is HTTP or HTTPS. Specify GRPC to send requests to targets using gRPC. Specify HTTP2 to send requests to targets using HTTP/2. The default is `HTTP1`, which sends requests to targets using HTTP/1.1 | `string` | `"HTTP1"` | no |
 | <a name="input_alb_ingress_target_group_arn"></a> [alb\_ingress\_target\_group\_arn](#input\_alb\_ingress\_target\_group\_arn) | Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group | `string` | `""` | no |
-| <a name="input_alb_ingress_target_type"></a> [alb\_ingress\_target\_type](#input\_alb\_ingress\_target\_type) | Target type for the ALB ingress. One of `ip`, `instance`, `lambda` or `container`. Defaults to `ip`, for bridge networking mode should be `instance` | `string` | `""` | no |
+| <a name="input_alb_ingress_target_type"></a> [alb\_ingress\_target\_type](#input\_alb\_ingress\_target\_type) | Target type for the ALB ingress. One of `ip`, `instance`, `lambda` or `container`. Defaults to `ip`, for bridge networking mode should be `instance` | `string` | `"ip"` | no |
 | <a name="input_alb_ingress_unauthenticated_hosts"></a> [alb\_ingress\_unauthenticated\_hosts](#input\_alb\_ingress\_unauthenticated\_hosts) | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_unauthenticated_listener_arns"></a> [alb\_ingress\_unauthenticated\_listener\_arns](#input\_alb\_ingress\_unauthenticated\_listener\_arns) | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_unauthenticated_listener_arns_count"></a> [alb\_ingress\_unauthenticated\_listener\_arns\_count](#input\_alb\_ingress\_unauthenticated\_listener\_arns\_count) | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
@@ -209,6 +209,7 @@
 | <a name="input_repo_owner"></a> [repo\_owner](#input\_repo\_owner) | GitHub Organization or Username | `string` | `""` | no |
 | <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | Zero or one runtime platform configurations that containers in your task may use.<br>Map of strings with optional keys `operating_system_family` and `cpu_architecture`.<br>See `runtime_platform` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition#runtime_platform | `list(map(string))` | `[]` | no |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | The secrets to pass to the container. This is a list of maps | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `null` | no |
+| <a name="input_service_connect_configurations"></a> [service\_connect\_configurations](#input\_service\_connect\_configurations) | The list of Service Connect configurations.<br>See `service_connect_configuration` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service#service_connect_configuration | <pre>list(object({<br>    enabled   = bool<br>    namespace = optional(string, null)<br>    log_configuration = optional(object({<br>      log_driver = string<br>      options    = optional(map(string), null)<br>      secret_option = optional(list(object({<br>        name       = string<br>        value_from = string<br>      })), [])<br>    }), null)<br>    service = optional(list(object({<br>      client_alias = list(object({<br>        dns_name = string<br>        port     = number<br>      }))<br>      timeout = optional(list(object({<br>        idle_timeout_seconds        = optional(number, null)<br>        per_request_timeout_seconds = optional(number, null)<br>      })), [])<br>      tls = optional(list(object({<br>        kms_key  = optional(string, null)<br>        role_arn = optional(string, null)<br>        issuer_cert_authority = object({<br>          aws_pca_authority_arn = string<br>        })<br>      })), [])<br>      discovery_name        = optional(string, null)<br>      ingress_port_override = optional(number, null)<br>      port_name             = string<br>    })), [])<br>  }))</pre> | `[]` | no |
 | <a name="input_service_registries"></a> [service\_registries](#input\_service\_registries) | The service discovery registries for the service. The maximum number of service\_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1 | <pre>list(object({<br>    registry_arn   = string<br>    port           = number<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_system_controls"></a> [system\_controls](#input\_system\_controls) | A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = "", value = ""} | `list(map(string))` | `null` | no |
@@ -229,7 +230,6 @@
 | <a name="input_webhook_filter_json_path"></a> [webhook\_filter\_json\_path](#input\_webhook\_filter\_json\_path) | The JSON path to filter on | `string` | `"$.ref"` | no |
 | <a name="input_webhook_filter_match_equals"></a> [webhook\_filter\_match\_equals](#input\_webhook\_filter\_match\_equals) | The value to match on (e.g. refs/heads/{Branch}) | `string` | `"refs/heads/{Branch}"` | no |
 | <a name="input_webhook_target_action"></a> [webhook\_target\_action](#input\_webhook\_target\_action) | The name of the action in a pipeline you want to connect to the webhook. The action must be from the source (first) stage of the pipeline | `string` | `"Source"` | no |
-| <a name="input_service_connect_configurations"></a> [service\_connect\_configurations](#input\_service\_connect\_configurations) | The list of Service Connect configurations.<br>See `service_connect_configuration` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service#service_connect_configuration | <pre>list(object({<br>    enabled   = bool<br>    namespace = optional(string, null)<br>    log_configuration = optional(object({<br>      log_driver = string<br>      options    = optional(map(string), null)<br>      secret_option = optional(list(object({<br>        name       = string<br>        value_from = string<br>      })), [])<br>    }), null)<br>    service = optional(list(object({<br>      client_alias = list(object({<br>        dns_name = string<br>        port     = number<br>      }))<br>      timeout = optional(list(object({<br>        idle_timeout_seconds        = optional(number, null)<br>        per_request_timeout_seconds = optional(number, null)<br>      })), [])<br>      tls = optional(list(object({<br>        kms_key  = optional(string, null)<br>        role_arn = optional(string, null)<br>        issuer_cert_authority = object({<br>          aws_pca_authority_arn = string<br>        })<br>      })), [])<br>      discovery_name        = optional(string, null)<br>      ingress_port_override = optional(number, null)<br>      port_name             = string<br>    })), [])<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
