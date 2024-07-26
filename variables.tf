@@ -1115,3 +1115,43 @@ variable "circuit_breaker_rollback_enabled" {
   description = "If `true`, Amazon ECS will roll back the service if a service deployment fails"
   default     = false
 }
+
+variable "service_connect_configurations" {
+  type = list(object({
+    enabled   = bool
+    namespace = optional(string, null)
+    log_configuration = optional(object({
+      log_driver = string
+      options    = optional(map(string), null)
+      secret_option = optional(list(object({
+        name       = string
+        value_from = string
+      })), [])
+    }), null)
+    service = optional(list(object({
+      client_alias = list(object({
+        dns_name = string
+        port     = number
+      }))
+      timeout = optional(list(object({
+        idle_timeout_seconds        = optional(number, null)
+        per_request_timeout_seconds = optional(number, null)
+      })), [])
+      tls = optional(list(object({
+        kms_key  = optional(string, null)
+        role_arn = optional(string, null)
+        issuer_cert_authority = object({
+          aws_pca_authority_arn = string
+        })
+      })), [])
+      discovery_name        = optional(string, null)
+      ingress_port_override = optional(number, null)
+      port_name             = string
+    })), [])
+  }))
+  description = <<-EOT
+    The list of Service Connect configurations.
+    See `service_connect_configuration` docs https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service#service_connect_configuration
+    EOT
+  default     = []
+}
