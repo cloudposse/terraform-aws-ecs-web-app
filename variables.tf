@@ -52,6 +52,32 @@ variable "container_repo_credentials" {
   description = "Container repository credentials; required when using a private repo. This map currently supports a single key; \"credentialsParameter\", which should be the ARN of a Secrets Manager's secret holding the credentials"
 }
 
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html
+variable "linux_parameters" {
+  type = object({
+    capabilities = optional(object({
+      add  = optional(list(string))
+      drop = optional(list(string))
+    }))
+    devices = optional(list(object({
+      containerPath = optional(string)
+      hostPath      = optional(string)
+      permissions   = optional(list(string))
+    })))
+    initProcessEnabled = optional(bool)
+    maxSwap            = optional(number)
+    sharedMemorySize   = optional(number)
+    swappiness         = optional(number)
+    tmpfs = optional(list(object({
+      containerPath = optional(string)
+      mountOptions  = optional(list(string))
+      size          = number
+    })))
+  })
+  description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
+  default     = {}
+}
+
 variable "ecr_scan_images_on_push" {
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not (false)"
