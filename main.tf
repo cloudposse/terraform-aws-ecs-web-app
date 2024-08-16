@@ -96,6 +96,10 @@ module "container_definition" {
   mount_points                 = var.mount_points
   container_depends_on         = local.container_depends_on
   repository_credentials       = var.container_repo_credentials
+  linux_parameters = merge(
+    var.linux_parameters,
+    var.exec_enabled ? { initProcessEnabled = true } : {}
+  )
 
   log_configuration = var.cloudwatch_log_group_enabled ? {
     logDriver = var.log_driver
