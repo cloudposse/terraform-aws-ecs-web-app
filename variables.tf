@@ -52,6 +52,32 @@ variable "container_repo_credentials" {
   description = "Container repository credentials; required when using a private repo. This map currently supports a single key; \"credentialsParameter\", which should be the ARN of a Secrets Manager's secret holding the credentials"
 }
 
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html
+variable "linux_parameters" {
+  type = object({
+    capabilities = optional(object({
+      add  = optional(list(string))
+      drop = optional(list(string))
+    }))
+    devices = optional(list(object({
+      containerPath = optional(string)
+      hostPath      = optional(string)
+      permissions   = optional(list(string))
+    })))
+    initProcessEnabled = optional(bool)
+    maxSwap            = optional(number)
+    sharedMemorySize   = optional(number)
+    swappiness         = optional(number)
+    tmpfs = optional(list(object({
+      containerPath = optional(string)
+      mountOptions  = optional(list(string))
+      size          = number
+    })))
+  })
+  description = "Linux-specific modifications that are applied to the container, such as Linux kernel capabilities. For more details, see https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_LinuxParameters.html"
+  default     = {}
+}
+
 variable "ecr_scan_images_on_push" {
   type        = bool
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not (false)"
@@ -416,6 +442,12 @@ variable "alb_ingress_enable_default_target_group" {
   default     = true
 }
 
+variable "alb_ingress_target_type" {
+  type        = string
+  description = "Target type for the ALB ingress. One of `ip`, `instance`, `lambda` or `container`. Defaults to `ip`, for bridge networking mode should be `instance`"
+  default     = "ip"
+}
+
 variable "alb_ingress_target_group_arn" {
   type        = string
   description = "Existing ALB target group ARN. If provided, set `alb_ingress_enable_default_target_group` to `false` to disable creation of the default target group"
@@ -510,6 +542,12 @@ variable "alb_ingress_authenticated_paths" {
   type        = list(string)
   default     = []
   description = "Authenticated path pattern to match (a maximum of 1 can be defined)"
+}
+
+variable "alb_ingress_load_balancing_algorithm_type" {
+  type        = string
+  default     = "round_robin"
+  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups. The value is round_robin or least_outstanding_requests. The default is round_robin."
 }
 
 variable "nlb_ingress_target_group_arn" {
@@ -728,12 +766,6 @@ variable "ecs_private_subnet_ids" {
 variable "github_oauth_token" {
   type        = string
   description = "GitHub Oauth Token with permissions to access private repositories"
-  default     = ""
-}
-
-variable "github_webhooks_token" {
-  type        = string
-  description = "GitHub OAuth Token with permissions to create webhooks. If not provided, can be sourced from the `GITHUB_TOKEN` environment variable"
   default     = ""
 }
 
