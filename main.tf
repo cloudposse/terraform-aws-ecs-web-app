@@ -136,6 +136,7 @@ locals {
       containerName = jsondecode(init_container.container_definition)["name"],
       condition     = init_container.condition
     }
+    if init_container.condition != null
   ]
 
   # override container_definition if var.container_definition is supplied

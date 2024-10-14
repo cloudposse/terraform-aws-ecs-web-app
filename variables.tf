@@ -1054,7 +1054,7 @@ variable "init_containers" {
     container_definition = any
     condition            = string
   }))
-  description = "A list of additional init containers to start. The map contains the container_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS or HEALTHY."
+  description = "A list of additional init containers to start. The map contains the container_definition (JSON) and the main container's dependency condition (string) on the init container. The latter can be one of START, COMPLETE, SUCCESS, HEALTHY, or null. If null, the init container will not be added to the depends_on list of the main container."
   default     = []
 }
 
