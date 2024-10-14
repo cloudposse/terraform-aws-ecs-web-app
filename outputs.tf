@@ -143,12 +143,12 @@ output "cloudwatch_log_group" {
 
 output "cloudwatch_log_group_arn" {
   description = "Cloudwatch log group ARN"
-  value       = join("", aws_cloudwatch_log_group.app.*.arn)
+  value       = join("", aws_cloudwatch_log_group.app[*].arn)
 }
 
 output "cloudwatch_log_group_name" {
   description = "Cloudwatch log group name"
-  value       = join("", aws_cloudwatch_log_group.app.*.name)
+  value       = join("", aws_cloudwatch_log_group.app[*].name)
 }
 
 output "codebuild" {

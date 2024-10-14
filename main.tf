@@ -105,7 +105,7 @@ module "container_definition" {
     logDriver = var.log_driver
     options = {
       "awslogs-region"        = coalesce(var.aws_logs_region, data.aws_region.current.name)
-      "awslogs-group"         = join("", aws_cloudwatch_log_group.app.*.name)
+      "awslogs-group"         = join("", aws_cloudwatch_log_group.app[*].name)
       "awslogs-stream-prefix" = var.aws_logs_prefix == "" ? module.this.name : var.aws_logs_prefix
     }
     secretOptions = null
@@ -127,13 +127,13 @@ locals {
   }
   load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
   init_container_definitions = [
-    for init_container in var.init_containers : lookup(init_container, "container_definition")
+    for init_container in var.init_containers : init_container["container_definition"]
   ]
 
   container_depends_on = [
     for init_container in var.init_containers :
     {
-      containerName = lookup(jsondecode(init_container.container_definition), "name"),
+      containerName = jsondecode(init_container.container_definition)["name"],
       condition     = init_container.condition
     }
   ]
