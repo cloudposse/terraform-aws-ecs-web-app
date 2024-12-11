@@ -547,7 +547,18 @@ variable "alb_ingress_authenticated_paths" {
 variable "alb_ingress_load_balancing_algorithm_type" {
   type        = string
   default     = "round_robin"
-  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups. The value is round_robin or least_outstanding_requests. The default is round_robin."
+  description = "Determines how the load balancer selects targets when routing requests. Only applicable for Application Load Balancer Target Groups. The value is round_robin, least_outstanding_requests or weighted_random. The default is round_robin."
+}
+
+variable "alb_ingress_load_balancing_anomaly_mitigation" {
+  type        = string
+  default     = "off"
+  description = "Determines whether to enable target anomaly mitigation. Only supported by the weighted_random load balancing algorithm type. Valid values are 'on' or 'off'."
+
+  validation {
+    condition     = contains(["on", "off"], var.alb_ingress_load_balancing_anomaly_mitigation)
+    error_message = "alb_ingress_load_balancing_anomaly_mitigation must be either 'on' or 'off'"
+  }
 }
 
 variable "nlb_ingress_target_group_arn" {
