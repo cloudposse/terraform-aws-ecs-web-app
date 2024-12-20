@@ -434,6 +434,12 @@ variable "alb_ingress_target_group_arn" {
   default     = ""
 }
 
+variable "alb_ingress_target_group_deregistration_delay" {
+  type        = number
+  default     = 15
+  description = "The amount of time to wait in seconds while deregistering target"
+}
+
 variable "alb_ingress_healthcheck_path" {
   type        = string
   description = "The path of the healthcheck which the ALB checks"
