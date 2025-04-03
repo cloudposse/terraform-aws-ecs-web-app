@@ -129,7 +129,7 @@ locals {
   additional_lbs = [
     for config in var.additional_lbs : {
       container_name   = config.container_name != null ? config.container_name : module.this.id
-      container_port   = config.container_port
+      container_port   = config.container_port != null ? config.container_port : var.container_port
       elb_name         = null
       target_group_arn = config.target_group_arn
     }
