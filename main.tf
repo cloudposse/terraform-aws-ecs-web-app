@@ -125,7 +125,22 @@ locals {
     elb_name         = null
     target_group_arn = var.nlb_ingress_target_group_arn
   }
-  load_balancers = var.nlb_ingress_target_group_arn != "" ? [local.alb, local.nlb] : [local.alb]
+
+  additional_lbs = [
+    for config in var.additional_lbs : {
+      container_name   = config.container_name != null ? config.container_name : module.this.id
+      container_port   = config.container_port
+      elb_name         = null
+      target_group_arn = config.target_group_arn
+    }
+  ]
+
+  load_balancers = concat(
+    [local.alb],
+    var.nlb_ingress_target_group_arn != "" ? [local.nlb] : [],
+    local.additional_lbs
+  )
+
   init_container_definitions = [
     for init_container in var.init_containers : init_container["container_definition"]
   ]
