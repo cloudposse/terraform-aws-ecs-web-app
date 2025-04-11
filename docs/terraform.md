@@ -37,6 +37,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_lbs"></a> [additional\_lbs](#input\_additional\_lbs) | List of additional load balancer configurations. Each config should specify container\_name (optional), container\_port (optional, defaults to main container\_port), and target\_group\_arn | <pre>list(object({<br/>    container_name   = optional(string)<br/>    container_port   = optional(number)<br/>    target_group_arn = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br/>This is for some rare cases where resources want additional configuration of tags<br/>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
 | <a name="input_alb_arn_suffix"></a> [alb\_arn\_suffix](#input\_alb\_arn\_suffix) | ARN suffix of the ALB for the Target Group | `string` | `""` | no |
 | <a name="input_alb_container_name"></a> [alb\_container\_name](#input\_alb\_container\_name) | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |

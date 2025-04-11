@@ -1141,3 +1141,13 @@ variable "circuit_breaker_rollback_enabled" {
   description = "If `true`, Amazon ECS will roll back the service if a service deployment fails"
   default     = false
 }
+
+variable "additional_lbs" {
+  type = list(object({
+    container_name   = optional(string)
+    container_port   = optional(number)
+    target_group_arn = string
+  }))
+  description = "List of additional load balancer configurations. Each config should specify container_name (optional), container_port (optional, defaults to main container_port), and target_group_arn"
+  default     = []
+}
