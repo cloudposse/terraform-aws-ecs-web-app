@@ -30,17 +30,18 @@ module "alb_ingress" {
   protocol         = var.alb_ingress_protocol
   protocol_version = var.alb_ingress_protocol_version
 
-  target_type                      = var.alb_ingress_target_type
-  health_check_path                = var.alb_ingress_healthcheck_path
-  health_check_protocol            = var.alb_ingress_healthcheck_protocol
-  health_check_healthy_threshold   = var.alb_ingress_health_check_healthy_threshold
-  health_check_interval            = var.alb_ingress_health_check_interval
-  health_check_matcher             = var.alb_ingress_health_check_matcher
-  health_check_timeout             = var.alb_ingress_health_check_timeout
-  health_check_unhealthy_threshold = var.alb_ingress_health_check_unhealthy_threshold
-  default_target_group_enabled     = var.alb_ingress_enable_default_target_group
-  target_group_arn                 = var.alb_ingress_target_group_arn
-  load_balancing_algorithm_type    = var.alb_ingress_load_balancing_algorithm_type
+  target_type                       = var.alb_ingress_target_type
+  health_check_path                 = var.alb_ingress_healthcheck_path
+  health_check_protocol             = var.alb_ingress_healthcheck_protocol
+  health_check_healthy_threshold    = var.alb_ingress_health_check_healthy_threshold
+  health_check_interval             = var.alb_ingress_health_check_interval
+  health_check_matcher              = var.alb_ingress_health_check_matcher
+  health_check_timeout              = var.alb_ingress_health_check_timeout
+  health_check_unhealthy_threshold  = var.alb_ingress_health_check_unhealthy_threshold
+  default_target_group_enabled      = var.alb_ingress_enable_default_target_group
+  target_group_arn                  = var.alb_ingress_target_group_arn
+  load_balancing_algorithm_type     = var.alb_ingress_load_balancing_algorithm_type
+  load_balancing_anomaly_mitigation = var.alb_ingress_load_balancing_anomaly_mitigation
 
   authenticated_paths   = var.alb_ingress_authenticated_paths
   unauthenticated_paths = var.alb_ingress_unauthenticated_paths
