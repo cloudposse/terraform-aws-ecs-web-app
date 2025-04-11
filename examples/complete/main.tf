@@ -109,11 +109,10 @@ module "ecs_web_app" {
   container_port                    = var.container_port
 
   # ALB
-  alb_arn_suffix                                  = module.alb.alb_arn_suffix
-  alb_security_group                              = module.alb.security_group_id
-  alb_ingress_unauthenticated_listener_arns       = [module.alb.http_listener_arn]
-  alb_ingress_unauthenticated_listener_arns_count = 1
-  alb_ingress_healthcheck_path                    = var.alb_ingress_healthcheck_path
+  alb_arn_suffix                            = module.alb.alb_arn_suffix
+  alb_security_group                        = module.alb.security_group_id
+  alb_ingress_unauthenticated_listener_arns = [module.alb.http_listener_arn]
+  alb_ingress_healthcheck_path              = var.alb_ingress_healthcheck_path
 
   # CodePipeline
   codepipeline_enabled                 = var.codepipeline_enabled
