@@ -96,6 +96,7 @@ module "container_definition" {
   mount_points                 = var.mount_points
   container_depends_on         = local.container_depends_on
   repository_credentials       = var.container_repo_credentials
+  resource_requirements        = var.resource_requirements
   linux_parameters = merge(
     var.linux_parameters,
     var.exec_enabled ? { initProcessEnabled = true } : {}

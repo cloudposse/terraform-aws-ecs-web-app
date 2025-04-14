@@ -150,6 +150,16 @@ variable "ignore_changes_desired_count" {
   default     = false
 }
 
+# https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ResourceRequirement.html
+variable "resource_requirements" {
+  type = list(object({
+    type  = string
+    value = string
+  }))
+  description = "The type and amount of a resource to assign to a container. The only supported resource is a GPU."
+  default     = null
+}
+
 variable "system_controls" {
   type        = list(map(string))
   description = "A list of namespaced kernel parameters to set in the container, mapping to the --sysctl option to docker run. This is a list of maps: { namespace = \"\", value = \"\"}"
