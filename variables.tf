@@ -241,9 +241,9 @@ variable "capacity_provider_strategies" {
 variable "service_registries" {
   type = list(object({
     registry_arn   = string
-    port           = number
-    container_name = string
-    container_port = number
+    port           = optional(number)
+    container_name = optional(string)
+    container_port = optional(number)
   }))
   description = "The service discovery registries for the service. The maximum number of service_registries blocks is 1. The currently supported service registry is Amazon Route 53 Auto Naming Service - `aws_service_discovery_service`; see `service_registries` docs https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1"
   default     = []
