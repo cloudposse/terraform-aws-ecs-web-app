@@ -3,7 +3,7 @@
 <!-- markdownlint-disable -->
 <a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-aws-ecs-web-app/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
     <p align="right">
-<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
+<a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-ecs-web-app/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-ecs-web-app.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -103,18 +103,6 @@ module "default_backend_web_app" {
 
 
 
-<!-- markdownlint-disable -->
-## Makefile Targets
-```text
-Available targets:
-
-  help                                Help screen
-  help/all                            Display help for all targets
-  help/short                          This help short screen
-  lint                                Lint terraform code
-
-```
-<!-- markdownlint-restore -->
 <!-- markdownlint-disable -->
 ## Requirements
 
@@ -419,6 +407,11 @@ Available targets:
 | <a name="output_target_response_time_average_cloudwatch_metric_alarm_arn"></a> [target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn](#output\_target\_response\_time\_average\_cloudwatch\_metric\_alarm\_arn) | ALB Target Group response time average CloudWatch metric alarm ARN |
 | <a name="output_target_response_time_average_cloudwatch_metric_alarm_id"></a> [target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id](#output\_target\_response\_time\_average\_cloudwatch\_metric\_alarm\_id) | ALB Target Group response time average CloudWatch metric alarm ID |
 <!-- markdownlint-restore -->
+
+
+
+
+
 
 
 ## Related Projects
