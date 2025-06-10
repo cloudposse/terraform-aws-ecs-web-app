@@ -1,6 +1,8 @@
 module github.com/cloudposse/terraform-aws-ecs-web-app
 
-go 1.21.7
+go 1.24
+
+toolchain go1.24.0
 
 require (
 	github.com/gruntwork-io/terratest v0.46.13
