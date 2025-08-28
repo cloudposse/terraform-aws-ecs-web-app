@@ -2,10 +2,8 @@ package test
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
-
-	"math/rand"
-	"strconv"
 	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -16,9 +14,7 @@ import (
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
 
-	rand.Seed(time.Now().UnixNano())
-
-	attributes := []string{strconv.Itoa(rand.Intn(1000))}
+	attributes := []string{fmt.Sprintf("%d", time.Now().Unix())}
 
 	// We need to create the ALB first because terraform does not wwait for it to be in the ready state before creating ECS target group
 	terraformOptions := &terraform.Options{
