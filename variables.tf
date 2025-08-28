@@ -96,6 +96,12 @@ variable "container_memory" {
   default     = 512
 }
 
+variable "docker_labels" {
+  type        = map(string)
+  description = "Map of Docker labels to assign to the container"
+  default     = null
+}
+
 variable "container_start_timeout" {
   type        = number
   description = "Time duration (in seconds) to wait before giving up on resolving dependencies for a container"

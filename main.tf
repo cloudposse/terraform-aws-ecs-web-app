@@ -81,6 +81,7 @@ module "container_definition" {
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
+  docker_labels                = var.docker_labels
   start_timeout                = var.container_start_timeout
   stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
