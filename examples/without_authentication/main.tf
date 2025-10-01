@@ -127,8 +127,7 @@ module "web_app" {
   alb_ingress_healthcheck_path = "/"
 
   # Without authentication, both HTTP and HTTPS endpoints are supported
-  alb_ingress_unauthenticated_listener_arns       = module.alb.listener_arns
-  alb_ingress_unauthenticated_listener_arns_count = 2
+  alb_ingress_unauthenticated_listener_arns = module.alb.listener_arns
 
   # All paths are unauthenticated
   alb_ingress_unauthenticated_paths             = ["/*"]

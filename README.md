@@ -70,7 +70,6 @@ module "default_backend_web_app" {
   name                                            = "appname"
   vpc_id                                          = module.vpc.vpc_id
   alb_ingress_unauthenticated_listener_arns       = module.alb.listener_arns
-  alb_ingress_unauthenticated_listener_arns_count = 1
   aws_logs_region                                 = "us-east-2"
   ecs_cluster_arn                                 = aws_ecs_cluster.default.arn
   ecs_cluster_name                                = aws_ecs_cluster.default.name
@@ -151,7 +150,6 @@ module "default_backend_web_app" {
 | <a name="input_alb_container_name"></a> [alb\_container\_name](#input\_alb\_container\_name) | The name of the container to associate with the ALB. If not provided, the generated container will be used | `string` | `null` | no |
 | <a name="input_alb_ingress_authenticated_hosts"></a> [alb\_ingress\_authenticated\_hosts](#input\_alb\_ingress\_authenticated\_hosts) | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_authenticated_listener_arns"></a> [alb\_ingress\_authenticated\_listener\_arns](#input\_alb\_ingress\_authenticated\_listener\_arns) | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| <a name="input_alb_ingress_authenticated_listener_arns_count"></a> [alb\_ingress\_authenticated\_listener\_arns\_count](#input\_alb\_ingress\_authenticated\_listener\_arns\_count) | The number of authenticated ARNs in `alb_ingress_authenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
 | <a name="input_alb_ingress_authenticated_paths"></a> [alb\_ingress\_authenticated\_paths](#input\_alb\_ingress\_authenticated\_paths) | Authenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_enable_default_target_group"></a> [alb\_ingress\_enable\_default\_target\_group](#input\_alb\_ingress\_enable\_default\_target\_group) | If true, create a default target group for the ALB ingress | `bool` | `true` | no |
 | <a name="input_alb_ingress_health_check_healthy_threshold"></a> [alb\_ingress\_health\_check\_healthy\_threshold](#input\_alb\_ingress\_health\_check\_healthy\_threshold) | The number of consecutive health checks successes required before healthy | `number` | `2` | no |
@@ -170,7 +168,6 @@ module "default_backend_web_app" {
 | <a name="input_alb_ingress_target_type"></a> [alb\_ingress\_target\_type](#input\_alb\_ingress\_target\_type) | Target type for the ALB ingress. One of `ip`, `instance`, `lambda` or `container`. Defaults to `ip`, for bridge networking mode should be `instance` | `string` | `"ip"` | no |
 | <a name="input_alb_ingress_unauthenticated_hosts"></a> [alb\_ingress\_unauthenticated\_hosts](#input\_alb\_ingress\_unauthenticated\_hosts) | Unauthenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
 | <a name="input_alb_ingress_unauthenticated_listener_arns"></a> [alb\_ingress\_unauthenticated\_listener\_arns](#input\_alb\_ingress\_unauthenticated\_listener\_arns) | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
-| <a name="input_alb_ingress_unauthenticated_listener_arns_count"></a> [alb\_ingress\_unauthenticated\_listener\_arns\_count](#input\_alb\_ingress\_unauthenticated\_listener\_arns\_count) | The number of unauthenticated ARNs in `alb_ingress_unauthenticated_listener_arns`. This is necessary to work around a limitation in Terraform where counts cannot be computed | `number` | `0` | no |
 | <a name="input_alb_ingress_unauthenticated_paths"></a> [alb\_ingress\_unauthenticated\_paths](#input\_alb\_ingress\_unauthenticated\_paths) | Unauthenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | <a name="input_alb_security_group"></a> [alb\_security\_group](#input\_alb\_security\_group) | Security group of the ALB | `string` | n/a | yes |
 | <a name="input_alb_stickiness_cookie_duration"></a> [alb\_stickiness\_cookie\_duration](#input\_alb\_stickiness\_cookie\_duration) | The time period, in seconds, during which requests from a client should be routed to the same target. After this time period expires, the load balancer-generated cookie is considered stale. The range is 1 second to 1 week (604800 seconds). The default value is 1 day (86400 seconds) | `number` | `86400` | no |
