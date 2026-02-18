@@ -84,6 +84,12 @@ variable "ecr_scan_images_on_push" {
   default     = false
 }
 
+variable "ecr_enable_default_lifecycle_policy" {
+  type        = bool
+  description = "Enable default lifecycle policy for the ECR repository"
+  default     = true
+}
+
 variable "container_cpu" {
   type        = number
   description = "The vCPU setting to control cpu limits of container. (If FARGATE launch type is used below, this must be a supported vCPU size from the table here: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html)"

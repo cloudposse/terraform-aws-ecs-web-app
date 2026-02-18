@@ -2,12 +2,13 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.41.0"
+  version = "1.0.0"
   enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
-  attributes           = ["ecr"]
-  scan_images_on_push  = var.ecr_scan_images_on_push
-  image_tag_mutability = var.ecr_image_tag_mutability
+  attributes              = ["ecr"]
+  scan_images_on_push     = var.ecr_scan_images_on_push
+  image_tag_mutability    = var.ecr_image_tag_mutability
+  enable_lifecycle_policy = var.ecr_enable_default_lifecycle_policy
 
   context = module.this.context
 }
