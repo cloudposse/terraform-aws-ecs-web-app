@@ -2,12 +2,13 @@ data "aws_region" "current" {}
 
 module "ecr" {
   source  = "cloudposse/ecr/aws"
-  version = "0.41.0"
+  version = "1.0.0"
   enabled = module.this.enabled && (var.ecr_enabled || var.codepipeline_enabled)
 
-  attributes           = ["ecr"]
-  scan_images_on_push  = var.ecr_scan_images_on_push
-  image_tag_mutability = var.ecr_image_tag_mutability
+  attributes              = ["ecr"]
+  scan_images_on_push     = var.ecr_scan_images_on_push
+  image_tag_mutability    = var.ecr_image_tag_mutability
+  enable_lifecycle_policy = var.ecr_enable_default_lifecycle_policy
 
   context = module.this.context
 }
@@ -81,6 +82,7 @@ module "container_definition" {
   container_memory             = var.container_memory
   container_memory_reservation = var.container_memory_reservation
   container_cpu                = var.container_cpu
+  docker_labels                = var.docker_labels
   start_timeout                = var.container_start_timeout
   stop_timeout                 = var.container_stop_timeout
   healthcheck                  = var.healthcheck
@@ -163,7 +165,7 @@ locals {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.64.1"
+  version = "0.78.0"
 
   alb_security_group                 = var.alb_security_group
   use_alb_security_group             = var.use_alb_security_group
